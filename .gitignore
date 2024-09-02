@@ -1,0 +1,8 @@
+.task/
+*.secret.env
+*.secret.yaml
+*.key
+.decrypted~*
+kubeconfig
+talosconfig
+
