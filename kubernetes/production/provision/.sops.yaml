@@ -1,0 +1,13 @@
+---
+creation_rules:
+  - path_regex: vm-config.secret(\.sops)?\.ya?ml
+    input_type: yaml
+    encrypted_regex: '^(schematic-id|vip|controlplane-nodes|worker-nodes|node|vlanid|vmid|name|mac|storage|net0|password)$'
+    mac_only_encrypted: true
+    key_groups:
+      - age:
+          - age1vxgckta3fudhphcjg7403u37n22tgklq0q59y7dkjg9lp9sqtyuqnk35e8
+ 
+stores:
+  yaml:
+    indent: 2

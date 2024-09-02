@@ -1,0 +1,90 @@
+---
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: "3"
+
+vars:
+  VM_CONFIG_FILE: "{{.KUBERNETES_DIR}}/{{.CLUSTER}}/provision/vm-config.secret.sops.yaml"
+  TALOS_VERSION: 
+    sh: |
+      sops -d {{.VM_CONFIG_FILE}} | yq e '.proxmox.talos.version'
+  PVE_SERVERS: 
+    sh: |
+      sops -d {{.VM_CONFIG_FILE}} | yq -e '.proxmox.vms[].node' | sort | uniq
+        
+tasks:
+  download-talos-to-proxmox:
+    desc: Download the Talos image to all Proxmox servers
+    summary: |
+      This task downloads the Talos image to all Proxmox servers
+    cmds:
+      - for: { var: PVE_SERVERS }
+        task: download-talos-image
+        vars:
+          NODE: "{{.ITEM}}"
+
+  download-talos-image:
+    internal: true
+    desc: Download the Talos image to a Proxmox node
+    summary: |
+      This task downloads the Talos image to a Proxmox node
+      TALOS_VERSION: 
+        desc: The version of Talos to download
+        type: string
+        required: true
+      NODE:
+        desc: The Proxmox node to download the Talos image to
+        type: string
+        required: true
+    vars:
+      ISO_URL: "https://github.com/siderolabs/talos/releases/download/{{.TALOS_VERSION}}/metal-amd64.iso"
+      ISO_PATH: "/var/lib/vz/template/iso/talos-{{.TALOS_VERSION}}-amd64.iso"
+      NODE: "{{.NODE}}"
+    cmds:
+      - ssh root@"{{.NODE}}"  'curl -L -o "{{.ISO_PATH}}" "{{.ISO_URL}}"' # TODO replace root with a cluster admin 
+
+  create-talos-vms:
+    desc: Create all Talos VMs
+    summary: This task creates Talos VMs on the specified Proxmox node
+    cmds:
+      - |
+        vm_configs=$(sops -d {{.VM_CONFIG_FILE}} | yq -e '.proxmox.vms[] | .vmid + "," + .name + "," + .node + "," + .mac + "," + .vlanid  + "," + .storage + "," + .memory')
+        for config in $vm_configs; do
+          vmid=$(echo $config | cut -d',' -f1)
+          name=$(echo $config | cut -d',' -f2)
+          node=$(echo $config | cut -d',' -f3)
+          mac=$(echo $config | cut -d',' -f4)
+          vlanid=$(echo $config | cut -d',' -f5)
+          storage=$(echo $config | cut -d',' -f6)
+          memory=$(echo $config | cut -d',' -f7)
+          task provision:create-talos-vm VMID=$vmid NAME=$name NODE=$node MAC=$mac VLANID=$vlanid STORAGE=$storage MEMORY=$memory
+        done
+
+  create-talos-vm:
+    desc: Create a new VM suitable for running Talos
+    summary: This task creates a new VM on the specified Proxmox node
+    preconditions:
+      - sh: |
+          ! ssh root@"{{.NODE}}" "pvesh get /cluster/resources --type vm | grep -qw qemu/{{.VMID}}"
+        msg: "VM with ID {{.VMID}} already exists"
+    cmds:
+      - ssh root@"{{.NODE}}" "qm create {{.VMID}} --name {{.NAME}} --net0 virtio,bridge=vmbr0,macaddr={{.MAC}},tag={{.VLANID}} --ide2 local:iso/talos-{{.TALOS_VERSION}}-amd64.iso,media=cdrom --boot c --memory {{.MEMORY}} --cores 2 --sockets 1 --cpu host --numa 1 --scsihw virtio-scsi-pci --scsi0 {{.STORAGE}},ssd=1"
+      - ssh root@"{{.NODE}}" "qm start {{.VMID}}"
+
+  delete-talos-vms:
+    desc: Delete all Talos VMs
+    summary: This task deletes all Talos VMs on the specified Proxmox node
+    cmds:
+      - |
+        vm_configs=$(sops -d {{.VM_CONFIG_FILE}} | yq -e '.proxmox.vms[] | .vmid + "," + .node')
+        for config in $vm_configs; do
+          vmid=$(echo $config | cut -d',' -f1)
+          node=$(echo $config | cut -d',' -f2)
+          task provision:delete-talos-vm VMID=$vmid NODE=$node
+        done  
+
+  delete-talos-vm:
+    desc: Delete a VM suitable for running Talos
+    summary: This task deletes a VM on the specified Proxmox node
+    cmds:
+      - ssh root@"{{.NODE}}" "qm stop {{.VMID}}"
+      - ssh root@"{{.NODE}}" "qm destroy {{.VMID}}"

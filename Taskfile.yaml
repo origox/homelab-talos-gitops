@@ -1,0 +1,13 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: '3'
+
+vars:
+  KUBERNETES_DIR: "{{.ROOT_DIR}}/kubernetes"
+  CLUSTER: production
+
+includes:
+  provision: .taskfiles/provision
+
+tasks:
+
+  default: task -l
