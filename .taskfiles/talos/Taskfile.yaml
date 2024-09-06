@@ -1,0 +1,52 @@
+---
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: "3"
+
+vars:
+  VM_CONFIG_FILE: "{{.KUBERNETES_DIR}}/{{.CLUSTER}}/provision/vm-config.secret.sops.yaml"
+  TALOS_SCHEMATIC_ID:
+    sh: sops -d {{.VM_CONFIG_FILE}} | yq e '.talos.schematic-id'
+  TALOS_VIP:
+    sh: sops -d {{.VM_CONFIG_FILE}} | yq e '.talos.vip'
+  TALOS_CONTROLPLANE_NODES:
+    sh: sops -d {{.VM_CONFIG_FILE}} | yq e '.talos.controlplane-nodes'
+  TALOS_WORKER_NODES:
+    sh: sops -d {{.VM_CONFIG_FILE}} | yq e '.talos.worker-nodes'
+  TALOS_NODE:
+    sh: sops -d {{.VM_CONFIG_FILE}} | yq e '.talos.node'
+
+tasks:
+  
+  install-talosctl:
+    desc: Install talosctl
+    vars:
+      cmds:
+        - brew install siderolabs/tap/talosctl
+        - talosctl version
+
+  gen-secrets:
+    desc: Generate secrets for the cluster
+    cmds:
+      - talosctl gen secrets -o {{.KUBERNETES_DIR}}/{{.CLUSTER}}/provision/rendered/secrets.yaml
+
+  gen-machine-config:
+    desc: Generate configuration for the cluster and export talosconfig
+    cmds:
+      - talosctl gen config --force {{.CLUSTER}} https://{{.TALOS_VIP}}:6443 --with-secrets {{.KUBERNETES_DIR}}/{{.CLUSTER}}/provision/rendered/secrets.yaml  --install-image factory.talos.dev/installer/{{.TALOS_SCHEMATIC_ID}}:{{.TALOS_VERSION}} --config-patch @{{.KUBERNETES_DIR}}/{{.CLUSTER}}/provision/patches/cni.yaml --config-patch @{{.KUBERNETES_DIR}}/{{.CLUSTER}}/provision/patches/dhcp.yaml --config-patch @{{.KUBERNETES_DIR}}/{{.CLUSTER}}/provision/patches/install-disk.yaml --config-patch @{{.KUBERNETES_DIR}}/{{.CLUSTER}}/provision/patches/interface-names.yaml --config-patch-control-plane '[{"op":"add","path":"/machine/network/interfaces/0/vip","value":{"ip":"{{.TALOS_VIP}}"}}]' --output {{.KUBERNETES_DIR}}/{{.CLUSTER}}/provision/rendered
+      
+  setup-talosctl:
+    desc: Setup talosctl - Note dont use VIP, see https://www.talos.dev/v1.7/talos-guides/network/vip/#caveats
+    cmds:
+      - cp {{.KUBERNETES_DIR}}/{{.CLUSTER}}/provision/rendered/talosconfig {{.KUBERNETES_DIR}}/{{.CLUSTER}}/talosconfig
+      - echo 'apa' {{.TALOS_NODE}}
+      - talosctl config node {{.TALOS_NODE}}
+      - echo 'apan' {{.TALOS_NODE}}
+      - talosctl config endpoint {{.TALOS_CONTROLPLANE_NODES}}
+
+  apply-machine-config:
+    desc: Apply configuration to the cluster i.e. install Talos
+    cmds:
+      - for: { var: TALOS_CONTROLPLANE_NODES }
+        cmd: talosctl apply-config --insecure --nodes {{.ITEM}} --file {{.KUBERNETES_DIR}}/{{.CLUSTER}}/provision/rendered/controlplane.yaml
+      - for: { var: TALOS_WORKER_NODES }
+        cmd: talosctl apply-config --insecure --nodes {{.ITEM}} --file {{.KUBERNETES_DIR}}/{{.CLUSTER}}/provision/rendered/worker.yaml

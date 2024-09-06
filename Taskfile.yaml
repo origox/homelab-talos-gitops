@@ -7,6 +7,7 @@ vars:
 
 includes:
   provision: .taskfiles/provision
+  talos: .taskfiles/talos
 
 tasks:
 
