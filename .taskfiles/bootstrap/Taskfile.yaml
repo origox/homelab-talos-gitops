@@ -3,8 +3,9 @@
 version: "3"
 
 vars:
+  TALOSCTL_CONFIG_FILE: "{{.KUBERNETES_DIR}}/{{.CLUSTER}}/talosconfig"
   CONTROLLER: 
-    sh:  talosctl --talosconfig {{.TALOSCTL_CONFIG_FILE}} --context production config info --output json | jq --raw-output '.nodes[]'
+    sh:  talosctl --talosconfig {{.TALOSCTL_CONFIG_FILE}} --context {{.CLUSTER}} config info --output json | jq --raw-output '.nodes[]'
 
 tasks:
 
@@ -15,10 +16,10 @@ tasks:
       cluster: Cluster to run command against (default: production)
     vars: &vars
     cmds:
-      - { task: etcd, vars: *vars }
+      #- { task: etcd, vars: *vars }
       - { task: kubeconfig, vars: *vars }
       #- { task: apps, vars: *vars }
-      # { task: flux, vars: *vars }
+      - { task: flux, vars: *vars }
     preconditions:
       - talosctl --talosconfig {{.TALOSCTL_CONFIG_FILE}} --context {{.CLUSTER}} config info >/dev/null 2>&1
       - test -f {{.KUBERNETES_DIR}}/{{.CLUSTER}}/talosconfig
@@ -39,4 +40,20 @@ tasks:
     preconditions:
       - test -f {{.KUBERNETES_DIR}}/{{.CLUSTER}}/talosconfig
       - talosctl --talosconfig {{.TALOSCTL_CONFIG_FILE}} --context {{.CLUSTER}} config info >/dev/null 2>&1
+
+  flux:
+    internal: true
+    cmds: 
+      # define namespace
+      - kubectl --kubeconfig {{.KUBERNETES_DIR}}/{{.CLUSTER}}/kubeconfig create ns flux-system
+      
+      # instert priv key to my cluster so we can decrypt sops secrets
+      - cat $AGE_KEY_FILE | kubectl --kubeconfig kubernetes/production/kubeconfig create secret generic sops-age --namespace=flux-system --from-file=age.agekey=/dev/stdin
+      
+      # verify it is in place
+      - kubectl --kubeconfig {{.KUBERNETES_DIR}}/{{.CLUSTER}}/kubeconfig -n flux-system describe secrets sops-age
+      
+      # Install Flux into the cluster
+      - flux bootstrap github --owner=$GITHUB_USER --repository=homelab-talos-gitops --branch=main --path=./kubernetes/production/flux --personal --private 
+
 
