@@ -67,7 +67,7 @@ tasks:
           ! ssh root@"{{.NODE}}" "pvesh get /cluster/resources --type vm | grep -qw qemu/{{.VMID}}"
         msg: "VM with ID {{.VMID}} already exists"
     cmds:
-      - ssh root@"{{.NODE}}" "qm create {{.VMID}} --name {{.NAME}} --net0 virtio,bridge=vmbr0,macaddr={{.MAC}},tag={{.VLANID}} --ide2 local:iso/talos-{{.TALOS_VERSION}}-amd64.iso,media=cdrom --boot c --memory {{.MEMORY}} --cores 2 --sockets 1 --cpu host --numa 1 --scsihw virtio-scsi-pci --scsi0 {{.STORAGE}},ssd=1"
+      - ssh root@"{{.NODE}}" "qm create {{.VMID}} --name {{.NAME}} --agent enabled=1 --net0 virtio,bridge=vmbr0,macaddr={{.MAC}},tag={{.VLANID}} --ide2 local:iso/talos-{{.TALOS_VERSION}}-amd64.iso,media=cdrom --boot c --memory {{.MEMORY}} --cores 2 --sockets 1 --cpu host --numa 1 --scsihw virtio-scsi-pci --scsi0 {{.STORAGE}},ssd=1"
       - ssh root@"{{.NODE}}" "qm start {{.VMID}}"
 
   delete-talos-vms:
