@@ -17,6 +17,15 @@ vars:
     sh: sops -d {{.VM_CONFIG_FILE}} | yq e '.talos.node'
 
 tasks:
+
+  all:
+    desc: Run all tasks
+    cmds:
+      - { task: install-talosctl }
+      - { task: gen-secrets }
+      - { task: gen-machine-config }
+      - { task: setup-talosctl }
+      - { task: apply-machine-config }
   
   install-talosctl:
     desc: Install talosctl
@@ -28,7 +37,7 @@ tasks:
   gen-secrets:
     desc: Generate secrets for the cluster
     cmds:
-      - talosctl gen secrets -o {{.KUBERNETES_DIR}}/{{.CLUSTER}}/provision/rendered/secrets.yaml
+      - talosctl gen secrets --force -o {{.KUBERNETES_DIR}}/{{.CLUSTER}}/provision/rendered/secrets.yaml
 
   gen-machine-config:
     desc: Generate configuration for the cluster and export talosconfig
