@@ -8,6 +8,7 @@ vars:
 includes:
   provision: .taskfiles/provision
   talos: .taskfiles/talos
+  bootstrap: .taskfiles/bootstrap
 
 tasks:
 

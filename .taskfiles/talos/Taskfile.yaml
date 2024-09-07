@@ -4,6 +4,7 @@ version: "3"
 
 vars:
   VM_CONFIG_FILE: "{{.KUBERNETES_DIR}}/{{.CLUSTER}}/provision/vm-config.secret.sops.yaml"
+  TALOSCTL_CONFIG_FILE: "{{.KUBERNETES_DIR}}/{{.CLUSTER}}/talosconfig"
   TALOS_SCHEMATIC_ID:
     sh: sops -d {{.VM_CONFIG_FILE}} | yq e '.talos.schematic-id'
   TALOS_VIP:
@@ -37,16 +38,14 @@ tasks:
   setup-talosctl:
     desc: Setup talosctl - Note dont use VIP, see https://www.talos.dev/v1.7/talos-guides/network/vip/#caveats
     cmds:
-      - cp {{.KUBERNETES_DIR}}/{{.CLUSTER}}/provision/rendered/talosconfig {{.KUBERNETES_DIR}}/{{.CLUSTER}}/talosconfig
-      - echo 'apa' {{.TALOS_NODE}}
-      - talosctl config node {{.TALOS_NODE}}
-      - echo 'apan' {{.TALOS_NODE}}
-      - talosctl config endpoint {{.TALOS_CONTROLPLANE_NODES}}
+      - cp {{.KUBERNETES_DIR}}/{{.CLUSTER}}/provision/rendered/talosconfig {{.TALOSCTL_CONFIG_FILE}}
+      - talosctl --talosconfig {{.TALOSCTL_CONFIG_FILE}} config node {{.TALOS_NODE}}
+      - talosctl --talosconfig {{.TALOSCTL_CONFIG_FILE}} config endpoint {{.TALOS_CONTROLPLANE_NODES}}
 
   apply-machine-config:
     desc: Apply configuration to the cluster i.e. install Talos
     cmds:
       - for: { var: TALOS_CONTROLPLANE_NODES }
-        cmd: talosctl apply-config --insecure --nodes {{.ITEM}} --file {{.KUBERNETES_DIR}}/{{.CLUSTER}}/provision/rendered/controlplane.yaml
+        cmd: talosctl --talosconfig {{.TALOSCTL_CONFIG_FILE}} apply-config --insecure --nodes {{.ITEM}} --file {{.KUBERNETES_DIR}}/{{.CLUSTER}}/provision/rendered/controlplane.yaml
       - for: { var: TALOS_WORKER_NODES }
-        cmd: talosctl apply-config --insecure --nodes {{.ITEM}} --file {{.KUBERNETES_DIR}}/{{.CLUSTER}}/provision/rendered/worker.yaml
+        cmd: talosctl --talosconfig {{.TALOSCTL_CONFIG_FILE}} apply-config --insecure --nodes {{.ITEM}} --file {{.KUBERNETES_DIR}}/{{.CLUSTER}}/provision/rendered/worker.yaml

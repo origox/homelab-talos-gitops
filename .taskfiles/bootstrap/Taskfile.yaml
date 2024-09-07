@@ -1,0 +1,42 @@
+---
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: "3"
+
+vars:
+  CONTROLLER: 
+    sh:  talosctl --talosconfig {{.TALOSCTL_CONFIG_FILE}} --context production config info --output json | jq --raw-output '.nodes[]'
+
+tasks:
+
+  kubernetes:
+    desc: Bootstrap a Talos Kubernetes cluster backed by flux and sops
+    prompt: Bootstrap a Talos Kubernetes cluster ... continue?
+    summary: |
+      cluster: Cluster to run command against (default: production)
+    vars: &vars
+    cmds:
+      - { task: etcd, vars: *vars }
+      - { task: kubeconfig, vars: *vars }
+      #- { task: apps, vars: *vars }
+      # { task: flux, vars: *vars }
+    preconditions:
+      - talosctl --talosconfig {{.TALOSCTL_CONFIG_FILE}} --context {{.CLUSTER}} config info >/dev/null 2>&1
+      - test -f {{.KUBERNETES_DIR}}/{{.CLUSTER}}/talosconfig
+
+
+  etcd:
+    internal: true
+    cmd: until talosctl --talosconfig {{.TALOSCTL_CONFIG_FILE}} --context {{.CLUSTER}} --nodes {{.CONTROLLER}} bootstrap; do sleep 10; done
+    preconditions:
+      - test -f $TALOSCONFIG
+      - talosctl --talosconfig {{.TALOSCTL_CONFIG_FILE}} --context {{.CLUSTER}} config info >/dev/null 2>&1
+
+  kubeconfig:
+    internal: true
+    cmd: |
+      talosctl --talosconfig {{.TALOSCTL_CONFIG_FILE}} --context {{.CLUSTER}} kubeconfig --nodes {{.CONTROLLER}} \
+          --force --force-context-name {{.CLUSTER}} {{.KUBERNETES_DIR}}/{{.CLUSTER}}
+    preconditions:
+      - test -f {{.KUBERNETES_DIR}}/{{.CLUSTER}}/talosconfig
+      - talosctl --talosconfig {{.TALOSCTL_CONFIG_FILE}} --context {{.CLUSTER}} config info >/dev/null 2>&1
+
