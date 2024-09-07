@@ -54,6 +54,6 @@ tasks:
       - kubectl --kubeconfig {{.KUBERNETES_DIR}}/{{.CLUSTER}}/kubeconfig -n flux-system describe secrets sops-age
       
       # Install Flux into the cluster
-      - flux bootstrap github --owner=$GITHUB_USER --repository=homelab-talos-gitops --branch=main --path=./kubernetes/production/flux --personal --private 
+      - flux --kubeconfig {{.KUBERNETES_DIR}}/{{.CLUSTER}}/kubeconfig bootstrap github --owner=$GITHUB_USER --repository=homelab-talos-gitops --branch=main --path=./kubernetes/production/flux --personal --private 
 
 
