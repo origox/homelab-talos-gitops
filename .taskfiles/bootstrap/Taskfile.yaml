@@ -16,7 +16,7 @@ tasks:
       cluster: Cluster to run command against (default: production)
     vars: &vars
     cmds:
-      #- { task: etcd, vars: *vars }
+      - { task: etcd, vars: *vars }
       - { task: kubeconfig, vars: *vars }
       #- { task: apps, vars: *vars }
       - { task: flux, vars: *vars }

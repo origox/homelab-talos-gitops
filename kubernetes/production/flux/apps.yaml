@@ -9,7 +9,7 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./kubernetes/production/flux/cluster-secrets
+  path: ./kubernetes/production/cluster-secrets
   prune: true
   decryption:
     provider: sops
