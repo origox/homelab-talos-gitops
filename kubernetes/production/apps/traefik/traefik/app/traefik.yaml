@@ -1,0 +1,70 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: traefik-charts
+  namespace: flux-system
+spec:
+  interval: 10m0s
+  url: https://traefik.github.io/charts
+
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: traefik
+  namespace: traefik
+spec:
+  chart:
+    spec:
+      chart: traefik
+      reconcileStrategy: ChartVersion
+      sourceRef:
+        kind: HelmRepository
+        name: traefik-charts
+        namespace: flux-system
+      version: v31.0.0
+  interval: 10m0s
+  values:
+    deployment:
+      replicas: 1
+    globalArguments:
+      - "--global.checknewversion=false"
+      - "--global.sendanonymoususage=false"
+    additionalArguments:
+      - "--log.level=DEBUG"
+      - "--providers.kubernetesingress.allowemptyservices=true"
+      - "--providers.kubernetesingress.allowexternalnameservices=true"
+      - "--providers.kubernetescrd.allowemptyservices=true"
+      - "--providers.kubernetescrd.allowexternalnameservices=true"
+    ports:
+      redis:
+        port: 6379
+        expose: true
+        protocol: TCP
+      web:
+        redirectTo:
+          port: websecure
+      websecure:
+        tls:
+          enabled: true
+    ingressRoute:
+      dashboard:
+        enabled: false
+    providers:
+      kubernetesCRD:
+        enabled: true
+        ingressClass: traefik-external
+      kubernetesIngress:
+        enabled: true
+        publishedService:
+          enabled: false
+    rbac:
+      enabled: true
+    service:
+      enabled: true
+      type: LoadBalancer
+      annotations: {}
+      labels: {}
+      spec:
+        loadBalancerIP: 172.16.32.20 
