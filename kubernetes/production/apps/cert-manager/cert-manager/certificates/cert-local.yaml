@@ -1,0 +1,28 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: cert-local
+  namespace: traefik
+spec:
+  secretName: local-staging-tls
+  issuerRef:
+    name: letsencrypt-staging
+    kind: ClusterIssuer
+  dnsNames:
+    - "home.${SECRET_DOMAIN}"
+    - "*.home.${SECRET_DOMAIN}"
+# ---
+# apiVersion: cert-manager.io/v1
+# kind: Certificate
+# metadata:
+#   name: cert-local-production
+#   namespace: traefik
+# spec:
+#   secretName: local-production-tls
+#   issuerRef:
+#     name: letsencrypt-production
+#     kind: ClusterIssuer
+#   dnsNames:
+#     - "home.${SECRET_DOMAIN}"
+#     - "*.home.${SECRET_DOMAIN}"
