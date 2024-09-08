@@ -61,10 +61,4 @@ spec:
           enabled: false
     rbac:
       enabled: true
-    service:
-      enabled: true
-      type: LoadBalancer
-      annotations: {}
-      labels: {}
-      spec:
-        loadBalancerIP: 172.16.32.20 
+    
