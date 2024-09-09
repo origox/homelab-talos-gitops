@@ -38,10 +38,10 @@ spec:
       - "--providers.kubernetescrd.allowemptyservices=true"
       - "--providers.kubernetescrd.allowexternalnameservices=true"
     ports:
-      redis:
-        port: 6379
-        expose: true
-        protocol: TCP
+      traefik:
+        expose:
+          default: false
+          internal: true
       web:
         redirectTo:
           port: websecure
