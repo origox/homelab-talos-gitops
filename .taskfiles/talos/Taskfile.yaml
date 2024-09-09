@@ -15,6 +15,7 @@ vars:
     sh: sops -d {{.VM_CONFIG_FILE}} | yq e '.talos.worker-nodes'
   TALOS_NODE:
     sh: sops -d {{.VM_CONFIG_FILE}} | yq e '.talos.node'
+  # RESOURCE_DIR: "{{ .ROOT_DIR }}/.taskfiles/talos/resources"
 
 tasks:
 
@@ -58,3 +59,9 @@ tasks:
         cmd: talosctl --talosconfig {{.TALOSCTL_CONFIG_FILE}} apply-config --insecure --nodes {{.ITEM}} --file {{.KUBERNETES_DIR}}/{{.CLUSTER}}/provision/rendered/controlplane.yaml
       - for: { var: TALOS_WORKER_NODES }
         cmd: talosctl --talosconfig {{.TALOSCTL_CONFIG_FILE}} apply-config --insecure --nodes {{.ITEM}} --file {{.KUBERNETES_DIR}}/{{.CLUSTER}}/provision/rendered/worker.yaml
+
+  # install-cilium:
+  #   desc: Install Cilium
+  #   cmds:
+  #     - helm repo add cilium https://helm.cilium.io/; helm repo update
+  #     - "{{.RESOURCE_DIR}}/helm-install-cilium.sh"

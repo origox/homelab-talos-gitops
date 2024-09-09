@@ -6,7 +6,7 @@ vars:
   TALOSCTL_CONFIG_FILE: "{{.KUBERNETES_DIR}}/{{.CLUSTER}}/talosconfig"
   CONTROLLER: 
     sh:  talosctl --talosconfig {{.TALOSCTL_CONFIG_FILE}} --context {{.CLUSTER}} config info --output json | jq --raw-output '.nodes[]'
-
+  RESOURCE_DIR: "{{ .ROOT_DIR }}/.taskfiles/bootstrap/resources"
 tasks:
 
   kubernetes:
@@ -16,9 +16,9 @@ tasks:
       cluster: Cluster to run command against (default: production)
     vars: &vars
     cmds:
-      - { task: etcd, vars: *vars }
-      - { task: kubeconfig, vars: *vars }
-      #- { task: apps, vars: *vars }
+      #- { task: etcd, vars: *vars }
+      #- { task: kubeconfig, vars: *vars }
+      - { task: apps, vars: *vars }
       - { task: flux, vars: *vars }
     preconditions:
       - talosctl --talosconfig {{.TALOSCTL_CONFIG_FILE}} --context {{.CLUSTER}} config info >/dev/null 2>&1
@@ -40,6 +40,12 @@ tasks:
     preconditions:
       - test -f {{.KUBERNETES_DIR}}/{{.CLUSTER}}/talosconfig
       - talosctl --talosconfig {{.TALOSCTL_CONFIG_FILE}} --context {{.CLUSTER}} config info >/dev/null 2>&1
+
+  apps:
+    internal: true
+    cmds:
+      - helm repo add cilium https://helm.cilium.io/; helm repo update
+      - "{{.RESOURCE_DIR}}/helm-install-cilium.sh"
 
   flux:
     internal: true
