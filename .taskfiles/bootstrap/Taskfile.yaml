@@ -16,8 +16,8 @@ tasks:
       cluster: Cluster to run command against (default: production)
     vars: &vars
     cmds:
-      #- { task: etcd, vars: *vars }
-      #- { task: kubeconfig, vars: *vars }
+      - { task: etcd, vars: *vars }
+      - { task: kubeconfig, vars: *vars }
       - { task: apps, vars: *vars }
       - { task: flux, vars: *vars }
     preconditions:
@@ -42,13 +42,13 @@ tasks:
       - talosctl --talosconfig {{.TALOSCTL_CONFIG_FILE}} --context {{.CLUSTER}} config info >/dev/null 2>&1
 
   apps:
-    internal: true
+    internal: false
     cmds:
       - helm repo add cilium https://helm.cilium.io/; helm repo update
       - "{{.RESOURCE_DIR}}/helm-install-cilium.sh"
 
   flux:
-    internal: true
+    internal: false
     cmds: 
       # define namespace
       - kubectl --kubeconfig {{.KUBERNETES_DIR}}/{{.CLUSTER}}/kubeconfig create ns flux-system
