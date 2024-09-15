@@ -3,7 +3,7 @@
 helm install \
     cilium \
     cilium/cilium \
-    --version 1.15.6 \
+    --version 1.16.1 \
     --namespace kube-system \
     --set ipam.mode=kubernetes \
     --set kubeProxyReplacement=true \
@@ -12,4 +12,5 @@ helm install \
     --set cgroup.autoMount.enabled=false \
     --set cgroup.hostRoot=/sys/fs/cgroup \
     --set k8sServiceHost=localhost \
-    --set k8sServicePort=7445
+    --set k8sServicePort=7445 \
+    --set l2announcements.enabled=true 

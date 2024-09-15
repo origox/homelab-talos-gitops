@@ -61,9 +61,9 @@ spec:
     rbac:
       enabled: true
     service:
+      annotations:
+        lbipam.cilium.io/ips: 172.16.32.99
       enabled: true
       type: LoadBalancer
-      annotations: {}
       labels: {}
-      spec:
-        loadBalancerIP: 172.16.32.20 
+ 
