@@ -31,8 +31,8 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *app
-  dependsOn:
-    - name: cilium
+  # dependsOn:
+  #   - name: cilium
   path: ./kubernetes/production/apps/cilium/config
   prune: false # never should be deleted
   sourceRef:
