@@ -60,8 +60,12 @@ tasks:
       - for: { var: TALOS_WORKER_NODES }
         cmd: talosctl --talosconfig {{.TALOSCTL_CONFIG_FILE}} apply-config --insecure --nodes {{.ITEM}} --file {{.KUBERNETES_DIR}}/{{.CLUSTER}}/provision/rendered/worker.yaml
 
-  # install-cilium:
-  #   desc: Install Cilium
-  #   cmds:
-  #     - helm repo add cilium https://helm.cilium.io/; helm repo update
-  #     - "{{.RESOURCE_DIR}}/helm-install-cilium.sh"
+  reset-cluster:
+    desc: Reset all the Talos nodes and shut 'em down
+    prompt: Reset Talos on the '{{.cluster}}' cluster ... continue?
+    cmd: talosctl --talosconfig {{.TALOSCTL_CONFIG_FILE}} reset --nodes {{.nodes}} --graceful=false
+    vars:
+      nodes:
+        sh: kubectl get nodes -o json | jq -r '[.items[].status.addresses[] | select(.type == "InternalIP") | .address] | join(",")'
+
+        

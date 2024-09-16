@@ -44,8 +44,10 @@ tasks:
   apps:
     internal: false
     cmds:
+      - until kubectl wait --for=condition=Ready=False nodes --all --timeout=10m; do sleep 10; done
       - helm repo add cilium https://helm.cilium.io/; helm repo update
       - "{{.RESOURCE_DIR}}/helm-install-cilium.sh"
+      - until kubectl wait --for=condition=Ready nodes --all --timeout=10m; do sleep 10; done
 
   flux:
     internal: false

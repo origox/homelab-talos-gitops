@@ -1,6 +1,6 @@
 ---
 creation_rules:
-  - path_regex: secret(\.sops)?\.ya?ml
+  - path_regex: cluster.secret(\.sops)?\.ya?ml
     input_type: yaml
     encrypted_regex: ^(data|stringData)$
     mac_only_encrypted: true
