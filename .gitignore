@@ -6,3 +6,6 @@
 kubeconfig
 talosconfig
 **/*.tmp.*
+
+# Mdbook
+book/

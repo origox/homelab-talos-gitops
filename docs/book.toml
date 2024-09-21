@@ -1,0 +1,6 @@
+[book]
+authors = ["origox"]
+language = "en"
+multilingual = false
+src = "src"
+title = "My Homelab Setup"
