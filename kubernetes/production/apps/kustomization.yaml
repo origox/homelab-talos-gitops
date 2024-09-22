@@ -6,5 +6,5 @@ resources:
   - cert-manager
   - cilium
   - traefik
-  #- longhorn
+  - longhorn
   
