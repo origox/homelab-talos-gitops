@@ -1,0 +1,29 @@
+---
+apiVersion: v1
+data:
+  auth: ENC[AES256_GCM,data:URfGXMUf4/2+m9eAT8Zjsxy6Nr6ZPJXDCryHvXTHAFLkcd6z2pcY3SCA56JCrCl5T6BFhOTklQdK65FP,iv:Llu+BK4ijO0GMxNfTqqQvICm3OSwhZ4oFjNOqZZV6pE=,tag:pwHrhhdGNFnH2yijr0R1kg==,type:str]
+kind: Secret
+metadata:
+  creationTimestamp: null
+  name: basic-auth
+  namespace: longhorn-system
+sops:
+  kms: []
+  gcp_kms: []
+  azure_kv: []
+  hc_vault: []
+  age:
+    - recipient: age1vxgckta3fudhphcjg7403u37n22tgklq0q59y7dkjg9lp9sqtyuqnk35e8
+      enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBuOVkzWmd3RDJmZXdHZHQ3
+        VUlWaFpleTBtbGlpTWNQekhaU1hxazlMbUNrCjBpWDNzaTkzMzdKNVM1OXhwYVp5
+        Ri9tZ2hUU2l3VlZiaDJERWx5MFk0Y28KLS0tIGExdlUyYnl0cXl4QnFLNmZVZHJN
+        SUo0NFZqbm9raWszOTlkdHZuM3JkcjAKsy9ea6JI++1YB/my6BrxE0EdJjGtydIC
+        R9VTRtF3DC6kmbaYhxBToFoTW5G3M2QavNj0bS//IPp+mLcIllKRSw==
+        -----END AGE ENCRYPTED FILE-----
+  lastmodified: "2022-11-24T18:56:30Z"
+  mac: ENC[AES256_GCM,data:Cx0ORCOa+mDdqCzewwXqVdQa68dgN8ewsCpicibeAbmemhnXsRGJcyIJg18iFzbCJhZA+olRtDmC3SfqnXS6sqzuqF5nzpIsVTD4yOYBG6KldX/d8WUv81DRpUdy2pT45OWnfxDM4f32FM8pPzd07aWbkdj+IiJuWifm7r2Vkus=,iv:cJMguAUwk1cOzmnTZNM23VcuWRLCqKhxKWr5Aa7Ozkg=,tag:K9QIYN4JKqQEM/ZdK0bo4w==,type:str]
+  pgp: []
+  encrypted_regex: ^(data||stringData)$
+  version: 3.7.3

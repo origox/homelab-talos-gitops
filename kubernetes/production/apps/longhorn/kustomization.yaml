@@ -1,10 +1,7 @@
----
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
+  # Pre config
+  - namespace.yaml
   # Kustomizations
-  - cert-manager
-  - cilium
-  - traefik
-  - longhorn
-  
+  - ./longhorn/ks.yaml

@@ -1,0 +1,43 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: longhorn-charts
+  namespace: flux-system
+spec:
+  interval: 10m0s
+  url: https://charts.longhorn.io
+
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: longhorn
+  namespace: longhorn-system
+spec:
+  interval: 15m
+  chart:
+    spec:
+      chart: longhorn
+      version: 1.6.2
+      sourceRef:
+        kind: HelmRepository
+        name: longhorn-charts
+        namespace: flux-system
+      interval: 15m
+  install:
+    createNamespace: true
+    remediation:
+      retries: 5
+  upgrade:
+    remediation:
+      retries: 5
+  values:
+    persistence:
+      defaultClass: true
+      defaultClassReplicaCount: 3
+      defaultDataLocality: disabled # best-effort otherwise
+      reclaimPolicy: Retain
+    defaultSettings:
+      backupTarget: s3://xxxxxxlonghorn-backup@eu-north-se2/
+      backupTargetCredentialSecret: longhorn-truenas-s3-backup-credentials-2
