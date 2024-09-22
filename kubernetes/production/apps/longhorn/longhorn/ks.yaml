@@ -14,21 +14,21 @@ spec:
   interval: 30m
   retryInterval: 1m
   timeout: 5m
-# ---
-# apiVersion: kustomize.toolkit.fluxcd.io/v1
-# kind: Kustomization
-# metadata:
-#   name: longhorn-dashboard
-#   namespace: flux-system
-# spec:
-#   dependsOn:
-#     - name: longhorn-app
-#   path: ./kubernetes/production/apps/longhorn/longhorn/dashboard
-#   prune: true
-#   sourceRef:
-#     kind: GitRepository
-#     name: flux-system
-#   wait: true
-#   interval: 30m
-#   retryInterval: 1m
-#   timeout: 5m
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: longhorn-dashboard
+  namespace: flux-system
+spec:
+  dependsOn:
+    - name: longhorn-app
+  path: ./kubernetes/production/apps/longhorn/longhorn/dashboard
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  wait: true
+  interval: 30m
+  retryInterval: 1m
+  timeout: 5m

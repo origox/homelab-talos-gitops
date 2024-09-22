@@ -13,3 +13,11 @@ includes:
 tasks:
 
   default: task -l
+
+  setup-all:
+    desc: Setup all the things
+    cmds:
+      - { task: provision:download-talos-to-proxmox }
+      - { task: provision:create-talos-vms }
+      - { task: talos:all }
+      - { task: bootstrap:kubernetes }
