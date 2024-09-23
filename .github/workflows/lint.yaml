@@ -5,6 +5,9 @@ name: Yamllint
 on:
   push:
     branches: ["main"]
+    paths:
+      - '**/*.yaml'
+      - '**/*.yml'
 
 jobs:
   yamllint:
