@@ -1,3 +1,5 @@
+![lint](https://github.com/origox/homelab-talos-gitops/actions/workflows/lint.yaml/badge.svg)
+
 # homelab-talos-gitops
 Mono repo for my homelab configuration
 
