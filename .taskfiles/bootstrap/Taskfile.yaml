@@ -48,9 +48,7 @@ tasks:
       - helm repo add cilium https://helm.cilium.io/; helm repo update
       - "{{.RESOURCE_DIR}}/helm-install-cilium.sh"
       - until kubectl wait --for=condition=Ready nodes --all --timeout=10m; do sleep 10; done
-      - kubectl create ns longhorn-system
-      - kubectl label namespace longhorn-system pod-security.kubernetes.io/enforce=privileged pod-security.kubernetes.io/audit=privileged pod-security.kubernetes.io/warn=privileged --overwrite
-
+      
   flux:
     internal: true
     cmds: 
