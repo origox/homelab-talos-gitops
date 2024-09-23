@@ -1,5 +1,5 @@
 ---
-machine:  
+machine:
   network:
     interfaces:
       - interface: eth0

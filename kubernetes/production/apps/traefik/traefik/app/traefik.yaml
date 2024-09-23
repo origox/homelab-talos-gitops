@@ -66,4 +66,3 @@ spec:
       enabled: true
       type: LoadBalancer
       labels: {}
- 

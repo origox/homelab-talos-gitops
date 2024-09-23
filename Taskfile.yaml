@@ -1,3 +1,4 @@
+---
 # yaml-language-server: $schema=https://taskfile.dev/schema.json
 version: '3'
 
@@ -17,7 +18,7 @@ tasks:
   setup-all:
     desc: Setup all the things
     cmds:
-      - { task: provision:download-talos-to-proxmox }
-      - { task: provision:create-talos-vms }
-      - { task: talos:all }
-      - { task: bootstrap:kubernetes }
+      - {task: provision:download-talos-to-proxmox}
+      - {task: provision:create-talos-vms}
+      - {task: talos:all}
+      - {task: bootstrap:kubernetes}

@@ -4,20 +4,20 @@ version: "3"
 
 vars:
   VM_CONFIG_FILE: "{{.KUBERNETES_DIR}}/{{.CLUSTER}}/provision/vm-config.secret.sops.yaml"
-  TALOS_VERSION: 
+  TALOS_VERSION:
     sh: |
       sops -d {{.VM_CONFIG_FILE}} | yq e '.proxmox.talos.version'
-  PVE_SERVERS: 
+  PVE_SERVERS:
     sh: |
       sops -d {{.VM_CONFIG_FILE}} | yq -e '.proxmox.vms[].node' | sort | uniq
-        
+
 tasks:
   download-talos-to-proxmox:
     desc: Download the Talos image to all Proxmox servers
     summary: |
       This task downloads the Talos image to all Proxmox servers
     cmds:
-      - for: { var: PVE_SERVERS }
+      - for: {var: PVE_SERVERS}
         task: download-talos-image
         vars:
           NODE: "{{.ITEM}}"
@@ -27,7 +27,7 @@ tasks:
     desc: Download the Talos image to a Proxmox node
     summary: |
       This task downloads the Talos image to a Proxmox node
-      TALOS_VERSION: 
+      TALOS_VERSION:
         desc: The version of Talos to download
         type: string
         required: true
@@ -40,7 +40,7 @@ tasks:
       ISO_PATH: "/var/lib/vz/template/iso/talos-{{.TALOS_VERSION}}-amd64.iso"
       NODE: "{{.NODE}}"
     cmds:
-      - ssh root@"{{.NODE}}"  'curl -L -o "{{.ISO_PATH}}" "{{.ISO_URL}}"' # TODO replace root with a cluster admin 
+      - ssh root@"{{.NODE}}"  'curl -L -o "{{.ISO_PATH}}" "{{.ISO_URL}}"'  # TODO replace root with a cluster admin
 
   create-talos-vms:
     desc: Create all Talos VMs
@@ -80,7 +80,7 @@ tasks:
           vmid=$(echo $config | cut -d',' -f1)
           node=$(echo $config | cut -d',' -f2)
           task provision:delete-talos-vm VMID=$vmid NODE=$node
-        done  
+        done
 
   delete-talos-vm:
     desc: Delete a VM suitable for running Talos

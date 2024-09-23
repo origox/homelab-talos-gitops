@@ -35,6 +35,5 @@ spec:
     persistence:
       defaultClass: true
       defaultClassReplicaCount: 3
-      defaultDataLocality: disabled # best-effort otherwise
+      defaultDataLocality: disabled  # best-effort otherwise
       reclaimPolicy: Retain
-    

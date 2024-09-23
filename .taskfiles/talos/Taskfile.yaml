@@ -15,19 +15,18 @@ vars:
     sh: sops -d {{.VM_CONFIG_FILE}} | yq e '.talos.worker-nodes'
   TALOS_NODE:
     sh: sops -d {{.VM_CONFIG_FILE}} | yq e '.talos.node'
-  # RESOURCE_DIR: "{{ .ROOT_DIR }}/.taskfiles/talos/resources"
 
 tasks:
 
   all:
     desc: Run all tasks
     cmds:
-      - { task: install-talosctl }
-      - { task: gen-secrets }
-      - { task: gen-machine-config }
-      - { task: setup-talosctl }
-      - { task: apply-machine-config }
-  
+      - {task: install-talosctl}
+      - {task: gen-secrets}
+      - {task: gen-machine-config}
+      - {task: setup-talosctl}
+      - {task: apply-machine-config}
+
   install-talosctl:
     desc: Install talosctl
     vars:
@@ -44,7 +43,7 @@ tasks:
     desc: Generate configuration for the cluster and export talosconfig
     cmds:
       - talosctl gen config --force {{.CLUSTER}} https://{{.TALOS_VIP}}:6443 --with-secrets {{.KUBERNETES_DIR}}/{{.CLUSTER}}/provision/rendered/secrets.yaml  --install-image factory.talos.dev/installer/{{.TALOS_SCHEMATIC_ID}}:{{.TALOS_VERSION}} --config-patch @{{.KUBERNETES_DIR}}/{{.CLUSTER}}/provision/patches/cni.yaml --config-patch @{{.KUBERNETES_DIR}}/{{.CLUSTER}}/provision/patches/dhcp.yaml --config-patch @{{.KUBERNETES_DIR}}/{{.CLUSTER}}/provision/patches/install-disk.yaml --config-patch @{{.KUBERNETES_DIR}}/{{.CLUSTER}}/provision/patches/interface-names.yaml --config-patch-control-plane '[{"op":"add","path":"/machine/network/interfaces/0/vip","value":{"ip":"{{.TALOS_VIP}}"}}]' --config-patch-worker @{{.KUBERNETES_DIR}}/{{.CLUSTER}}/provision/patches/longhorn.yaml --output {{.KUBERNETES_DIR}}/{{.CLUSTER}}/provision/rendered
-      
+
   setup-talosctl:
     desc: Setup talosctl - Note dont use VIP, see https://www.talos.dev/v1.7/talos-guides/network/vip/#caveats
     cmds:
@@ -55,9 +54,9 @@ tasks:
   apply-machine-config:
     desc: Apply configuration to the cluster i.e. install Talos
     cmds:
-      - for: { var: TALOS_CONTROLPLANE_NODES }
+      - for: {var: TALOS_CONTROLPLANE_NODES}
         cmd: talosctl --talosconfig {{.TALOSCTL_CONFIG_FILE}} apply-config --insecure --nodes {{.ITEM}} --file {{.KUBERNETES_DIR}}/{{.CLUSTER}}/provision/rendered/controlplane.yaml
-      - for: { var: TALOS_WORKER_NODES }
+      - for: {var: TALOS_WORKER_NODES}
         cmd: talosctl --talosconfig {{.TALOSCTL_CONFIG_FILE}} apply-config --insecure --nodes {{.ITEM}} --file {{.KUBERNETES_DIR}}/{{.CLUSTER}}/provision/rendered/worker.yaml
 
   reset-cluster:
@@ -67,5 +66,3 @@ tasks:
     vars:
       nodes:
         sh: kubectl get nodes -o json | jq -r '[.items[].status.addresses[] | select(.type == "InternalIP") | .address] | join(",")'
-
-        

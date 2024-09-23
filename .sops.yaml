@@ -1,6 +1,6 @@
 ---
 creation_rules:
-  - # IMPORTANT: Keep this rule first
+  -  # IMPORTANT: Keep this rule first
     path_regex: talos/.+\.secret(\.sops)?\.ya?ml
     input_type: yaml
     encrypted_regex: ^(token|crt|key|id|secret|secretboxEncryptionSecret|ca)$
@@ -22,7 +22,7 @@ creation_rules:
     key_groups:
       - age:
           - age1vxgckta3fudhphcjg7403u37n22tgklq0q59y7dkjg9lp9sqtyuqnk35e8
-  
+
 stores:
   yaml:
     indent: 2

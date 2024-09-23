@@ -34,7 +34,7 @@ spec:
   # dependsOn:
   #   - name: cilium
   path: ./kubernetes/production/apps/cilium/cilium/config
-  prune: false # never should be deleted
+  prune: false  # never should be deleted
   sourceRef:
     kind: GitRepository
     name: flux-system

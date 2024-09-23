@@ -17,6 +17,6 @@ metadata:
 spec:
   allowFirstLastIPs: "Yes"
   blocks:
-    - # 
+    -  #
       start: 172.16.32.80
       stop: 172.16.32.99

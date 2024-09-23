@@ -1,0 +1,10 @@
+---
+extends: default
+
+ignore: |
+  **/rendered/**
+  **/flux-system/**
+
+rules:
+  line-length: {max: 1020}
+  truthy: disable
