@@ -1,0 +1,14 @@
+---
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: "3"
+
+tasks:
+  encrypt:
+    desc: Encrypt all sops files in this repository.
+    run: once
+    cmd: bash {{ .ROOT_DIR }}/.taskfiles/utils/resources/sops-encrypt-all.sh
+
+  decrypt:
+    desc: Decrypt all sops files in this repository.
+    run: once
+    cmd: bash {{ .ROOT_DIR }}/.taskfiles/utils/resources/sops-decrypt-all.sh {{.CLI_ARGS}}

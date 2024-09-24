@@ -3,7 +3,7 @@
 version: "3"
 
 vars:
-  VM_CONFIG_FILE: "{{.KUBERNETES_DIR}}/{{.CLUSTER}}/provision/vm-config.secret.sops.yaml"
+  VM_CONFIG_FILE: "{{.KUBERNETES_DIR}}/{{.CLUSTER}}/provision/vmconfig.secret.sops.yaml"
   TALOSCTL_CONFIG_FILE: "{{.KUBERNETES_DIR}}/{{.CLUSTER}}/talosconfig"
   TALOS_SCHEMATIC_ID:
     sh: sops -d {{.VM_CONFIG_FILE}} | yq e '.talos.schematic-id'

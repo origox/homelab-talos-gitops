@@ -1,23 +1,16 @@
 ---
 creation_rules:
-  -  # IMPORTANT: Keep this rule first
-    path_regex: talos/.+\.secret(\.sops)?\.ya?ml
+  - path_regex: vmconfig.secret(\.sops)?\.ya?ml
     input_type: yaml
-    encrypted_regex: ^(token|crt|key|id|secret|secretboxEncryptionSecret|ca)$
+    encrypted_regex: '^(schematic-id|vip|controlplane-nodes|worker-nodes|node|vlanid|vmid|name|mac|storage|net0|password)$'
     mac_only_encrypted: true
     key_groups:
       - age:
           - age1vxgckta3fudhphcjg7403u37n22tgklq0q59y7dkjg9lp9sqtyuqnk35e8
-  - path_regex: kubernetes/.+\.secret(\.sops)?\.ya?ml
+
+  - path_regex: .*\.secret(\.sops)?\.ya?ml
     input_type: yaml
-    encrypted_regex: ^(data|stringData)$
-    mac_only_encrypted: true
-    key_groups:
-      - age:
-          - age1vxgckta3fudhphcjg7403u37n22tgklq0q59y7dkjg9lp9sqtyuqnk35e8
-  - path_regex: secret(\.sops)?\.ya?ml
-    input_type: yaml
-    encrypted_regex: ^(data|stringData)$
+    encrypted_regex: ^(data|stringData|ip)$
     mac_only_encrypted: true
     key_groups:
       - age:
