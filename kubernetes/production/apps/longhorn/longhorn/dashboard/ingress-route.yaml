@@ -10,7 +10,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`longhornx.home.frandberg.live`)
+    - match: Host(`longhornx.${SECRET_CLUSTER_LOCAL_DOMAIN}`)
       kind: Rule
       middlewares:
         - name: longhorn-dashboard-basicauth
