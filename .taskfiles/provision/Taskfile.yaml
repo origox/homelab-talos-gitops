@@ -3,7 +3,7 @@
 version: "3"
 
 vars:
-  VM_CONFIG_FILE: "{{.KUBERNETES_DIR}}/{{.CLUSTER}}/provision/vm-config.secret.sops.yaml"
+  VM_CONFIG_FILE: "{{.KUBERNETES_DIR}}/{{.CLUSTER}}/provision/vmconfig.secret.sops.yaml"
   TALOS_VERSION:
     sh: |
       sops -d {{.VM_CONFIG_FILE}} | yq e '.proxmox.talos.version'
