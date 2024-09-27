@@ -1,0 +1,36 @@
+{
+    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+    "extends": [
+      "config:base"
+    ],
+    "flux": {
+      "fileMatch": ["(^|/)kubernetes/.+\\.ya?ml(\\.j2)?$"]
+    },
+    "helm-values": {
+      "fileMatch": ["(^|/)kubernetes/.+\\.ya?ml(\\.j2)?$"]
+    },
+    "kubernetes": {
+      "fileMatch": [
+        "\\.yaml$",
+        "(^|/)\\.taskfiles/.+\\.ya?ml(\\.j2)?$",
+        "(^|/)infrastructure/.+\\.ya?ml(\\.j2)?$",
+        "(^|/)kubernetes/.+\\.ya?ml(\\.j2)?$",
+        "(^|/)clusters/.+\\.ya?ml(\\.j2)?$"
+      ]
+    },
+    "regexManagers": [
+      {
+        "description": "Process custom dependencies",
+        "fileMatch": [
+          "(^|/)kubernetes/.+\\.ya?ml(\\.j2)?$",
+          "(^|/)clusters/.+\\.ya?ml(\\.j2)?$"
+        ],
+        "matchStrings": [
+          "datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( versioning=(?<versioning>\\S+))?\n.*?\"(?<currentValue>.*)\"\n",
+          "datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( versioning=(?<versioning>\\S+))?\n.*?-\\s(.*?)\/(?<currentValue>(v|\\d)[^/]+)\/\\S+\n"
+        ],
+        "datasourceTemplate": "{{#if datasource}}{{{datasource}}}{{else}}github-releases{{/if}}",
+        "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}"
+      }
+    ]
+  }
