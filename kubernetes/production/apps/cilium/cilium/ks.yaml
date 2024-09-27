@@ -32,7 +32,7 @@ spec:
     labels:
       app.kubernetes.io/name: *app
   dependsOn:
-    - name: cilium
+    - name: cilium-app
   path: ./kubernetes/production/apps/cilium/cilium/config
   prune: false  # never should be deleted
   sourceRef:
