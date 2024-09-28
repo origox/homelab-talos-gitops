@@ -5,6 +5,8 @@ metadata:
   name: infra-traefik-app
   namespace: flux-system
 spec:
+  dependsOn:
+    - name: cilium-app
   path: ./kubernetes/production/apps/traefik/traefik/app
   prune: true
   sourceRef:

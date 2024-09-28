@@ -1,5 +1,4 @@
 ---
-autoDirectNodeRoutes: true
 bandwidthManager:
   enabled: true
   bbr: true
@@ -26,7 +25,6 @@ ipam:
 k8sServiceHost: 127.0.0.1
 k8sServicePort: 7445
 kubeProxyReplacement: true
-kubeProxyReplacementHealthzBindAddr: 0.0.0.0:10256
 l2announcements:
   enabled: true
 loadBalancer:
