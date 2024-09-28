@@ -1,8 +1,6 @@
 ---
 nameReference:
   - kind: ConfigMap
-    metadata:
-      namespace: flux-system
     version: v1
     fieldSpecs:
       - path: spec/valuesFrom/name
