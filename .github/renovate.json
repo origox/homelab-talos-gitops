@@ -1,9 +1,10 @@
 {
     "$schema": "https://docs.renovatebot.com/renovate-schema.json",
     "extends": [
-      "config:base",
+      "config:recommended",
       "replacements:k8s-registry-move",
-      "github>origox/homelab-talos-gitops//.github/renovate/labels.json"
+      "github>origox/homelab-talos-gitops//.github/renovate/labels.json",
+      "github>origox/homelab-talos-gitops//.github/renovate/custommanagers.json"
     ],
     "prHeader": "chore(deps): update dependency ${depName} to ${currentValue}",
     "labels": [
