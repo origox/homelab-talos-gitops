@@ -23,7 +23,7 @@ spec:
         kind: HelmRepository
         name: traefik-charts
         namespace: flux-system
-      version: 32.0.0
+      version: 32.1.0
   interval: 10m0s
   values:
     deployment:
