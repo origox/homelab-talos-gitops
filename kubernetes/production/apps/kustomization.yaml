@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   # Kustomizations
   - cert-manager
+  - kube-system
   - cilium
   - traefik
   - longhorn
