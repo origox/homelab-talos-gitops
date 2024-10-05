@@ -59,7 +59,7 @@ spec:
     sources: ["ingress", "service", "crd"]
     txtOwnerId: main
     txtPrefix: k8s.main.
-    domainFilters: ["frandberg.live"]
+    domainFilters: ["frandberg.live", "home.frandberg.live"]
     serviceMonitor:
       enabled: true
     podAnnotations:
