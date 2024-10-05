@@ -8,6 +8,12 @@ creation_rules:
       - age:
           - age1vxgckta3fudhphcjg7403u37n22tgklq0q59y7dkjg9lp9sqtyuqnk35e8
 
+  - path_regex: homepage.cm.secret(\.sops)?\.ya?ml
+    mac_only_encrypted: true
+    key_groups:
+      - age:
+          - age1vxgckta3fudhphcjg7403u37n22tgklq0q59y7dkjg9lp9sqtyuqnk35e8
+
   - path_regex: .*\.secret(\.sops)?\.ya?ml
     input_type: yaml
     encrypted_regex: ^(data|stringData|ip)$
