@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: uptime-kuma
+spec:
+  selector:
+    matchLabels:
+      app: uptime-kuma
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+        app: uptime-kuma
+    spec:
+      containers:
+      - name: uptime-kuma
+        image: louislam/uptime-kuma:1.23.15
+        imagePullPolicy: IfNotPresent
+        env:
+        # only need to set PUID and PGUI because of NFS server
+        - name: PUID
+          value: "1000"
+        - name: PGID
+          value: "1000"
+        ports:
+        - containerPort: 3001
+          name: web-ui
+        resources:
+          limits:
+            cpu: 200m
+            memory: 512Mi
+          requests:
+            cpu: 50m
+            memory: 128Mi
+        livenessProbe:
+          tcpSocket:
+            port: web-ui
+          initialDelaySeconds: 60
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            scheme: HTTP
+            path: /
+            port: web-ui
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        volumeMounts:
+        - name: data
+          mountPath: /app/data
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: uptime-kuma-pvc
