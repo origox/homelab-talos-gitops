@@ -7,5 +7,5 @@ spec:
   selector:
     app: uptime-kuma
   ports:
-  - name: uptime-kuma
-    port: 3001
+    - name: uptime-kuma
+      port: 3001
