@@ -5,11 +5,12 @@ metadata:
   name: uptime-kuma-ingress
   annotations:
     kubernetes.io/ingress.class: traefik-external
+    external-dns.alpha.kubernetes.io/hostname: uptime-kumaxyz.${SECRET_CLUSTER_LOCAL_DOMAIN}
 spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`uptime-kuma.${SECRET_CLUSTER_LOCAL_DOMAIN}`)
+    - match: Host(`uptime-kumaxyz.${SECRET_CLUSTER_LOCAL_DOMAIN}`)
       kind: Rule
       services:
         - name: uptime-kuma-service
