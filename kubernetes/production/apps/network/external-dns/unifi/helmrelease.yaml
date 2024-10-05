@@ -54,8 +54,9 @@ spec:
           timeoutSeconds: 5
     extraArgs:
       - --ignore-ingress-tls-spec
+      # - traefik-disable-legacy 
     policy: sync
-    sources: ["ingress", "service"]
+    sources: ["ingress", "service", "crd"]
     txtOwnerId: main
     txtPrefix: k8s.main.
     domainFilters: ["frandberg.live"]
