@@ -6,7 +6,6 @@ resources:
   - homepage.secret.sops.yaml
   - homepage.cm.secret.sops.yaml
   - misc.yaml
-  - cm.yaml
   - deployment.yaml
   - svc.yaml
   - ingress-route.yaml
