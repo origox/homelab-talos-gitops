@@ -7,7 +7,7 @@ metadata:
     kubernetes.io/ingress.class: traefik-external
     # external-dns.alpha.kubernetes.io/hostname: uptime-kumaxyz.${SECRET_CLUSTER_LOCAL_DOMAIN}
     external-dns.alpha.kubernetes.io/hostname: uptime-kumaqqq.${SECRET_CLUSTER_LOCAL_DOMAIN}
-    external-dns.alpha.kubernetes.io/target: "traefikqqq.${SECRET_CLUSTER_LOCAL_DOMAIN}
+    external-dns.alpha.kubernetes.io/target: traefikqqq.${SECRET_CLUSTER_LOCAL_DOMAIN}
 spec:
   entryPoints:
     - websecure
