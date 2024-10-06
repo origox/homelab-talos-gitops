@@ -3,6 +3,8 @@ apiVersion: v1
 kind: Service
 metadata:
   name: uptime-kuma-service
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: uptime-kumaxyz.${SECRET_CLUSTER_LOCAL_DOMAIN}
 spec:
   selector:
     app: uptime-kuma

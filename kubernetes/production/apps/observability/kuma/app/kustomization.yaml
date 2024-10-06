@@ -6,3 +6,4 @@ resources:
   - deployment.yaml
   - svc.yaml
   - ingress-route.yaml
+

@@ -5,7 +5,7 @@ metadata:
   name: uptime-kuma-ingress
   annotations:
     kubernetes.io/ingress.class: traefik-external
-    external-dns.alpha.kubernetes.io/hostname: uptime-kumaxyz.${SECRET_CLUSTER_LOCAL_DOMAIN}
+    external-dns.alpha.kubernetes.io/target: uptime-kumaxyz.${SECRET_CLUSTER_LOCAL_DOMAIN}
 spec:
   entryPoints:
     - websecure
