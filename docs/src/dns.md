@@ -5,10 +5,10 @@ Use ExternalDNS with Unifi provider to make kubernetes services discoverable.
 - [ExternalDNS](https://github.com/kubernetes-sigs/external-dns)
 - [ExternalDNS Webhook Provider for UniFi](https://github.com/kashalls/external-dns-unifi-webhook) <br>
 ---
-NOTE: Chech this page how to handle external-dns and traefik ingress routes.
+## NOTE: Chech this page how to handle external-dns and traefik ingress routes.
 - [traefik-proxy](https://github.com/kubernetes-sigs/external-dns/blob/cda94ebed99eca67a4f5be2198eea09f9162ef52/docs/sources/traefik-proxy.md#L4)
 
-
+## Instruction
 1. Update external dns helm deployment
 ```bash
 # From helm files
@@ -48,3 +48,17 @@ service:
 ```
 
 5. Traefik hostname and ip was pre configured in router
+
+---
+## Fault finding
+
+```bash
+# List external-dns 
+k -n network get all 
+
+# Chech external-dns log
+ k -n network logs -f pods/external-dns-unifi-85678f4b86-cq7x7
+
+# Check/Edit cluster role
+k edit clusterroles.rbac.authorization.k8s.io external-dns-unifi
+```
