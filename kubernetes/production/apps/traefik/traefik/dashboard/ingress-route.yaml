@@ -6,11 +6,12 @@ metadata:
   namespace: traefik
   annotations:
     kubernetes.io/ingress.class: traefik-external
+    external-dns.alpha.kubernetes.io/target: traefik.${SECRET_CLUSTER_LOCAL_DOMAIN}
 spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`traefikx.${SECRET_CLUSTER_LOCAL_DOMAIN}`)
+    - match: Host(`traefik-dashboard.${SECRET_CLUSTER_LOCAL_DOMAIN}`)
       kind: Rule
       middlewares:
         - name: traefik-dashboard-basicauth

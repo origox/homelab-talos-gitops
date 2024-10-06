@@ -60,7 +60,7 @@ spec:
     sources: ["service", "ingress", "crd"]
     txtOwnerId: main
     txtPrefix: k8s.main.
-    domainFilters: 
+    domainFilters:
       - "frandberg.live"
       - ${SECRET_CLUSTER_LOCAL_DOMAIN}
     serviceMonitor:
