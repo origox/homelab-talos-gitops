@@ -57,7 +57,7 @@ spec:
       - --traefik-disable-legacy
       - --source=traefik-proxy
     policy: sync
-    sources: ["service","ingress", "crd"]
+    sources: ["service", "ingress", "crd"]
     txtOwnerId: main
     txtPrefix: k8s.main.
     domainFilters: ["frandberg.live", "home.frandberg.live"]
