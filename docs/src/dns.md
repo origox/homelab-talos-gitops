@@ -48,6 +48,7 @@ service:
 ```
 
 5. Traefik hostname and ip was pre configured in router
+SEEMS NOT NEEDED, EXTERNAL-DNS CREATES TRAEFIK ENTRY.
 
 ---
 ## Fault finding
