@@ -65,3 +65,8 @@ spec:
       enabled: true
     podAnnotations:
       secret.reloader.stakater.com/auto: "true"
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: external-dns
