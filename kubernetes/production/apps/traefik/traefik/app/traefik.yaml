@@ -63,6 +63,7 @@ spec:
     service:
       annotations:
         external-dns.alpha.kubernetes.io/hostname: traefikqqq.${SECRET_CLUSTER_LOCAL_DOMAIN}
+        external-dns.alpha.kubernetes.io/owner-id: main
         lbipam.cilium.io/ips: 172.16.32.99
       enabled: true
       type: LoadBalancer
