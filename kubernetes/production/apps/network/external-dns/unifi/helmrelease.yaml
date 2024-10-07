@@ -54,9 +54,9 @@ spec:
           timeoutSeconds: 5
     rbac:
       additionalPermissions:
-        - apiGroups: ["traefik.containo.us","traefik.io"]
+        - apiGroups: ["traefik.containo.us", "traefik.io"]
           resources: ["ingressroutes", "ingressroutetcps", "ingressrouteudps"]
-          verbs: ["get","watch","list"]
+          verbs: ["get", "watch", "list"]
     extraArgs:
       - --ignore-ingress-tls-spec
       - --traefik-disable-legacy
