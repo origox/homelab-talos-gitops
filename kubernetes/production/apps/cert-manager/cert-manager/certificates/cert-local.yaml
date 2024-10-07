@@ -26,3 +26,17 @@ spec:
   dnsNames:
     - "${SECRET_CLUSTER_LOCAL_DOMAIN}"
     - "*.${SECRET_CLUSTER_LOCAL_DOMAIN}"
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: cert-test
+  namespace: observability
+spec:
+  secretName: test-tls
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer
+  dnsNames:
+    - "${SECRET_CLUSTER_LOCAL_DOMAIN}"
+    - "*.${SECRET_CLUSTER_LOCAL_DOMAIN}"
