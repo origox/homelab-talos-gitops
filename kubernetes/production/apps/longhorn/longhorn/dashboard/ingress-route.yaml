@@ -6,11 +6,12 @@ metadata:
   namespace: longhorn-system
   annotations:
     kubernetes.io/ingress.class: traefik-external
+    external-dns.alpha.kubernetes.io/target: longhorn.${SECRET_CLUSTER_LOCAL_DOMAIN}
 spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`longhornx.${SECRET_CLUSTER_LOCAL_DOMAIN}`)
+    - match: Host(`longhorn.${SECRET_CLUSTER_LOCAL_DOMAIN}`)
       kind: Rule
       middlewares:
         - name: longhorn-dashboard-basicauth
