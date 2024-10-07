@@ -3,7 +3,7 @@ apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: cert-local
-  namespace: cert-manager
+  namespace: traefik
 spec:
   secretName: local-staging-tls
   issuerRef:
