@@ -16,4 +16,4 @@ spec:
         - name: uptime-kuma-service
           port: 3001
   tls:
-    secretName: local-production-tls
+    secretName: test-tls
