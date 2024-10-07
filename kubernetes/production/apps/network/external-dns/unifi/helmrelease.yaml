@@ -53,7 +53,7 @@ spec:
           initialDelaySeconds: 10
           timeoutSeconds: 5
     rbac:
-      addtionalPermissions:
+      additionalPermissions:
         - apiGroups: ["traefik.containo.us","traefik.io"]
           resources: ["ingressroutes", "ingressroutetcps", "ingressrouteudps"]
           verbs: ["get","watch","list"]
