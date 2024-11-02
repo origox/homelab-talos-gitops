@@ -6,14 +6,15 @@ metadata:
   namespace: monitoring
   annotations:
     kubernetes.io/ingress.class: traefik-external
+    external-dns.alpha.kubernetes.io/target: traefik.${SECRET_CLUSTER_LOCAL_DOMAIN}
 spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`grafanax.${SECRET_CLUSTER_LOCAL_DOMAIN}`)
+    - match: Host(`grafana.${SECRET_CLUSTER_LOCAL_DOMAIN}`)
       kind: Rule
       services:
         - name: kube-prometheus-stack-grafana
           port: 80
   tls:
-    secretName: local-production-tls
+    secretName: production-tls
