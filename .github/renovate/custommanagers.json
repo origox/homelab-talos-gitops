@@ -3,31 +3,14 @@
     "customManagers": [
         {
             "customType": "regex",
-            "description": "Process Talos Linux version",
+            "description": "Process Talos Linux and OS versions",
             "fileMatch": [
-                "^vmconfig\\.secret\\.sops\\.yaml$"
+                "(^|/)vmconfig\\.secret\\.sops\\.yaml$"
             ],
             "matchStrings": [
-                "os_version:\\s*(?<currentValue>v[\\d\\.]+)"
+                "datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( repository=(?<registryUrl>\\S+))?\\n.+(:\\s|=)(&\\S+\\s)?(?<currentValue>\\S+)"
             ],
-            "datasource": "github-releases",
-            "depNameTemplate": "talos",
-            "lookupName": "talos-systems/talos",
-            "versioning": "semver"
-        },
-        {
-            "customType": "regex",
-            "description": "Process Talos Kubernetes version",
-            "fileMatch": [
-                "^vmconfig\\.secret\\.sops\\.yaml$"
-            ],
-            "matchStrings": [
-                "k8s_version:\\s*(?<currentValue>v[\\d\\.]+)"
-            ],
-            "datasource": "github-releases",
-            "depNameTemplate": "kubernetes",
-            "lookupName": "kubernetes/kubernetes",
-            "versioning": "semver"
+            "datasourceTemplate": "{{#if datasource}}{{{datasource}}}{{else}}github-releases{{/if}}"
         },
         {
             "customType": "regex",
