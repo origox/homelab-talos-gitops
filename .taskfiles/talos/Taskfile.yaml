@@ -42,7 +42,7 @@ tasks:
   gen-machine-config:
     desc: Generate configuration for the cluster and export talosconfig
     cmds:
-      - talosctl gen config --force {{.CLUSTER}} https://{{.TALOS_VIP}}:6443 --with-secrets {{.KUBERNETES_DIR}}/{{.CLUSTER}}/provision/rendered/secrets.yaml  --install-image factory.talos.dev/installer/{{.TALOS_SCHEMATIC_ID}}:{{.TALOS_VERSION}} --config-patch @{{.KUBERNETES_DIR}}/{{.CLUSTER}}/provision/patches/cni.yaml --config-patch @{{.KUBERNETES_DIR}}/{{.CLUSTER}}/provision/patches/dhcp.yaml --config-patch @{{.KUBERNETES_DIR}}/{{.CLUSTER}}/provision/patches/install-disk.yaml --config-patch @{{.KUBERNETES_DIR}}/{{.CLUSTER}}/provision/patches/interface-names.yaml --config-patch-control-plane '[{"op":"add","path":"/machine/network/interfaces/0/vip","value":{"ip":"{{.TALOS_VIP}}"}}]' --config-patch-worker @{{.KUBERNETES_DIR}}/{{.CLUSTER}}/provision/patches/longhorn.yaml --output {{.KUBERNETES_DIR}}/{{.CLUSTER}}/provision/rendered
+      - talosctl gen config --force {{.CLUSTER}} https://{{.TALOS_VIP}}:6443 --with-secrets {{.KUBERNETES_DIR}}/{{.CLUSTER}}/provision/rendered/secrets.yaml  --install-image factory.talos.dev/installer/{{.TALOS_SCHEMATIC_ID}}:{{.TALOS_OS_VERSION}} --config-patch @{{.KUBERNETES_DIR}}/{{.CLUSTER}}/provision/patches/cni.yaml --config-patch @{{.KUBERNETES_DIR}}/{{.CLUSTER}}/provision/patches/dhcp.yaml --config-patch @{{.KUBERNETES_DIR}}/{{.CLUSTER}}/provision/patches/install-disk.yaml --config-patch @{{.KUBERNETES_DIR}}/{{.CLUSTER}}/provision/patches/interface-names.yaml --config-patch-control-plane '[{"op":"add","path":"/machine/network/interfaces/0/vip","value":{"ip":"{{.TALOS_VIP}}"}}]' --config-patch-worker @{{.KUBERNETES_DIR}}/{{.CLUSTER}}/provision/patches/longhorn.yaml --output {{.KUBERNETES_DIR}}/{{.CLUSTER}}/provision/rendered
 
   setup-talosctl:
     desc: Setup talosctl - Note dont use VIP, see https://www.talos.dev/v1.7/talos-guides/network/vip/#caveats
@@ -66,3 +66,16 @@ tasks:
     vars:
       nodes:
         sh: kubectl get nodes -o json | jq -r '[.items[].status.addresses[] | select(.type == "InternalIP") | .address] | join(",")'
+
+  upgrade-node:
+    desc: Upgrade a node to a new version of Talos OS
+    cmds:
+      - talosctl --nodes {{.HOSTNAME}} upgrade --image="factory.talos.dev/installer/{{.TALOS_SCHEMATIC_ID}}:{{.TALOS_OS_VERSION}}" --timeout=10m
+      #- talosctl --nodes {{.HOSTNAME}} health --wait-timeout=10m --server=false
+    requires:
+      vars: [HOSTNAME]
+
+  upgrade-k8s:
+    desc: Upgrade the Kubernetes version on the cluster
+    cmds:
+      - talosctl --nodes {{.TALOS_NODE}} upgrade --kubernetes-version={{.TALOS_K8S_VERSION}} --timeout=10m
