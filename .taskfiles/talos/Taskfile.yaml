@@ -71,7 +71,6 @@ tasks:
     desc: Upgrade a node to a new version of Talos OS
     cmds:
       - talosctl --nodes {{.HOSTNAME}} upgrade --image="factory.talos.dev/installer/{{.TALOS_SCHEMATIC_ID}}:{{.TALOS_OS_VERSION}}" --timeout=10m
-      #- talosctl --nodes {{.HOSTNAME}} health --wait-timeout=10m --server=false
     requires:
       vars: [HOSTNAME]
 
