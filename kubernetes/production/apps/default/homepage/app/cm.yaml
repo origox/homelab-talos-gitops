@@ -102,14 +102,14 @@ data:
     - Hypervisor:
         - Proxmox:
             icon: proxmox.svg
-            href: https://www.gp.se/
-            description: gp
+            href: "{{HOMEPAGE_VAR_PROXMOX1_URL}}"
+            description: pve1
             widget:
                 type: proxmox
-                url: https://www.gp.se/
-                username: apa
-                password: apa
-                node: apa1
+                url: "{{HOMEPAGE_VAR_PROXMOX1_URL}}"
+                username: "{{HOMEPAGE_VAR_PROXMOX1_USER}}"
+                password: "{{HOMEPAGE_VAR_PROXMOX1_API_KEY}}"
+                node: apa-01
 
   widgets.yaml: |
     - resources:
