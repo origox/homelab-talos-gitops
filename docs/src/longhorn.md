@@ -11,6 +11,11 @@
 - create new dataset for Minio to use
 - In Minio create new bucket and access keys
 
+Note: 
+"backupTarget: s3://s3-longhorn-backup@eu-north-se2/"
+- s3-longhorn-backup = bucket in Minio
+- eu-north-se2 = server location in Minio
+
 
 ```bash
 # Base64 encode secret

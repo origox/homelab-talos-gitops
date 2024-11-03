@@ -6,14 +6,11 @@ vars:
   KUBERNETES_DIR: "{{.ROOT_DIR}}/kubernetes"
   CLUSTER: production
 
-
 includes:
   provision: .taskfiles/provision
   talos: .taskfiles/talos
   bootstrap: .taskfiles/bootstrap
   utils: .taskfiles/utils
-
-
 
 tasks:
 
