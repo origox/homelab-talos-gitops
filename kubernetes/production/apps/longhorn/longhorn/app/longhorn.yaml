@@ -37,3 +37,6 @@ spec:
       defaultClassReplicaCount: 3
       defaultDataLocality: disabled  # best-effort otherwise
       reclaimPolicy: Retain
+    defaultSettings:
+      backupTarget: s3://longhorn-backup@eu-north-se2/
+      backupTargetCredentialSecret: longhorn-truenas-s3-backup-credentials
