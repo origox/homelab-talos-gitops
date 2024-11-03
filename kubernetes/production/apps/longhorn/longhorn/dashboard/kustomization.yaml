@@ -5,4 +5,4 @@ resources:
   - basic-auth.secret.sops.yaml
   - middleware.yaml
   - ingress-route.yaml
-  #  - backup-jobs.yaml
+  - backup-jobs.yaml
