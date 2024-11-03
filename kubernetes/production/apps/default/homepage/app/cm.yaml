@@ -110,7 +110,6 @@ data:
                 username: "{{HOMEPAGE_VAR_PROXMOX1_USER}}"
                 password: "{{HOMEPAGE_VAR_PROXMOX1_API_KEY}}"
                 node: apa-01
-
   widgets.yaml: |
     - resources:
         cpu: true
