@@ -6,6 +6,7 @@
 kubeconfig
 talosconfig
 **/*.tmp.*
+etcd.backup
 
 # Mdbook
 book/

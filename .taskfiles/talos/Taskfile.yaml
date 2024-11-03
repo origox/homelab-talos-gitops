@@ -69,7 +69,6 @@ tasks:
 
   upgrade-node:
     desc: Upgrade a node to a new version of Talos OS
-    dotenv: ['{{.KUBERNETES_DIR}}/{{.CLUSTER}}/cluster.env']
     cmds:
       - talosctl --nodes {{.HOSTNAME}} upgrade --image="factory.talos.dev/installer/{{.TALOS_SCHEMATIC_ID}}:{{.TALOS_OS_VERSION}}" --timeout=10m
     requires:
@@ -77,6 +76,5 @@ tasks:
 
   upgrade-k8s:
     desc: Upgrade the Kubernetes version on the cluster
-    dotenv: ['{{.KUBERNETES_DIR}}/{{.CLUSTER}}/cluster.env']
     cmds:
-      - talosctl --nodes {{.TALOS_NODE}} upgrade --kubernetes-version={{.TALOS_K8S_VERSION}} --timeout=10m
+      - talosctl -n {{.TALOS_NODE}} upgrade-k8s --to="{{.TALOS_K8S_VERSION}}" --dry-run=false
