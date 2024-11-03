@@ -4,12 +4,6 @@ version: "3"
 
 vars:
   VM_CONFIG_FILE: "{{.KUBERNETES_DIR}}/{{.CLUSTER}}/provision/vmconfig.secret.sops.yaml"
-  TALOS_OS_VERSION:
-    sh: |
-      sops -d {{.VM_CONFIG_FILE}} | yq e '.talos.os_version'
-  TALOS_K8S_VERSION:
-    sh: |
-      sops -d {{.VM_CONFIG_FILE}} | yq e '.talos.k8s_version'
   PVE_SERVERS:
     sh: |
       sops -d {{.VM_CONFIG_FILE}} | yq -e '.proxmox.vms[].node' | sort | uniq
@@ -38,6 +32,7 @@ tasks:
         desc: The Proxmox node to download the Talos image to
         type: string
         required: true
+    dotenv: ['{{.KUBERNETES_DIR}}/{{.CLUSTER}}/cluster.env']
     vars:
       ISO_URL: "https://github.com/siderolabs/talos/releases/download/{{.TALOS_OS_VERSION}}/metal-amd64.iso"
       ISO_PATH: "/var/lib/vz/template/iso/talos-{{.TALOS_OS_VERSION}}-amd64.iso"
@@ -65,6 +60,7 @@ tasks:
   create-talos-vm:
     desc: Create a new VM suitable for running Talos
     summary: This task creates a new VM on the specified Proxmox node
+    dotenv: ['{{.KUBERNETES_DIR}}/{{.CLUSTER}}/cluster.env']
     preconditions:
       - sh: |
           ! ssh root@"{{.NODE}}" "pvesh get /cluster/resources --type vm | grep -qw qemu/{{.VMID}}"

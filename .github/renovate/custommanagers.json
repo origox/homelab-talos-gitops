@@ -5,7 +5,7 @@
             "customType": "regex",
             "description": "Process Talos Linux and OS versions",
             "fileMatch": [
-                "(^|/)vmconfig\\.secret\\.sops\\.yaml$"
+                "(^|/)kubernetes/.+\\.env$"
             ],
             "matchStrings": [
                 "datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( repository=(?<registryUrl>\\S+))?\\n.+(:\\s|=)(&\\S+\\s)?(?<currentValue>\\S+)"
