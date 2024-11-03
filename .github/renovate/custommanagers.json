@@ -17,7 +17,7 @@
         },
         {
             "customType": "regex",
-            "description": "Process Kubernetes version",
+            "description": "Process Talos Kubernetes version",
             "fileMatch": [
                 "^vmconfig\\.secret\\.sops\\.yaml$"
             ],
