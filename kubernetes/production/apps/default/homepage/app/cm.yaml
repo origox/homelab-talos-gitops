@@ -7,7 +7,7 @@ metadata:
     app.kubernetes.io/name: homepage
 data:
   kubernetes.yaml: |
-    mode: cluster
+    mode: default
   settings.yaml: |
     title: Origox Homepage
 
@@ -103,13 +103,33 @@ data:
         - Proxmox:
             icon: proxmox.svg
             href: "{{HOMEPAGE_VAR_PROXMOX1_URL}}"
-            description: pve1
+            description: PVE1
             widget:
                 type: proxmox
                 url: "{{HOMEPAGE_VAR_PROXMOX1_URL}}"
-                username: "{{HOMEPAGE_VAR_PROXMOX1_USER}}"
-                password: "{{HOMEPAGE_VAR_PROXMOX1_API_KEY}}"
-                node: apa-01
+                username: "{{HOMEPAGE_VAR_PROXMOX_USER}}"
+                password: "{{HOMEPAGE_VAR_PROXMOX_API_KEY}}"
+                node: PVE1
+        - Proxmox:
+            icon: proxmox.svg
+            href: "{{HOMEPAGE_VAR_PROXMOX2_URL}}"
+            description: PVE2
+            widget:
+                type: proxmox
+                url: "{{HOMEPAGE_VAR_PROXMOX2_URL}}"
+                username: "{{HOMEPAGE_VAR_PROXMOX_USER}}"
+                password: "{{HOMEPAGE_VAR_PROXMOX_API_KEY}}"
+                node: PVE2
+        - Proxmox:
+            icon: proxmox.svg
+            href: "{{HOMEPAGE_VAR_PROXMOX3_URL}}"
+            description: PVE3
+            widget:
+                type: proxmox
+                url: "{{HOMEPAGE_VAR_PROXMOX3_URL}}"
+                username: "{{HOMEPAGE_VAR_PROXMOX_USER}}"
+                password: "{{HOMEPAGE_VAR_PROXMOX_API_KEY}}"
+                node: PVE3
   widgets.yaml: |
     - resources:
         cpu: true
