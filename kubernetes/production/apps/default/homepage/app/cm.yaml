@@ -28,42 +28,10 @@ data:
         header: true
         style: row
         columns: 3
-      DNS:
-        header: true
-        style: row
-        columns: 2
-      Network:
-        header: true
-        style: row
-        columns: 3
-      Monitoring:
-        header: true
-        style: row
-        columns: 4
-      Cluster:
-        header: true
-        style: row
-        columns: 4
-      Remote Access:
-        header: true
-        style: row
-        columns: 4
       Storage:
         header: true
         style: row
-        columns: 4
-      Media:
-        header: true
-        style: row
-        columns: 4
-      Home Automation:
-        header: true
-        style: row
         columns: 2
-      Other:
-        header: true
-        style: row
-        columns: 4
   custom.css: ""
   custom.js: ""
   bookmarks.yaml: |
