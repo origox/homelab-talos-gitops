@@ -1,8 +1,8 @@
----
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: homepage
+  namespace: homepage
   labels:
     app.kubernetes.io/name: homepage
 data:
@@ -28,10 +28,42 @@ data:
         header: true
         style: row
         columns: 3
-      Storage:
+      DNS:
         header: true
         style: row
         columns: 2
+      Network:
+        header: true
+        style: row
+        columns: 3
+      Monitoring:
+        header: true
+        style: row
+        columns: 4
+      Cluster:
+        header: true
+        style: row
+        columns: 4
+      Remote Access:
+        header: true
+        style: row
+        columns: 4
+      Storage:
+        header: true
+        style: row
+        columns: 4
+      Media:
+        header: true
+        style: row
+        columns: 4
+      Home Automation:
+        header: true
+        style: row
+        columns: 2
+      Other:
+        header: true
+        style: row
+        columns: 4
   custom.css: ""
   custom.js: ""
   bookmarks.yaml: |
@@ -77,7 +109,7 @@ data:
                 url: "{{HOMEPAGE_VAR_PROXMOX1_URL}}"
                 username: "{{HOMEPAGE_VAR_PROXMOX_USER}}"
                 password: "{{HOMEPAGE_VAR_PROXMOX_API_KEY}}"
-                node: PVE1
+                node: pve1
         - Proxmox:
             icon: proxmox.svg
             href: "{{HOMEPAGE_VAR_PROXMOX2_URL}}"
@@ -87,7 +119,7 @@ data:
                 url: "{{HOMEPAGE_VAR_PROXMOX2_URL}}"
                 username: "{{HOMEPAGE_VAR_PROXMOX_USER}}"
                 password: "{{HOMEPAGE_VAR_PROXMOX_API_KEY}}"
-                node: PVE2
+                node: pve2
         - Proxmox:
             icon: proxmox.svg
             href: "{{HOMEPAGE_VAR_PROXMOX3_URL}}"
@@ -97,7 +129,7 @@ data:
                 url: "{{HOMEPAGE_VAR_PROXMOX3_URL}}"
                 username: "{{HOMEPAGE_VAR_PROXMOX_USER}}"
                 password: "{{HOMEPAGE_VAR_PROXMOX_API_KEY}}"
-                node: PVE3
+                node: pve3
     - Storage:
         - TrueNAS Scale:
             icon: truenas.svg
@@ -107,6 +139,15 @@ data:
             icon: longhorn.svg
             href: "{{HOMEPAGE_VAR_LONGHORN_url}}"
             description: Longhorn
+        - TrueNAS Scale:
+            icon: truenas.svg
+            href: "{{HOMEPAGE_VAR_TRUENAS_url}}"
+            description: TrueNAS Scale
+        - Longhorn:
+            icon: longhorn.svg
+            href: "{{HOMEPAGE_VAR_LONGHORN_url}}"
+            description: Longhorn
+
   widgets.yaml: |
     - resources:
         cpu: true
