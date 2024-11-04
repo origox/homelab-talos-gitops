@@ -130,6 +130,15 @@ data:
                 username: "{{HOMEPAGE_VAR_PROXMOX_USER}}"
                 password: "{{HOMEPAGE_VAR_PROXMOX_API_KEY}}"
                 node: PVE3
+    - Storage:
+        - TrueNAS Scale:
+            icon: truenas.svg
+            href: "{{HOMEPAGE_VAR_TRUENAS_url}}"
+            description: TrueNAS Scale
+        - Longhorn:
+            icon: longhorn.svg
+            href: "{{HOMEPAGE_VAR_LONGHORN_url}}"
+            description: Longhorn
   widgets.yaml: |
     - resources:
         cpu: true
