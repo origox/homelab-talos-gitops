@@ -12,3 +12,4 @@ resources:
   - default
   - observability
   - network
+  - database
