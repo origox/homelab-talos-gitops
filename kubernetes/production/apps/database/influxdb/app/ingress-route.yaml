@@ -3,7 +3,7 @@ apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
   name: &app influxdb
-  alabels:
+  labels:
     app.kubernetes.io/name: *app
   annotations:
     kubernetes.io/ingress.class: traefik-external
