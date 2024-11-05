@@ -35,15 +35,15 @@ data:
       Network:
         header: true
         style: row
-        columns: 2  
+        columns: 2
       Home Automation:
         header: true
         style: row
         columns: 2
-      DNS:  
+      DNS:
         header: true
         style: row
-        columns: 2  
+        columns: 2
   custom.css: ""
   custom.js: ""
   bookmarks.yaml: |

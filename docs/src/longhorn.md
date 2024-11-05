@@ -26,3 +26,26 @@ echo -n "https://myurl.io:9002" | base64
 # Sops/Age encrypt secret file to proper sops yaml. 
 encrypt longhorn.secret.yaml > longhorn.secret.sops.yaml
 ```
+
+## Restore backup 
+```sh
+# List pvc and connected volume/pv
+ k -n observability get pvc uptime-kuma-pvc
+
+# Scale down deployment
+ k -n observability scale deployment uptime-kuma --replicas 0
+
+# In UI - Volume Tab
+# 1. wait for volume to be detached
+# 2. copy name of PV volume
+# 3. delete the volume
+# In UI - Backup Tab
+# 4. restore latest backup - use name of old volume
+# In UI - Volume
+# 5. Create PV/PVC(accept all predefined settings)    
+
+# Scale up deployment
+ k -n observability scale deployment uptime-kuma --replicas 1
+
+# Now the backup volume be attached to new pod
+```
