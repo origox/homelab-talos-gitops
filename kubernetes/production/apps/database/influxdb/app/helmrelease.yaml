@@ -1,0 +1,94 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: &app influxdb
+spec:
+  interval: 30m
+  timeout: 15m
+  chart:
+    spec:
+      chart: influxdb
+      version: 6.3.21
+      sourceRef:
+        kind: HelmRepository
+        name: bitnami
+        namespace: flux-system
+  maxHistory: 2
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    persistence:
+      enabled: true
+      storageClass: longhorn
+      accessMode: ReadWriteOnce
+      size: 50Gi
+      ## Configure resource requests and limits
+    influxdb:
+      resources:
+        requests:
+          memory: 256Mi
+          cpu: 200m
+        limits:
+          memory: 4Gi
+          cpu: 2000m
+    metrics:
+      enabled: true
+    auth:
+      admin:
+        username:
+          valueFrom:
+            secretKeyRef:
+              name: influxdb-secrets
+              key: admin-username
+        password:
+          valueFrom:
+            secretKeyRef:
+              name: influxdb-secrets
+              key: admin-password
+        token:
+          valueFrom:
+            secretKeyRef:
+              name: influxdb-secrets
+              key: admin-token
+      user:
+        username:
+          valueFrom:
+            secretKeyRef:
+              name: influxdb-secrets
+              key: user-username
+        password:
+          valueFrom:
+            secretKeyRef:
+              name: influxdb-secrets
+              key: user-password
+      readUser:
+        username:
+          valueFrom:
+            secretKeyRef:
+              name: influxdb-secrets
+              key: readuser-username
+        password:
+          valueFrom:
+            secretKeyRef:
+              name: influxdb-secrets
+              key: readuser-password
+      writeUser:
+        username:
+          valueFrom:
+            secretKeyRef:
+              name: influxdb-secrets
+              key: writeuser-username
+        password:
+          valueFrom:
+            secretKeyRef:
+              name: influxdb-secrets
+              key: writeuser-password
