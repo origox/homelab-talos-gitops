@@ -44,6 +44,10 @@ data:
         header: true
         style: row
         columns: 2
+      Observability:
+        header: true
+        style: row
+        columns: 2
   custom.css: ""
   custom.js: ""
   bookmarks.yaml: |
@@ -131,7 +135,15 @@ data:
             icon: pi-hole.svg
             href: {{HOMEPAGE_VAR_DNS_SECONDARY_url}}
             description: DNS Secondary
-
+    - Observability:
+        - Grafana:
+            icon: grafana.svg
+            href: "{{HOMEPAGE_VAR_GRAFANA_url}}"
+            description: Grafana
+        - Prometheus:
+            icon: prometheus.svg
+            href: "{{HOMEPAGE_VAR_PROMETHEUS_url}}"
+            description: Prometheus 
   widgets.yaml: |
     - resources:
         cpu: true
