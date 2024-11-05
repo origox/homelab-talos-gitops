@@ -5,4 +5,4 @@ kind: Kustomization
 resources:
   - ./stakater.yaml
   - ./external-dns.yaml
-  - ./influxdb.yaml
+  - ./bitnami.yaml
