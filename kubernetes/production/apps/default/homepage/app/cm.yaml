@@ -32,6 +32,18 @@ data:
         header: true
         style: row
         columns: 4
+      Network:
+        header: true
+        style: row
+        columns: 2  
+      Home Automation:
+        header: true
+        style: row
+        columns: 2
+      DNS:  
+        header: true
+        style: row
+        columns: 2  
   custom.css: ""
   custom.js: ""
   bookmarks.yaml: |
@@ -39,6 +51,12 @@ data:
         - Github:
             - abbr: GH
               href: https://github.com/
+        - K8S:
+            - abbr: K8S
+              href: https://kubernetes.io/
+        - Talos:
+            - abbr: TALOS
+              href: https://talos.dev/
     - Social:
         - Reddit:
             - abbr: RE
@@ -54,59 +72,30 @@ data:
         - Hacker News:
             - abbr: HN
               href: https://news.ycombinator.com/
-        - GP:
-            - abbr: GP
-              href: https://www.gp.se/
-        - Aftonbladet:
-            - abbr: AB
-              href: https://www.aftonbladet.se/
-        - Expressen:
-            - abbr: EX
-              href: https://www.expressen.se/
-        - Readly:
-            - abbr: RD
-              href: https://go.readly.com/discover
+
   services.yaml: |
     - Hypervisor:
         - Proxmox:
             icon: proxmox.svg
             href: "{{HOMEPAGE_VAR_PROXMOX1_URL}}"
             description: PVE1
-            widget:
-                type: proxmox
-                url: "{{HOMEPAGE_VAR_PROXMOX1_URL}}"
-                username: "{{HOMEPAGE_VAR_PROXMOX_USER}}"
-                password: "{{HOMEPAGE_VAR_PROXMOX_API_KEY}}"
-                node: pve1
         - Proxmox:
             icon: proxmox.svg
             href: "{{HOMEPAGE_VAR_PROXMOX2_URL}}"
             description: PVE2
-            widget:
-                type: proxmox
-                url: "{{HOMEPAGE_VAR_PROXMOX2_URL}}"
-                username: "{{HOMEPAGE_VAR_PROXMOX_USER}}"
-                password: "{{HOMEPAGE_VAR_PROXMOX_API_KEY}}"
-                node: pve2
         - Proxmox:
             icon: proxmox.svg
             href: "{{HOMEPAGE_VAR_PROXMOX3_URL}}"
             description: PVE3
-            widget:
-                type: proxmox
-                url: "{{HOMEPAGE_VAR_PROXMOX3_URL}}"
-                username: "{{HOMEPAGE_VAR_PROXMOX_USER}}"
-                password: "{{HOMEPAGE_VAR_PROXMOX_API_KEY}}"
-                node: pve3
     - Storage:
         - TrueNAS Scale:
             icon: truenas.svg
             href: "{{HOMEPAGE_VAR_TRUENAS_url}}"
             description: TrueNAS Scale
-        - Longhorn:
-            icon: longhorn.svg
-            href: "{{HOMEPAGE_VAR_LONGHORN_url}}"
-            description: Longhorn
+        - Minio:
+            icon: minio.svg
+            href: "{{HOMEPAGE_VAR_MINIO_url}}"
+            description: Minio
         - TrueNAS Scale:
             icon: truenas.svg
             href: "{{HOMEPAGE_VAR_TRUENAS_url}}"
@@ -115,6 +104,33 @@ data:
             icon: longhorn.svg
             href: "{{HOMEPAGE_VAR_LONGHORN_url}}"
             description: Longhorn
+    - Network:
+        - Unifi:
+            icon: unifi.svg
+            href: "{{HOMEPAGE_VAR_ROUTER_url}}"
+            description: Unifi
+        - Syslog:
+            icon: graylog.svg
+            href: "{{HOMEPAGE_VAR_SYSLOG_url}}"
+            description: Graylog Server
+    - Home Automation:
+        - Home Assistant:
+            icon: home-assistant.svg
+            href: "{{HOMEPAGE_VAR_HASS_url}}"
+            description: Home Assistant
+        - Node-RED:
+            icon: node-red.svg
+            href: "{{HOMEPAGE_VAR_NODE_RED_url}}"
+            description: Node-RED
+    - DNS:
+        - DNS:
+            icon: pi-hole.svg
+            href: {{HOMEPAGE_VAR_DNS_PRIMARY_url}}
+            description: DNS Primary
+        - DNS:
+            icon: pi-hole.svg
+            href: {{HOMEPAGE_VAR_DNS_SECONDARY_url}}
+            description: DNS Secondary
 
   widgets.yaml: |
     - resources:
