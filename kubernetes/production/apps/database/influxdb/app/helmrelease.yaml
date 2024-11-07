@@ -9,11 +9,11 @@ spec:
   timeout: 15m
   chart:
     spec:
-      chart: influxdb
-      version: 6.3.21
+      chart: influxdata/influxdb2
+      version: 2.1.2
       sourceRef:
         kind: HelmRepository
-        name: bitnami
+        name: influxdb
         namespace: flux-system
   maxHistory: 2
   install:
@@ -43,52 +43,4 @@ spec:
     metrics:
       enabled: true
     auth:
-      admin:
-        username:
-          valueFrom:
-            secretKeyRef:
-              name: influxdb-secrets
-              key: admin-username
-        password:
-          valueFrom:
-            secretKeyRef:
-              name: influxdb-secrets
-              key: admin-password
-        token:
-          valueFrom:
-            secretKeyRef:
-              name: influxdb-secrets
-              key: admin-token
-      user:
-        username:
-          valueFrom:
-            secretKeyRef:
-              name: influxdb-secrets
-              key: user-username
-        password:
-          valueFrom:
-            secretKeyRef:
-              name: influxdb-secrets
-              key: user-password
-      readUser:
-        username:
-          valueFrom:
-            secretKeyRef:
-              name: influxdb-secrets
-              key: readuser-username
-        password:
-          valueFrom:
-            secretKeyRef:
-              name: influxdb-secrets
-              key: readuser-password
-      writeUser:
-        username:
-          valueFrom:
-            secretKeyRef:
-              name: influxdb-secrets
-              key: writeuser-username
-        password:
-          valueFrom:
-            secretKeyRef:
-              name: influxdb-secrets
-              key: writeuser-password
+      existingSecret: influxdb-secrets

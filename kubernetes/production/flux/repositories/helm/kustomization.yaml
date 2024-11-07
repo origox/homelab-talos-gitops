@@ -6,3 +6,4 @@ resources:
   - ./stakater.yaml
   - ./external-dns.yaml
   - ./bitnami.yaml
+  - ./influxdb.yaml

@@ -1,0 +1,10 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: influxdb
+  namespace: flux-system
+spec:
+  type: oci
+  interval: 5m
+  url: https://helm.influxdata.com
