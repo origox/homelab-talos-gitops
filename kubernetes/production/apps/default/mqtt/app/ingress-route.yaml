@@ -13,10 +13,10 @@ spec:
   entryPoints:
     - mqttsecure
   routes:
-    - match: HostSNI(`mqtt.${SECRET_CLUSTER_LOCAL_DOMAIN}`)
+    # - match: HostSNI(`mqtt.${SECRET_CLUSTER_LOCAL_DOMAIN}`)
+    - match: HostSNI(`*`)
       services:
         - name: mosquitto-service
           port: 1883
   tls:
     secretName: production-tls
-    certResolver: letsencrypt-production
