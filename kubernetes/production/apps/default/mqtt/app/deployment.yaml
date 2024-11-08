@@ -21,8 +21,8 @@ spec:
             - containerPort: 1883  # MQTT port
           resources:
             limits:
-              memory: "256Mi"
-              cpu: "500m"
+              memory: "1024Mi"
+              cpu: "1500m"
             requests:
               memory: "128Mi"
               cpu: "250m"
