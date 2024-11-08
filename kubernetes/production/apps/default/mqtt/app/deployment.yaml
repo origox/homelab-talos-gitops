@@ -19,6 +19,13 @@ spec:
           image: eclipse-mosquitto:2.0.20
           ports:
             - containerPort: 1883  # MQTT port
+          env:
+            - name: MOSQUITTO_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mosquitto-password
+                  key: mosquitto_password
+          args: ["-c", "/mosquitto/config/mosquitto.conf"]
           resources:
             limits:
               memory: "1024Mi"
@@ -29,18 +36,12 @@ spec:
           volumeMounts:
             - name: mosquitto-config
               mountPath: /mosquitto/config
-            - name: mosquitto-password
-              mountPath: /mosquitto/config
-              subPath: mosquitto_passwd_file
             - name: data
               mountPath: /mosquitto/data
       volumes:
         - name: mosquitto-config
           configMap:
             name: mosquitto-config
-        - name: mosquitto-password
-          secret:
-            secretName: mosquitto-password
         - name: data
           persistentVolumeClaim:
             claimName: mosquitto-data
