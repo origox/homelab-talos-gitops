@@ -1,22 +1,42 @@
 ---
+# apiVersion: traefik.io/v1alpha1
+# kind: IngressRouteTCP
+# metadata:
+#   name: mosquitto-ingress-tcp
+#   labels:
+#     app.kubernetes.io/name: mqtt
+#   annotations:
+#     kubernetes.io/ingress.class: traefik-external
+#     external-dns.alpha.kubernetes.io/target: traefik.${SECRET_CLUSTER_LOCAL_DOMAIN}
+# spec:
+#   entryPoints:
+#     - mqttsecure
+#   routes:
+#     - match: HostSNI(`mqtt.${SECRET_CLUSTER_LOCAL_DOMAIN}`)
+#       services:
+#         - name: mosquitto-service
+#           port: 1883
+#   tls:
+#     secretName: production-tls
+#     certResolver: letsencrypt-production
 apiVersion: traefik.io/v1alpha1
 kind: IngressRouteTCP
 metadata:
-  name: mosquitto-ingress-tcp
-  labels:
-    app.kubernetes.io/name: mqtt
-  annotations:
-    kubernetes.io/ingress.class: traefik-external
-    external-dns.alpha.kubernetes.io/target: traefik.${SECRET_CLUSTER_LOCAL_DOMAIN}
+  name: mqtt-ingressroute
+  namespace: default  # Adjust the namespace if necessary
 spec:
   entryPoints:
-    - mqttsecure
+    - mqtt            # non-secure MQTT entry point (port 1883)
+    - mqttsecure      # secure MQTT entry point (port 8883)
   routes:
-    - match: HostSNI(`mqtt.${SECRET_CLUSTER_LOCAL_DOMAIN}`)
+    - match: HostSNI(`mqtt.talos.frandberg.live`)  # Host-based routing (SNI)
       services:
-        - name: mosquitto-service
-          port: 1883
-  tls:
-    secretName: production-tls
-    certResolver: letsencrypt-production
-
+        - name: mqtt-service  # The name of the service to route to
+          port: 1883           # Port for non-secure MQTT (1883)
+    - match: HostSNI(`mqtt.talos.frandberg.live`)  # Same domain for secure connection
+      services:
+        - name: mqtt-secure-service  # A different service for secure MQTT
+          port: 1883                # Port for secure MQTT (1883)
+      tls:
+        certResolver: letsencrypt-production  # TLS certificate resolver for secure connections
+        passthrough: false  # Traefik should terminate the TLS connection
