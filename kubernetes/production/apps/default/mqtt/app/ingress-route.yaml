@@ -14,7 +14,6 @@ spec:
     - mqttsecure
   routes:
     - match: HostSNI(`mqtt.${SECRET_CLUSTER_LOCAL_DOMAIN}`)
-      kind: Rule
       services:
         - name: mosquitto-service
           port: 1883
