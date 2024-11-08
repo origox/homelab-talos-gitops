@@ -48,6 +48,7 @@ spec:
         tls:
           enabled: true
       mqtt:
+        port: 1883
         redirectTo:
           port: mqttsecure
       mqttsecure:
