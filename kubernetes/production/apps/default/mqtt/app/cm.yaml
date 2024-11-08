@@ -8,5 +8,5 @@ data:
     listener 1883
     persistence true
     persistence_location /mosquitto/data/
-    allow_anonymous false  # Disable anonymous connections
+    allow_anonymous true  # Disable anonymous connections
     password_file /mosquitto/config/mosquitto_passwd_file
