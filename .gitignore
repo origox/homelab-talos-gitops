@@ -10,3 +10,6 @@ etcd.backup
 
 # Mdbook
 book/
+
+# 
+kubernetes/production/apps/default/mqtt/app/mosquitto_passwd_file

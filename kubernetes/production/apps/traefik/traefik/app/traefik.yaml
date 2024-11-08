@@ -47,6 +47,13 @@ spec:
       websecure:
         tls:
           enabled: true
+      mqtt:
+        redirectTo:
+          port: mqttsecure
+      mqttsecure:
+        port: 8883
+        tls:
+          enabled: true
     ingressRoute:
       dashboard:
         enabled: false

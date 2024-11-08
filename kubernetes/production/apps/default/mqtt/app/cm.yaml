@@ -1,0 +1,11 @@
+---apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mosquitto-config
+data:
+  mosquitto.conf: |
+    listener 1883
+    persistence true
+    persistence_location /mosquitto/data/
+    allow_anonymous false  # Disable anonymous connections
+    password_file /mosquitto/config/mosquitto_passwd_file
