@@ -1,18 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mosquitto
+  name: &app mosquitto
   labels:
-    app: mosquitto
+    app.kubernetes.io/name: *app
+  annotations:
+    reloader.stakater.com/auto: "true"
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: mosquitto
+      app.kubernetes.io/name: *app
   template:
     metadata:
       labels:
-        app: mosquitto
+        app.kubernetes.io/name: *app
     spec:
       containers:
         - name: mosquitto
