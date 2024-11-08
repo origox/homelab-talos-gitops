@@ -55,6 +55,9 @@ spec:
       mqttsecure:
         port: 8883
         protocol: TCP
+        expose:
+          default: true
+        exposedPort: 8883
         tls:
           enabled: true
     ingressRoute:
