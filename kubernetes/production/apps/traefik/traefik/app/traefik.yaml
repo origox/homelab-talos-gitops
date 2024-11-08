@@ -49,12 +49,12 @@ spec:
           enabled: true
       mqtt:
         port: 1883
-        protocol: tcp
+        protocol: TCP
         redirectTo:
           port: mqttsecure
       mqttsecure:
         port: 8883
-        protocol: tcp
+        protocol: TCP
         tls:
           enabled: true
     ingressRoute:
