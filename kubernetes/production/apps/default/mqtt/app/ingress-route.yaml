@@ -10,8 +10,7 @@ spec:
   entryPoints:
     - mqttsecure
   routes:
-    # - match: HostSNI(`mqtt.${SECRET_CLUSTER_LOCAL_DOMAIN}`)
-    - match: HostSNI(`*`)
+    - match: HostSNI(`mqtt.${SECRET_CLUSTER_LOCAL_DOMAIN}`)
       services:
         - name: mosquitto-service
           port: 1883
