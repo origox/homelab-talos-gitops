@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: &app mosquitto
+  name: &app mqtt
   labels:
     app.kubernetes.io/name: *app
   annotations:
