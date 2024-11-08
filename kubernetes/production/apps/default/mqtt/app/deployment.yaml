@@ -30,7 +30,7 @@ spec:
             - name: mosquitto-config
               mountPath: /mosquitto/config
             - name: mosquitto-password
-              mountPath: /mosquitto/config/mosquitto_passwd_file
+              mountPath: /mosquitto/config
               subPath: mosquitto_passwd_file
             - name: data
               mountPath: /mosquitto/data
