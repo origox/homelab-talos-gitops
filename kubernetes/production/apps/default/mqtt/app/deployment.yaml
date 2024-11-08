@@ -24,7 +24,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: mosquitto-password
-                  key: mosquitto_password
+                  key: mosquitto_passwd_file
           args: ["-c", "/mosquitto/config/mosquitto.conf"]
           resources:
             limits:
