@@ -32,6 +32,11 @@ spec:
           secretKeyRef:
             name: telegraf-secrets
             key: INFLUXDB_TOKEN
+    service:
+        ports:
+        - name: http
+          port: 8086
+          targetPort: 8086
     config:
       outputs:
       - influxdb_v2:
