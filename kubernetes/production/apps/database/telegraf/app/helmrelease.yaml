@@ -26,7 +26,12 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    envFromSecret: telegraf-secrets
+    env:
+      - name: INFLUXDB_TOKEN
+        valueFrom:
+          secretKeyRef:
+            name: telegraf-secrets
+            key: INFLUXDB_TOKEN
     config:
       outputs:
       - influxdb_v2:
@@ -34,4 +39,3 @@ spec:
             - "http://influxdb.database.svc:8086"
           token: "${INFLUXDB_TOKEN}"
           bucket: "smartmeter"
-          organization: "primary"
