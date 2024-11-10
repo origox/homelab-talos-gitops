@@ -34,3 +34,4 @@ spec:
             - "http://influxdb.database.svc:8086"
           token: "${INFLUXDB_TOKEN}"
           bucket: "smartmeter"
+          organization: "primary"
