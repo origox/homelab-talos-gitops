@@ -29,7 +29,8 @@ spec:
     envFromSecret: telegraf-secrets
     config:
       outputs:
-      - influxdb:
+      - influxdb_v2:
           urls:
             - "http://influxdb.database.svc:8086"
-          database: "smartmeter"
+          token: "${INFLUXDB_TOKEN}"
+          bucket: "smartmeter"
