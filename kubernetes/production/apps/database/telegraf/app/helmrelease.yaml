@@ -54,3 +54,7 @@ spec:
             totalcpu: true
             collect_cpu_time: false
             report_active: false
+    containerPorts:
+      - name: http
+        containerPort: 9273
+        protocol: TCP
