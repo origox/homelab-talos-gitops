@@ -27,3 +27,8 @@ spec:
     keepHistory: false
   values:
     envFromSecret: telegraf-secrets
+    outputs:
+    - influxdb:
+        urls:
+          - "http://influxdb.database.svc:8086"
+        database: "smartmeter"
