@@ -40,4 +40,11 @@ spec:
           token: "${INFLUXDB_TOKEN}"
           bucket: "smartmeter"
           organization: "primary"
+      inputs:
+      - mqtt_consumer:
+          servers:
+            - "tcp://mqtt.default.svc.cluster.local:1883"
+          topics:
+            - "smartmeter"
+          data_format: "json"
 
