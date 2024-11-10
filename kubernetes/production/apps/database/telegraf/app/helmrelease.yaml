@@ -36,8 +36,8 @@ spec:
       outputs:
       - influxdb_v2:
           urls:
-            - "http://influxdb.database.svc:8086"
+            - "http://influxdb.database.svc.cluster.local:8086"
           token: "${INFLUXDB_TOKEN}"
           bucket: "smartmeter"
           organization: "primary"
-          
+
