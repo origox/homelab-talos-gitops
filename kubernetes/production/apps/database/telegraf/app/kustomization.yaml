@@ -5,4 +5,3 @@ kind: Kustomization
 resources:
   - telegraf.secret.sops.yaml
   - helmrelease.yaml
-

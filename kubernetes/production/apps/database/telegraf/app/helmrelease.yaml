@@ -26,8 +26,7 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    envFromSecret:
-      secretName: telegraf-secrets
+    envFromSecret: telegraf-secrets
     config:
       agent:
         interval: "10s"
@@ -55,4 +54,3 @@ spec:
             totalcpu: true
             collect_cpu_time: false
             report_active: false
-    
