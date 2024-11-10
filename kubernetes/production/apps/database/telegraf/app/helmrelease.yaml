@@ -32,3 +32,4 @@ spec:
         urls:
           - "http://influxdb.database.svc:8086"
         database: "smartmeter"
+        token: $(INFLUXDB_TOKEN)
