@@ -74,3 +74,43 @@ data:
       data_type = "float"
       username = "$MQTT_USERNAME"
       password = "$MQTT_PASSWORD"
+
+    [[processors.converter]]
+      [processors.converter.fields]
+        float = [
+          "smartmeter/current_phase1",
+          "smartmeter/current_phase2",
+          "smartmeter/current_phase3",
+          "smartmeter/total_energy_usage",
+          "smartmeter/total_energy_returned",
+          "smartmeter/reactive_energy_usage",
+          "smartmeter/reactive_energy_returned",
+          "smartmeter/current_power_usage",
+          "smartmeter/current_power_returned",
+          "smartmeter/current_reactive_usage",
+          "smartmeter/current_reactive_returned",
+          "smartmeter/current_energy_usage_phase1",
+          "smartmeter/current_energy_usage_phase2",
+          "smartmeter/current_energy_usage_phase3",
+          "smartmeter/current_energy_returned_phase1",
+          "smartmeter/current_energy_returned_phase2",
+          "smartmeter/current_energy_returned_phase3",
+          "smartmeter/current_reactive_usage_phase1",
+          "smartmeter/current_reactive_usage_phase2",
+          "smartmeter/current_reactive_usage_phase3",
+          "smartmeter/current_reactive_returned_phase1",
+          "smartmeter/current_reactive_returned_phase2",
+          "smartmeter/current_reactive_returned_phase3",
+          "smartmeter/voltage_phase1",
+          "smartmeter/voltage_phase2",
+          "smartmeter/voltage_phase3"
+        ]
+
+    [[processors.strings]]
+      [[processors.strings.trim]]
+        field = "*"
+        suffix = " A"
+        suffix = " kWh"
+        suffix = " kVAr"
+        suffix = " kW"
+        suffix = " V"
