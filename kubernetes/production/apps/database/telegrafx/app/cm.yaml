@@ -37,7 +37,13 @@ data:
 
     [[inputs.mqtt_consumer]]
       servers = ["tcp://mosquitto-service.default.svc.cluster.local:1883"]
-      topics = ["smartmeter/#"]
-      data_format = "json"
+      topics = [
+        "smartmeter/temperature",
+        "smartmeter/rssi",
+        "smartmeter/dht_temperature",
+        "smartmeter/dht_humidity"
+      ]
+      data_format = "value"
+      data_type = "float"
       username = "$MQTT_USERNAME"
       password = "$MQTT_PASSWORD"
