@@ -1,0 +1,41 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: telegraf-config
+data:
+  telegraf.conf: |
+    [global_tags]
+      env = "$ENV"
+
+    [agent]
+      interval = "10s"
+      round_interval = true
+      metric_batch_size = 1000
+      metric_buffer_limit = 10000
+      collection_jitter = "0s"
+      flush_interval = "10s"
+      flush_jitter = "0s"
+      precision = ""
+      hostname = "$HOSTNAME"
+      omit_hostname = false
+
+    [[outputs.influxdb_v2]]
+      urls = ["$INFLUXDB_HOST"]
+      token = "$INFLUXDB_TOKEN"
+      organization = "$INFLUXDB_ORG"
+      bucket = "$INFLUXDB_BUCKET"
+
+    [[inputs.cpu]]
+      percpu = true
+      totalcpu = true
+      collect_cpu_time = false
+      report_active = true
+
+    [[inputs.mem]]
+      fielddrop = ["available", "used_percent"]
+
+    [[inputs.mqtt_consumer]]
+      servers = ["tcp://mqtt.default.svc.cluster.local:1883"]
+      topics = ["smartmeter"]
+      data_format = "json"
