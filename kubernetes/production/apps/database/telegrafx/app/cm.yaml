@@ -39,3 +39,5 @@ data:
       servers = ["tcp://mosquitto-service.default.svc.cluster.local:1883"]
       topics = ["smartmeter"]
       data_format = "json"
+      username = "$MQTT_USERNAME"
+      password = "$MQTT_PASSWORD"
