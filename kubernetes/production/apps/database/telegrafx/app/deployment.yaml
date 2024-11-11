@@ -56,6 +56,16 @@ spec:
                 secretKeyRef:
                   name: telegraf-secrets
                   key: INFLUXDB_ORG
+            - name: MQTT_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mqtt-secret
+                  key: MQTT_USERNAME
+            - name: MQTT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mqtt-secret
+                  key: MQTT_PASSWORD
       volumes:
         - name: telegraf-config-volume
           configMap:
