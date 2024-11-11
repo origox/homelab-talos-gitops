@@ -110,7 +110,15 @@ data:
       [[processors.strings.trim]]
         field = "*"
         suffix = " A"
+      [[processors.strings.trim]]
+        field = "*"
         suffix = " kWh"
+      [[processors.strings.trim]]
+        field = "*"
         suffix = " kVAr"
+      [[processors.strings.trim]]
+        field = "*"
         suffix = " kW"
+      [[processors.strings.trim]]
+        field = "*"
         suffix = " V"
