@@ -59,12 +59,12 @@ spec:
             - name: MQTT_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: mqtt-secret
+                  name: telegraf-secrets
                   key: MQTT_USERNAME
             - name: MQTT_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: mqtt-secret
+                  name: telegraf-secrets
                   key: MQTT_PASSWORD
       volumes:
         - name: telegraf-config-volume
