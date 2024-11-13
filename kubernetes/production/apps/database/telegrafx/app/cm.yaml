@@ -39,10 +39,10 @@
       [[inputs.mqtt_consumer]]
         servers = ["tcp://mosquitto-service.default.svc.cluster.local:1883"]
         topics = [
-          # "smartmeter/temperature",
-          # "smartmeter/rssi",
-          # "smartmeter/dht_temperature",
-          # "smartmeter/dht_humidity",
+          "smartmeter/temperature",
+          "smartmeter/rssi",
+          "smartmeter/dht_temperature",
+          "smartmeter/dht_humidity",
           "smartmeter/current_phase1",
           "smartmeter/current_phase2",
           "smartmeter/current_phase3",
@@ -72,48 +72,48 @@
           "smartmeter/voltage_phase3"
         ]
         data_format = "value"
-        data_type = "string"
+        data_type = "float"
         username = "$MQTT_USERNAME"
         password = "$MQTT_PASSWORD"
   
-      [[processors.regex]]
-        namepass = ["smartmeter/*"]
-        [[processors.regex.fields]]
-          key = "smartmeter/*"
-          pattern = "([0-9.]+).*"
-          replacement = "${1}"
+      # [[processors.regex]]
+      #   namepass = ["smartmeter/*"]
+      #   [[processors.regex.fields]]
+      #     key = "smartmeter/*"
+      #     pattern = "([0-9.]+).*"
+      #     replacement = "${1}"
   
-      [[processors.converter]]
-        [processors.converter.fields]
-          float = [
-            # "smartmeter/temperature",
-            # "smartmeter/rssi",
-            # "smartmeter/dht_temperature",
-            # "smartmeter/dht_humidity",
-            "smartmeter/current_phase1",
-            "smartmeter/current_phase2",
-            "smartmeter/current_phase3",
-            "smartmeter/total_energy_usage",
-            "smartmeter/total_energy_returned",
-            "smartmeter/reactive_energy_usage",
-            "smartmeter/reactive_energy_returned",
-            "smartmeter/current_power_usage",
-            "smartmeter/current_power_returned",
-            "smartmeter/current_reactive_usage",
-            "smartmeter/current_reactive_returned",
-            "smartmeter/current_energy_usage_phase1",
-            "smartmeter/current_energy_usage_phase2",
-            "smartmeter/current_energy_usage_phase3",
-            "smartmeter/current_energy_returned_phase1",
-            "smartmeter/current_energy_returned_phase2",
-            "smartmeter/current_energy_returned_phase3",
-            "smartmeter/current_reactive_usage_phase1",
-            "smartmeter/current_reactive_usage_phase2",
-            "smartmeter/current_reactive_usage_phase3",
-            "smartmeter/current_reactive_returned_phase1",
-            "smartmeter/current_reactive_returned_phase2",
-            "smartmeter/current_reactive_returned_phase3",
-            "smartmeter/voltage_phase1",
-            "smartmeter/voltage_phase2",
-            "smartmeter/voltage_phase3"
-          ]
+      # [[processors.converter]]
+      #   [processors.converter.fields]
+      #     float = [
+      #       # "smartmeter/temperature",
+      #       # "smartmeter/rssi",
+      #       # "smartmeter/dht_temperature",
+      #       # "smartmeter/dht_humidity",
+      #       "smartmeter/current_phase1",
+      #       "smartmeter/current_phase2",
+      #       "smartmeter/current_phase3",
+      #       "smartmeter/total_energy_usage",
+      #       "smartmeter/total_energy_returned",
+      #       "smartmeter/reactive_energy_usage",
+      #       "smartmeter/reactive_energy_returned",
+      #       "smartmeter/current_power_usage",
+      #       "smartmeter/current_power_returned",
+      #       "smartmeter/current_reactive_usage",
+      #       "smartmeter/current_reactive_returned",
+      #       "smartmeter/current_energy_usage_phase1",
+      #       "smartmeter/current_energy_usage_phase2",
+      #       "smartmeter/current_energy_usage_phase3",
+      #       "smartmeter/current_energy_returned_phase1",
+      #       "smartmeter/current_energy_returned_phase2",
+      #       "smartmeter/current_energy_returned_phase3",
+      #       "smartmeter/current_reactive_usage_phase1",
+      #       "smartmeter/current_reactive_usage_phase2",
+      #       "smartmeter/current_reactive_usage_phase3",
+      #       "smartmeter/current_reactive_returned_phase1",
+      #       "smartmeter/current_reactive_returned_phase2",
+      #       "smartmeter/current_reactive_returned_phase3",
+      #       "smartmeter/voltage_phase1",
+      #       "smartmeter/voltage_phase2",
+      #       "smartmeter/voltage_phase3"
+      #     ]
