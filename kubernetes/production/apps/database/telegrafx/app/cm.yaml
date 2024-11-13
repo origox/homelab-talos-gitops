@@ -39,10 +39,10 @@
       [[inputs.mqtt_consumer]]
         servers = ["tcp://mosquitto-service.default.svc.cluster.local:1883"]
         topics = [
-          "smartmeter/temperature",
-          "smartmeter/rssi",
-          "smartmeter/dht_temperature",
-          "smartmeter/dht_humidity",
+          # "smartmeter/temperature",
+          # "smartmeter/rssi",
+          # "smartmeter/dht_temperature",
+          # "smartmeter/dht_humidity",
           "smartmeter/current_phase1",
           "smartmeter/current_phase2",
           "smartmeter/current_phase3",
