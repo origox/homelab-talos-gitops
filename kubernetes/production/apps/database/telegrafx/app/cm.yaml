@@ -1,69 +1,119 @@
 ---
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: telegraf-config
-data:
-  telegraf.conf: |
-    [global_tags]
-      env = "$ENV"
-
-    [agent]
-      interval = "10s"
-      round_interval = true
-      metric_batch_size = 1000
-      metric_buffer_limit = 10000
-      collection_jitter = "0s"
-      flush_interval = "10s"
-      flush_jitter = "0s"
-      precision = ""
-      hostname = "$HOSTNAME"
-      omit_hostname = false
-
-    [[outputs.influxdb_v2]]
-      urls = ["$INFLUXDB_HOST"]
-      token = "$INFLUXDB_TOKEN"
-      organization = "$INFLUXDB_ORG"
-      bucket = "$INFLUXDB_BUCKET"
-
-    [[inputs.cpu]]
-      percpu = true
-      totalcpu = true
-      collect_cpu_time = false
-      report_active = true
-
-    [[inputs.mem]]
-      fielddrop = ["available", "used_percent"]
-
-    [[inputs.mqtt_consumer]]
-      servers = ["tcp://mosquitto-service.default.svc.cluster.local:1883"]
-      topics = [
-        "smartmeter/temperature",
-        "smartmeter/rssi",
-        "smartmeter/dht_temperature",
-        "smartmeter/dht_humidity",
-      ]
-      data_format = "value"
-      data_type = "float"
-      username = "$MQTT_USERNAME"
-      password = "$MQTT_PASSWORD"
-
-    [[inputs.mqtt_consumer]]
-      # Separate config for energy usage with unit parsing
-      servers = ["tcp://mosquitto-service.default.svc.cluster.local:1883"]
-      topics = ["smartmeter/current_energy_usage_phase1",
-                "smartmeter/current_energy_usage_phase2",
-                "smartmeter/current_energy_usage_phase3"]
-      name_override = "current_energy_usage_phase"
-
-      # Use regex to extract value and unit
-      data_format = "regex"
-      regex = "^(\\d+\\.\\d+)\\s*(\\w+)$"
-      username = "$MQTT_USERNAME"
-      password = "$MQTT_PASSWORD"
-
-      # Map regex groups to fields
-      [[inputs.mqtt_consumer.fields]]
-        value = "float"  # The numeric energy value
-        unit = "string"  # The unit (e.g., kWh)
-      
+  apiVersion: v1
+  kind: ConfigMap
+  metadata:
+    name: telegraf-config
+    namespace: monitoring
+  data:
+    telegraf.conf: |
+      [global_tags]
+        env = "$ENV"
+  
+      [agent]
+        interval = "10s"
+        round_interval = true
+        metric_batch_size = 1000
+        metric_buffer_limit = 10000
+        collection_jitter = "0s"
+        flush_interval = "10s"
+        flush_jitter = "0s"
+        precision = ""
+        hostname = "$HOSTNAME"
+        omit_hostname = false
+  
+      [[outputs.influxdb_v2]]
+        urls = ["$INFLUXDB_HOST"]
+        token = "$INFLUXDB_TOKEN"
+        organization = "$INFLUXDB_ORG"
+        bucket = "$INFLUXDB_BUCKET"
+  
+      [[inputs.cpu]]
+        percpu = true
+        totalcpu = true
+        collect_cpu_time = false
+        report_active = true
+  
+      [[inputs.mem]]
+        fielddrop = ["available", "used_percent"]
+  
+      [[inputs.mqtt_consumer]]
+        servers = ["tcp://mosquitto-service.default.svc.cluster.local:1883"]
+        topics = [
+          "smartmeter/temperature",
+          "smartmeter/rssi",
+          "smartmeter/dht_temperature",
+          "smartmeter/dht_humidity",
+          "smartmeter/current_phase1",
+          "smartmeter/current_phase2",
+          "smartmeter/current_phase3",
+          "smartmeter/timestamp",
+          "smartmeter/total_energy_usage",
+          "smartmeter/total_energy_returned",
+          "smartmeter/reactive_energy_usage",
+          "smartmeter/reactive_energy_returned",
+          "smartmeter/current_power_usage",
+          "smartmeter/current_power_returned",
+          "smartmeter/current_reactive_usage",
+          "smartmeter/current_reactive_returned",
+          "smartmeter/current_energy_usage_phase1",
+          "smartmeter/current_energy_usage_phase2",
+          "smartmeter/current_energy_usage_phase3",
+          "smartmeter/current_energy_returned_phase1",
+          "smartmeter/current_energy_returned_phase2",
+          "smartmeter/current_energy_returned_phase3",
+          "smartmeter/current_reactive_usage_phase1",
+          "smartmeter/current_reactive_usage_phase2",
+          "smartmeter/current_reactive_usage_phase3",
+          "smartmeter/current_reactive_returned_phase1",
+          "smartmeter/current_reactive_returned_phase2",
+          "smartmeter/current_reactive_returned_phase3",
+          "smartmeter/voltage_phase1",
+          "smartmeter/voltage_phase2",
+          "smartmeter/voltage_phase3"
+        ]
+        data_format = "value"
+        data_type = "string"
+        username = "$MQTT_USERNAME"
+        password = "$MQTT_PASSWORD"
+  
+      [[processors.regex]]
+        namepass = ["smartmeter/*"]
+        [[processors.regex.fields]]
+          key = "smartmeter/*"
+          pattern = "([0-9.]+).*"
+          replacement = "${1}"
+  
+      [[processors.converter]]
+        [processors.converter.fields]
+          float = [
+            "smartmeter/temperature",
+            "smartmeter/rssi",
+            "smartmeter/dht_temperature",
+            "smartmeter/dht_humidity",
+            "smartmeter/current_phase1",
+            "smartmeter/current_phase2",
+            "smartmeter/current_phase3",
+            "smartmeter/total_energy_usage",
+            "smartmeter/total_energy_returned",
+            "smartmeter/reactive_energy_usage",
+            "smartmeter/reactive_energy_returned",
+            "smartmeter/current_power_usage",
+            "smartmeter/current_power_returned",
+            "smartmeter/current_reactive_usage",
+            "smartmeter/current_reactive_returned",
+            "smartmeter/current_energy_usage_phase1",
+            "smartmeter/current_energy_usage_phase2",
+            "smartmeter/current_energy_usage_phase3",
+            "smartmeter/current_energy_returned_phase1",
+            "smartmeter/current_energy_returned_phase2",
+            "smartmeter/current_energy_returned_phase3",
+            "smartmeter/current_reactive_usage_phase1",
+            "smartmeter/current_reactive_usage_phase2",
+            "smartmeter/current_reactive_usage_phase3",
+            "smartmeter/current_reactive_returned_phase1",
+            "smartmeter/current_reactive_returned_phase2",
+            "smartmeter/current_reactive_returned_phase3",
+            "smartmeter/voltage_phase1",
+            "smartmeter/voltage_phase2",
+            "smartmeter/voltage_phase3"
+          ]
