@@ -8,3 +8,4 @@ resources:
   - ./bitnami.yaml
   - ./influxdb.yaml
   - ./prometheus-community.yaml
+  - ./grafana.yaml
