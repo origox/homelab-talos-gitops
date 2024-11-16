@@ -13,7 +13,7 @@ spec:
     - match: Host(`grafana.${SECRET_CLUSTER_LOCAL_DOMAIN}`)
       kind: Rule
       services:
-        - name: kube-prometheus-stack-grafana
+        - name: grafana
           port: 80
   tls:
     secretName: production-tls
