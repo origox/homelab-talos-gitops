@@ -8,3 +8,4 @@ resources:
   # Flux-Kustomizations
   - kuma/ks.yaml
   - prometheus-operator-crds/ks.yaml
+  - kube-prometheus-stack/ks.yaml
