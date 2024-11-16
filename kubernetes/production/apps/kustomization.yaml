@@ -8,7 +8,6 @@ resources:
   - cilium
   - traefik
   - longhorn
-  # - monitoring
   - default
   - observability
   - network
