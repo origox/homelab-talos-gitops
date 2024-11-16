@@ -7,3 +7,4 @@ resources:
   - ./external-dns.yaml
   - ./bitnami.yaml
   - ./influxdb.yaml
+  - ./prometheus-community.yaml
