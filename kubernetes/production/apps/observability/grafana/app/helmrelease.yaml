@@ -48,9 +48,9 @@ spec:
       datasources.yaml:
         apiVersion: 1
         deleteDatasources:
-          - { name: Alertmanager, orgId: 1 }
-          - { name: Loki, orgId: 1 }
-          - { name: Prometheus, orgId: 1 }
+          - {name: Alertmanager, orgId: 1}
+          - {name: Loki, orgId: 1}
+          - {name: Prometheus, orgId: 1}
         datasources:
           - name: Prometheus
             type: prometheus
@@ -96,7 +96,7 @@ spec:
           gnetId: 17457
           revision: 6
           datasource:
-            - { name: DS_PROMETHEUS, value: Prometheus }
+            - {name: DS_PROMETHEUS, value: Prometheus}
         external-dns:
           # renovate: depName="External-dns"
           gnetId: 15038
@@ -167,7 +167,7 @@ spec:
           gnetId: 20204
           revision: 1
           datasource:
-            - { name: DS_PROMETHEUS, value: Prometheus }
+            - {name: DS_PROMETHEUS, value: Prometheus}
         unifi-insights:
           # renovate: depName="UniFi-Poller: Client Insights - Prometheus"
           gnetId: 11315

@@ -71,4 +71,3 @@ spec:
           configMap:
             name: telegraf-config
       serviceAccountName: default
-

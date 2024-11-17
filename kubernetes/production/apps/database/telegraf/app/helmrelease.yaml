@@ -33,23 +33,22 @@ spec:
             name: telegraf-secrets
             key: INFLUXDB_TOKEN
     service:
-        ports:
+      ports:
         - name: http
           port: 8086
           targetPort: 8086
     config:
       outputs:
-      - influxdb_v2:
-          urls:
-            - "http://influxdb.database.svc.cluster.local:8086"
-          token: "${INFLUXDB_TOKEN}"
-          bucket: "smartmeter"
-          organization: "primary"
+        - influxdb_v2:
+            urls:
+              - "http://influxdb.database.svc.cluster.local:8086"
+            token: "${INFLUXDB_TOKEN}"
+            bucket: "smartmeter"
+            organization: "primary"
       inputs:
-      - mqtt_consumer:
-          servers:
-            - "tcp://mqtt.default.svc.cluster.local:1883"
-          topics:
-            - "smartmeter"
-          data_format: "json"
-
+        - mqtt_consumer:
+            servers:
+              - "tcp://mqtt.default.svc.cluster.local:1883"
+            topics:
+              - "smartmeter"
+            data_format: "json"

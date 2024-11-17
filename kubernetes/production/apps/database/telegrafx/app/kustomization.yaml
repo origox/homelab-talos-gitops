@@ -6,4 +6,3 @@ resources:
   - telegraf.secret.sops.yaml
   - cm.yaml
   - deployment.yaml
-  

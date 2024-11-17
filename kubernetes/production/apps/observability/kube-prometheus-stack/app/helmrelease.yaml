@@ -58,14 +58,14 @@ spec:
         selector:
           k8s-app: kube-controller-manager
     kubeEtcd:
-      <<: *kubeControllerManager # etcd runs on control plane nodes
+      <<: *kubeControllerManager  # etcd runs on control plane nodes
     kubeProxy:
       enabled: false
     prometheus:
       ingress:
         enabled: false
       prometheusSpec:
-        scrapeInterval: 1m # Must match interval in Grafana Helm chart
+        scrapeInterval: 1m  # Must match interval in Grafana Helm chart
         podMonitorSelectorNilUsesHelmValues: false
         probeSelectorNilUsesHelmValues: false
         ruleSelectorNilUsesHelmValues: false
@@ -120,4 +120,3 @@ spec:
     grafana:
       enabled: false
       forceDeployDashboards: true
-    
