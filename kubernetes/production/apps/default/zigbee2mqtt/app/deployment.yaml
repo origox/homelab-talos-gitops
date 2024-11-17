@@ -35,6 +35,10 @@ spec:
           value: "/dev/ttyUSB0"
         - name: "ZIGBEE2MQTT_CONFIG_ADVANCED_NETWORK_KEY"
           value: "GENERATE"
+        - name: "ZIGBEE2MQTT_CONFIG_NETWORK_KEY"
+          value: "GENERATE"
+        - name: ZIGBEE2MQTT_CONFIG_ADVANCED_LOG_LEVEL 
+          value: "debug"
         - name: "TZ"
           value: "Europe/Stockholm"
         - name: MQTT_USER
