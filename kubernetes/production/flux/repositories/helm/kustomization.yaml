@@ -9,3 +9,4 @@ resources:
   - ./influxdb.yaml
   - ./prometheus-community.yaml
   - ./grafana.yaml
+  - ./bjw-s.yaml
