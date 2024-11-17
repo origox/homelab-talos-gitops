@@ -3,6 +3,8 @@ kind: Deployment
 metadata:
   name: zigbee2mqtt
 spec:
+  nodeSelector:
+    kubernetes.io/hostname: "talos-taz-s45"
   selector:
     matchLabels:
       app: zigbee2mqtt
