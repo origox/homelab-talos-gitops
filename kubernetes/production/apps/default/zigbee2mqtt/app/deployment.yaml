@@ -23,7 +23,10 @@ spec:
         - name: "ZIGBEE2MQTT_DATA"
           value: "/data"
         - name: "ZIGBEE2MQTT_CONFIG_MQTT_SERVER"
-          value: "mqtt://mosquitto"
+          valueFrom:
+            secretKeyRef:
+              name: zigbee-secrets
+              key: MQTT_SERVER
         - name: "ZIGBEE2MQTT_CONFIG_MQTT_BASE_TOPIC"
           value: "zigbee2mqtt"
         - name: "ZIGBEE2MQTT_CONFIG_PERMIT_JOIN"
@@ -34,6 +37,16 @@ spec:
           value: "GENERATE"
         - name: "TZ"
           value: "Europe/Stockholm"
+        - name: MQTT_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: zigbee-secrets
+              key: MQTT_USERNAME
+        - name: MQTT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: zigbee-secrets
+              key: MQTT_PASSWORD
         ports:
         - containerPort: 8080
           name: http
@@ -44,6 +57,13 @@ spec:
           mountPath: /dev/ttyUSB0
         - name: udev
           mountPath: /run/udev
+        resources:
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
         securityContext:
           privileged: true
       volumes:
