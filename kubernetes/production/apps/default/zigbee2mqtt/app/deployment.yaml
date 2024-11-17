@@ -37,7 +37,7 @@ spec:
           value: "GENERATE"
         - name: "TZ"
           value: "Europe/Stockholm"
-        - name: MQTT_USERNAME
+        - name: MQTT_USER
           valueFrom:
             secretKeyRef:
               name: zigbee-secrets
