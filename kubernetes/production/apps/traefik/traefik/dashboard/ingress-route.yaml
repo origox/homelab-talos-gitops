@@ -20,4 +20,4 @@ spec:
         - name: api@internal
           kind: TraefikService
   tls:
-    secretName: local-staging-tls
+    secretName: traefik-certificate-secret-staging

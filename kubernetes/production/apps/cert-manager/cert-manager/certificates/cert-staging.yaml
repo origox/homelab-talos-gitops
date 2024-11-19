@@ -1,31 +1,18 @@
+---
 # ---
 # apiVersion: cert-manager.io/v1
 # kind: Certificate
 # metadata:
-#   name: cert-local
-#   namespace: traefik
+#   name: cert-local-production
+#   namespace: cert-manager
 # spec:
-#   secretName: local-staging-tls
+#   secretName: local-production-tls
 #   issuerRef:
-#     name: letsencrypt-staging
+#     name: letsencrypt-production
 #     kind: ClusterIssuer
 #   dnsNames:
 #     - "${SECRET_CLUSTER_LOCAL_DOMAIN}"
 #     - "*.${SECRET_CLUSTER_LOCAL_DOMAIN}"
----
-apiVersion: cert-manager.io/v1
-kind: Certificate
-metadata:
-  name: cert-local-production
-  namespace: cert-manager
-spec:
-  secretName: local-production-tls
-  issuerRef:
-    name: letsencrypt-production
-    kind: ClusterIssuer
-  dnsNames:
-    - "${SECRET_CLUSTER_LOCAL_DOMAIN}"
-    - "*.${SECRET_CLUSTER_LOCAL_DOMAIN}"
 # ---
 # apiVersion: cert-manager.io/v1
 # kind: Certificate
@@ -40,30 +27,15 @@ spec:
 #   dnsNames:
 #     - "${SECRET_CLUSTER_LOCAL_DOMAIN}"
 #     - "*.${SECRET_CLUSTER_LOCAL_DOMAIN}"
----
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: cert-production
-  namespace: observability
-spec:
-  secretName: production-tls
-  issuerRef:
-    name: letsencrypt-production
-    kind: ClusterIssuer
-  dnsNames:
-    - "${SECRET_CLUSTER_LOCAL_DOMAIN}"
-    - "*.${SECRET_CLUSTER_LOCAL_DOMAIN}"
----
-apiVersion: cert-manager.io/v1
-kind: Certificate
-metadata:
-  name: cert-production
+  name: traefik-ingressroute-certificate-staging
   namespace: traefik
 spec:
-  secretName: production-tls
+  secretName: traefik-certificate-secret-staging
   issuerRef:
-    name: letsencrypt-production
+    name: cloudflare-clusterissuer-staging
     kind: ClusterIssuer
   dnsNames:
     - "${SECRET_CLUSTER_LOCAL_DOMAIN}"
@@ -72,12 +44,26 @@ spec:
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: cert-production
+  name: observability-ingressroute-certificate-staging
+  namespace: observability
+spec:
+  secretName:  observability-certificate-secret-staging
+  issuerRef:
+    name: cloudflare-clusterissuer-staging
+    kind: ClusterIssuer
+  dnsNames:
+    - "${SECRET_CLUSTER_LOCAL_DOMAIN}"
+    - "*.${SECRET_CLUSTER_LOCAL_DOMAIN}"
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: default-ingressroute-certificate-staging
   namespace: default
 spec:
-  secretName: production-tls
+  secretName: default-certificate-secret-staging
   issuerRef:
-    name: letsencrypt-production
+    name: cloudflare-clusterissuer-staging
     kind: ClusterIssuer
   dnsNames:
     - "${SECRET_CLUSTER_LOCAL_DOMAIN}"
