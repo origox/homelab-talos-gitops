@@ -45,7 +45,7 @@ apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: longhorn-ingressroute-certificate-staging
-  namespace: longhorn
+  namespace: longhorn-system
 spec:
   secretName: longhorn-certificate-secret-staging
   issuerRef:
