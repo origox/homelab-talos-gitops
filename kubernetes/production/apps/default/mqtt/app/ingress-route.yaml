@@ -18,4 +18,4 @@ spec:
         - name: mosquitto-service
           port: 1883
   tls:
-    secretName: production-tls
+    secretName: default-certificate-secret-staging

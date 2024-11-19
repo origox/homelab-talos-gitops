@@ -1,32 +1,4 @@
 ---
-# ---
-# apiVersion: cert-manager.io/v1
-# kind: Certificate
-# metadata:
-#   name: cert-local-production
-#   namespace: cert-manager
-# spec:
-#   secretName: local-production-tls
-#   issuerRef:
-#     name: letsencrypt-production
-#     kind: ClusterIssuer
-#   dnsNames:
-#     - "${SECRET_CLUSTER_LOCAL_DOMAIN}"
-#     - "*.${SECRET_CLUSTER_LOCAL_DOMAIN}"
-# ---
-# apiVersion: cert-manager.io/v1
-# kind: Certificate
-# metadata:
-#   name: cert-test
-#   namespace: observability
-# spec:
-#   secretName: test-tls
-#   issuerRef:
-#     name: letsencrypt-production
-#     kind: ClusterIssuer
-#   dnsNames:
-#     - "${SECRET_CLUSTER_LOCAL_DOMAIN}"
-#     - "*.${SECRET_CLUSTER_LOCAL_DOMAIN}"
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
@@ -62,6 +34,34 @@ metadata:
   namespace: default
 spec:
   secretName: default-certificate-secret-staging
+  issuerRef:
+    name: cloudflare-clusterissuer-staging
+    kind: ClusterIssuer
+  dnsNames:
+    - "${SECRET_CLUSTER_LOCAL_DOMAIN}"
+    - "*.${SECRET_CLUSTER_LOCAL_DOMAIN}"
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: longhorn-ingressroute-certificate-staging
+  namespace: longhorn
+spec:
+  secretName: longhorn-certificate-secret-staging
+  issuerRef:
+    name: cloudflare-clusterissuer-staging
+    kind: ClusterIssuer
+  dnsNames:
+    - "${SECRET_CLUSTER_LOCAL_DOMAIN}"
+    - "*.${SECRET_CLUSTER_LOCAL_DOMAIN}"
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: database-ingressroute-certificate-staging
+  namespace: database
+spec:
+  secretName: database-certificate-secret-staging
   issuerRef:
     name: cloudflare-clusterissuer-staging
     kind: ClusterIssuer

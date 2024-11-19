@@ -16,4 +16,4 @@ spec:
         - name: zigbee2mqtt
           port: 8080
   tls:
-    secretName: production-tls
+    secretName: default-certificate-secret-staging
