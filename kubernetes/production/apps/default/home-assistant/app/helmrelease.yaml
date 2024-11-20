@@ -23,6 +23,11 @@ spec:
       strategy: rollback
       retries: 3
   values:
+    http:
+      use_x_forwarded_for: true
+      trusted_proxies:
+        - 10.42.0.0/16
+        - 172.16.32.0/24
     controllers:
       home-assistant:
         annotations:
