@@ -36,6 +36,9 @@ spec:
               TZ: Europe/Stockholm
               HASS_HTTP_TRUSTED_PROXY_1: 10.42.0.0/16
               HASS_HTTP_TRUSTED_PROXY_2: 172.16.32.0/24
+              HASS_HTTP_TRUSTED_PROXY: 10.42.0.0/16, 172.16.32.0/24
+              HASS_USE_X_FOWARDED_FOR: "true"
+
 
 
               # HASS_HTTP_TRUSTED_PROXY_2: 172.168.42.0/24
