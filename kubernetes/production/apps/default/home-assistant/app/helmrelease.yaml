@@ -83,6 +83,8 @@ spec:
         fsGroup: 568
         fsGroupChangePolicy: OnRootMismatch
         seccompProfile: { type: RuntimeDefault }
+      nodeSelector:
+        kubernetes.io/hostname: "talos-taz-s45"
     service:
       app:
         controller: home-assistant
