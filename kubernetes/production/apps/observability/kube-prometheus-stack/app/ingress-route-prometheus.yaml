@@ -17,4 +17,4 @@ spec:
         - name: kube-prometheus-stack-prometheus
           port: 9090
   tls:
-    secretName: production-tls
+    secretName: observability-certificate-secret-staging
