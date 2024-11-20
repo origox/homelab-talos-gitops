@@ -19,7 +19,7 @@ metadata:
   name: observability-ingressroute-certificate-staging
   namespace: observability
 spec:
-  secretName:  observability-certificate-secret-staging
+  secretName: observability-certificate-secret-staging
   issuerRef:
     name: cloudflare-clusterissuer-staging
     kind: ClusterIssuer

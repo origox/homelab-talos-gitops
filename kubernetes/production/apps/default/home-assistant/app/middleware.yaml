@@ -6,8 +6,5 @@ metadata:
 spec:
   headers:
     customRequestHeaders:
-      X-Forwarded-Host: "true"
       X-Forwarded-Proto: "https"
-      X-Real-Ip: "true"
-      X-Forwarded-For: "true"
 
