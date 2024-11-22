@@ -14,6 +14,6 @@ spec:
       kind: Rule
       services:
         - name: node-red-service
-          port: 1880
+          port: 80
   tls:
     secretName: default-certificate-secret-staging
