@@ -1,0 +1,70 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: traefik-ingressroute-certificate-production
+  namespace: traefik
+spec:
+  secretName: traefik-certificate-secret-production
+  issuerRef:
+    name: cloudflare-clusterissuer-production
+    kind: ClusterIssuer
+  dnsNames:
+    - "${SECRET_CLUSTER_LOCAL_DOMAIN}"
+    - "*.${SECRET_CLUSTER_LOCAL_DOMAIN}"
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: observability-ingressroute-certificate-production
+  namespace: observability
+spec:
+  secretName: observability-certificate-secret-production
+  issuerRef:
+    name: cloudflare-clusterissuer-production
+    kind: ClusterIssuer
+  dnsNames:
+    - "${SECRET_CLUSTER_LOCAL_DOMAIN}"
+    - "*.${SECRET_CLUSTER_LOCAL_DOMAIN}"
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: default-ingressroute-certificate-production
+  namespace: default
+spec:
+  secretName: default-certificate-secret-production
+  issuerRef:
+    name: cloudflare-clusterissuer-production
+    kind: ClusterIssuer
+  dnsNames:
+    - "${SECRET_CLUSTER_LOCAL_DOMAIN}"
+    - "*.${SECRET_CLUSTER_LOCAL_DOMAIN}"
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: longhorn-ingressroute-certificate-production
+  namespace: longhorn-system
+spec:
+  secretName: longhorn-certificate-secret-production
+  issuerRef:
+    name: cloudflare-clusterissuer-production
+    kind: ClusterIssuer
+  dnsNames:
+    - "${SECRET_CLUSTER_LOCAL_DOMAIN}"
+    - "*.${SECRET_CLUSTER_LOCAL_DOMAIN}"
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: database-ingressroute-certificate-production
+  namespace: database
+spec:
+  secretName: database-certificate-secret-production
+  issuerRef:
+    name: cloudflare-clusterissuer-production
+    kind: ClusterIssuer
+  dnsNames:
+    - "${SECRET_CLUSTER_LOCAL_DOMAIN}"
+    - "*.${SECRET_CLUSTER_LOCAL_DOMAIN}"
