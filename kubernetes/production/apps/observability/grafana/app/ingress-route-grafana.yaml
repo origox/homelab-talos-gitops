@@ -16,4 +16,4 @@ spec:
         - name: grafana
           port: 80
   tls:
-    secretName: observability-certificate-secret-staging
+    secretName: observability-certificate-secret-production

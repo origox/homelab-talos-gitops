@@ -18,4 +18,4 @@ spec:
         - name: *app
           port: 8086
   tls:
-    secretName: database-certificate-secret-staging
+    secretName: database-certificate-secret-production

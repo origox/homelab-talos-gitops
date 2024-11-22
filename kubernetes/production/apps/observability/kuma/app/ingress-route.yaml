@@ -16,4 +16,4 @@ spec:
         - name: uptime-kuma-service
           port: 3001
   tls:
-    secretName: observability-certificate-secret-staging
+    secretName: observability-certificate-secret-production
