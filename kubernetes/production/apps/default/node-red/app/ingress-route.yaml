@@ -16,4 +16,4 @@ spec:
         - name: node-red-service
           port: 80
   tls:
-    secretName: default-certificate-secret-staging
+    secretName: default-certificate-secret-production
