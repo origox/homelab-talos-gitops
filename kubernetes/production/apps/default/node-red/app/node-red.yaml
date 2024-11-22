@@ -32,12 +32,12 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: *app
+      app.kubernetes.io/name: *app
   replicas: 1
   template:
     metadata:
        labels:
-        app: *app
+        app.kubernetes.io/name: *app
     spec:
       securityContext:
         runAsUser: 1000
@@ -49,7 +49,6 @@ spec:
         image: nodered/node-red
         ports:
         - containerPort: 1880
-          name: *app
         resources:
           limits:
             memory: "512Mi"
