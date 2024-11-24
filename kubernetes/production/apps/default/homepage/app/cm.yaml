@@ -127,6 +127,10 @@ data:
             icon: node-red.svg
             href: "{{HOMEPAGE_VAR_NODE_RED_url}}"
             description: Node-RED
+        - Zigbee2MQTT:
+            icon: zigbee2mqtt.svg
+            href: "{{HOMEPAGE_VAR_ZIGBEE2MQTT_URL}}"
+            description: Zigbee2MQTT
     - DNS:
         - DNS:
             icon: pi-hole.svg
