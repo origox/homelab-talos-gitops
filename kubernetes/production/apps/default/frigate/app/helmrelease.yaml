@@ -75,7 +75,8 @@ spec:
               globalMounts:
                 - path: /data
     service:
-      main:
+      app:  
+        controller: main
         ports:
           http:
             port: *port
