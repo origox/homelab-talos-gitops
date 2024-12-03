@@ -9,11 +9,11 @@ spec:
   timeout: 15m
   chart:
     spec:
-      chart: influxdb2
-      version: 2.1.2
+      chart: influxdb
+      version: 6.3.22
       sourceRef:
         kind: HelmRepository
-        name: influxdb
+        name: bitnami
         namespace: flux-system
   maxHistory: 2
   install:
