@@ -29,15 +29,13 @@ alertmanager:
           - bot_token: ${TELEGRAM_BOT_TOKEN}
             chat_id: ${TELEGRAM_CHAT_ID}
             parse_mode: ''
-    ingress:
-      enabled: false
-    alertmanagerSpec:
-      # useExistingSecret: true
-      # configSecret: alertmanager-secret
-      storage:
-        volumeClaimTemplate:
-          spec:
-            storageClassName: longhorn
-            resources:
-              requests:
-                storage: 1Gi
+  ingress:
+    enabled: false
+  alertmanagerSpec:
+    storage:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: longhorn
+          resources:
+            requests:
+              storage: 1Gi
