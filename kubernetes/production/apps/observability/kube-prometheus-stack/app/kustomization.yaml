@@ -6,3 +6,7 @@ resources:
    - ./helmrelease.yaml
    - ./ingress-route-prometheus.yaml
    - ./ingress-route-alert.yaml
+configMapGenerator:
+  - name: alertmanager-values
+    files:
+      - values.yaml=alertmanager-values.yaml

@@ -28,23 +28,13 @@ spec:
   dependsOn:
     - name: prometheus-operator-crds
       namespace: observability
+  valuesFrom:
+    - kind: ConfigMap
+      name: alertmanager-values
   values:
     crds:
       enabled: false
     cleanPrometheusOperatorObjectNames: true
-    alertmanager:
-      ingress:
-        enabled: false
-      alertmanagerSpec:
-        useExistingSecret: true
-        configSecret: alertmanager-secret
-        storage:
-          volumeClaimTemplate:
-            spec:
-              storageClassName: longhorn
-              resources:
-                requests:
-                  storage: 1Gi
     kubeApiServer:
       serviceMonitor:
         selector:
