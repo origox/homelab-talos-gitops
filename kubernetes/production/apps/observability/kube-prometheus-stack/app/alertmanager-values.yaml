@@ -10,10 +10,10 @@ alertmanager:
       group_interval: 5m
       repeat_interval: 3h
       routes:
-        - receiver: "null"
+        - receiver: "telegram"
           match:
             alertname: Watchdog
-        - receiver: "null"
+        - receiver: "telegram"
           match:
             alertname: InfoInhibitor
     inhibit_rules:
