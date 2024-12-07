@@ -32,8 +32,8 @@ alertmanager:
     ingress:
       enabled: false
     alertmanagerSpec:
-      useExistingSecret: true
-      configSecret: alertmanager-secret
+      # useExistingSecret: true
+      # configSecret: alertmanager-secret
       storage:
         volumeClaimTemplate:
           spec:
