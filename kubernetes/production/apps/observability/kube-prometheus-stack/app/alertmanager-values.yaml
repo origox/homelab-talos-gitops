@@ -3,6 +3,7 @@ alertmanager:
   config:
     global:
       resolve_timeout: 5m
+      telegram_api_url: "https://api.telegram.org"
     route:
       group_by: ["alertname", "job"]
       group_wait: 30s
@@ -23,6 +24,11 @@ alertmanager:
         equal: ["alertname", "namespace"]
     receivers:
       - name: "null"
+      - name: "telegram"
+        telegram_configs:
+          - bot_token: ${TELEGRAM_BOT_TOKEN}
+            chat_id: ${TELEGRAM_CHAT_ID}
+            parse_mode: ''
     ingress:
       enabled: false
     alertmanagerSpec:
