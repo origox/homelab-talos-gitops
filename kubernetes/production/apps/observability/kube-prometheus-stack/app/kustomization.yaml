@@ -7,8 +7,8 @@ resources:
    - ./ingress-route-prometheus.yaml
    - ./ingress-route-alert.yaml
 configurations:
-  - kustomize-config.yaml
+   - kustomize-config.yaml
 configMapGenerator:
-  - name: alertmanager-values
-    files:
-      - values.yaml=alertmanager-values.yaml
+   - name: alertmanager-values
+     files:
+        - values.yaml=alertmanager-values.yaml

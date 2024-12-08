@@ -16,8 +16,8 @@ metadata:
   name: node-red-service
 spec:
   ports:
-  - port: 80
-    targetPort: 1880
+    - port: 80
+      targetPort: 1880
   selector:
     app.kubernetes.io/name: node-red
 ---
@@ -36,7 +36,7 @@ spec:
   replicas: 1
   template:
     metadata:
-       labels:
+      labels:
         app.kubernetes.io/name: *app
     spec:
       securityContext:
@@ -45,22 +45,21 @@ spec:
         fsGroupChangePolicy: "OnRootMismatch"
         fsGroup: 1000
       containers:
-      - name: node-red
-        image: nodered/node-red
-        ports:
-        - containerPort: 1880
-        resources:
-          limits:
-            memory: "512Mi"
-            cpu: "500m"
-          requests:
-            memory: "256Mi"
-            cpu: "250m"
-        volumeMounts:
-        - name: nodered-data
-          mountPath: /data
+        - name: node-red
+          image: nodered/node-red
+          ports:
+            - containerPort: 1880
+          resources:
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+          volumeMounts:
+            - name: nodered-data
+              mountPath: /data
       volumes:
-      - name: nodered-data
-        persistentVolumeClaim:
-          claimName: nodered-data
-  
+        - name: nodered-data
+          persistentVolumeClaim:
+            claimName: nodered-data

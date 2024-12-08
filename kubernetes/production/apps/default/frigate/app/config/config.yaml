@@ -2,7 +2,7 @@ mqtt:
   host: "{FRIGATE_MQTT_SERVER}"
   topic_prefix: frigate
   user: "{FRIGATE_MQTT_USERNAME}"
-  password:  "{FRIGATE_MQTT_PASSWORD}"
+  password: "{FRIGATE_MQTT_PASSWORD}"
 
 record:
   enabled: true
@@ -36,35 +36,35 @@ birdseye:
 go2rtc:
   streams:
     garden:
-    - "{FRIGATE_GARDEN}"
+      - "{FRIGATE_GARDEN}"
     garden_sub:
-    - "{FRIGATE_GARDEN_SUB}"
+      - "{FRIGATE_GARDEN_SUB}"
 cameras:
   garden:
     ffmpeg:
       hwaccel_args: preset-vaapi
       inputs:
-      - path: rtsp://127.0.0.1:8554/garden
-        input_args: preset-rtsp-restream
-        roles:
-        - record
-        - detect
-        - audio
-    #detect:
-    #  height: 2160
-    #  width: 3840
-    #  fps: 5
+        - path: rtsp://127.0.0.1:8554/garden
+          input_args: preset-rtsp-restream
+          roles:
+            - record
+            - detect
+            - audio
+    #  detect:
+    #    height: 2160
+    #    width: 3840
+    #    fps: 5
     motion:
       mask:
-      - 0,2160,533,2160,868,2160,899,1910,882,1490,763,1394,773,1323,742,1137,754,969,1241,965,1761,877,1795,879,2072,2160,3840,2160,3840,0,0,0
+        - 0,2160,533,2160,868,2160,899,1910,882,1490,763,1394,773,1323,742,1137,754,969,1241,965,1761,877,1795,879,2072,2160,3840,2160,3840,0,0,0
     objects:
       filters:
         person:
           mask:
-          - 1526,1016,1519,1303,1343,1270,1330,1022
+            - 1526,1016,1519,1303,1343,1270,1330,1022
         bird:
           mask:
-          - 1526,1016,1519,1303,1343,1270,1330,1022      
+            - 1526,1016,1519,1303,1343,1270,1330,1022
 
 detectors:
   coral1:
@@ -73,9 +73,8 @@ detectors:
 
 objects:
   track:
-  - person
-  - dog
-  - cat
-  - bird
-  - horse
-
+    - person
+    - dog
+    - cat
+    - bird
+    - horse

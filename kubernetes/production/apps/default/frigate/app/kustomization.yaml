@@ -5,4 +5,3 @@ resources:
   - helmrelease.yaml
   - frigate.secret.sops.yaml
   # - ingress-route.yaml
-  

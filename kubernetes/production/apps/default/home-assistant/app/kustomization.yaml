@@ -7,4 +7,3 @@ resources:
   - ./helmrelease.yaml
   - ./middleware.yaml
   - ./ingress-route.yaml
-  

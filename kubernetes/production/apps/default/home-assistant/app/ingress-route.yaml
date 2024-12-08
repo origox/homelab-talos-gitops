@@ -34,7 +34,7 @@ spec:
     - match: Host(`hass-code.${SECRET_CLUSTER_LOCAL_DOMAIN}`)
       kind: Rule
       services:
-        - name: home-assistant-code-server 
+        - name: home-assistant-code-server
           port: 12321
       middlewares:
         - name: homeassistant-headers
