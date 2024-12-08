@@ -81,3 +81,7 @@ spec:
       enabled: true
       type: LoadBalancer
       labels: {}
+    prometheus:
+      enabled: true
+      serviceMonitor:
+        enabled: true
