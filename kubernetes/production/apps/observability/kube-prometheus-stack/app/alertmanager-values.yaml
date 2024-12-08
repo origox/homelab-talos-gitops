@@ -12,10 +12,7 @@ alertmanager:
       routes:
         - receiver: "telegram"
           match:
-            alertname: Watchdog
-        - receiver: "telegram"
-          match:
-            alertname: InfoInhibitor
+            alertname: BlackboxProbeFailed
     inhibit_rules:
       - source_match:
           severity: critical
