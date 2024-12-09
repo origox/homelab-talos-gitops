@@ -12,3 +12,7 @@ spec:
     staticConfig:
       static:
         - nano-p1.garage
+        - vacuum.internal
+        - shellys1.internal
+        - shellys2.internal
+        - shellys3.internal
