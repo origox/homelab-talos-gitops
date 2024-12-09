@@ -11,8 +11,23 @@ alertmanager:
       repeat_interval: 3h
       routes:
         - receiver: "telegram"
-          match:
-            alertname: BlackboxProbeFailed
+          matchers:
+            - alertname="BlackboxProbeFailed"
+        - receiver: "telegram"
+          matchers:
+            - alertname="node.rules"
+        - receiver: "telegram"
+          matchers:
+            - alertname="cpu.rules"
+        - receiver: "telegram"
+          matchers:
+            - alertname="memory.rules"
+        - receiver: "telegram"
+          matchers:
+            - alertname="storage.rules"
+        - receiver: "telegram"
+          matchers:
+            - alertname="pod.rules"
     inhibit_rules:
       - source_match:
           severity: critical
