@@ -6,6 +6,7 @@ resources:
    - ./helmrelease.yaml
    - ./ingress-route-prometheus.yaml
    - ./ingress-route-alert.yaml
+   - ./rules.yaml
 configurations:
    - kustomize-config.yaml
 configMapGenerator:
