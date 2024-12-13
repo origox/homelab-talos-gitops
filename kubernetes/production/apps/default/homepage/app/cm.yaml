@@ -124,7 +124,7 @@ data:
             href: "{{HOMEPAGE_VAR_HASS_url}}"
             description: Home Assistant
         - Code Server:
-            icon: code-server.svg
+            icon: home-assistant.svg
             href: "{{HOMEPAGE_VAR_CODE_SERVER_url}}"
             description: Code Server
         - Node-RED:
