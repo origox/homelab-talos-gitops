@@ -109,6 +109,10 @@ data:
             icon: longhorn.svg
             href: "{{HOMEPAGE_VAR_LONGHORN_url}}"
             description: Longhorn
+        - InfluxDB:
+            icon: influxdb.svg
+            href: "{{HOMEPAGE_VAR_INFLUXDB_url}}"
+            description: InfluxDB
     - Network:
         - Unifi:
             icon: unifi.svg
@@ -123,6 +127,10 @@ data:
             icon: home-assistant.svg
             href: "{{HOMEPAGE_VAR_HASS_url}}"
             description: Home Assistant
+        - Code Server:
+            icon: code-server.svg
+            href: "{{HOMEPAGE_VAR_CODE_SERVER_url}}"
+            description: Code Server
         - Node-RED:
             icon: node-red.svg
             href: "{{HOMEPAGE_VAR_NODE_RED_url}}"
@@ -149,6 +157,10 @@ data:
             icon: prometheus.svg
             href: "{{HOMEPAGE_VAR_PROMETHEUS_url}}"
             description: Prometheus
+        - Alertmanager:
+            icon: alertmanager.svg
+            href: "{{HOMEPAGE_VAR_PROMETHEUS_url}}/alertmanager"
+            description: Alertmanager
   widgets.yaml: |
     - resources:
         cpu: true
