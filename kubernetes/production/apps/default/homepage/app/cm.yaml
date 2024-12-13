@@ -101,10 +101,6 @@ data:
             icon: minio.svg
             href: "{{HOMEPAGE_VAR_MINIO_url}}"
             description: Minio
-        - TrueNAS Scale:
-            icon: truenas.svg
-            href: "{{HOMEPAGE_VAR_TRUENAS_url}}"
-            description: TrueNAS Scale
         - Longhorn:
             icon: longhorn.svg
             href: "{{HOMEPAGE_VAR_LONGHORN_url}}"
@@ -159,7 +155,7 @@ data:
             description: Prometheus
         - Alertmanager:
             icon: alertmanager.svg
-            href: "{{HOMEPAGE_VAR_PROMETHEUS_url}}/alertmanager"
+            href: "{{HOMEPAGE_VAR_ALERTMANAGER_url}}"
             description: Alertmanager
   widgets.yaml: |
     - resources:
