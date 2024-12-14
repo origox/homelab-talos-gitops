@@ -36,21 +36,37 @@ spec:
       enabled: false
     cleanPrometheusOperatorObjectNames: true
     kubeApiServer:
+      enabled: true
       serviceMonitor:
-        selector:
-          k8s-app: kube-apiserver
-    kubeScheduler:
-      service:
-        selector:
-          k8s-app: kube-scheduler
-    kubeControllerManager: &kubeControllerManager
-      service:
-        selector:
-          k8s-app: kube-controller-manager
+        metricRelabelings:
+          - action: drop
+            sourceLabels: ["__name__"]
+            regex: (apiserver|etcd|rest_client)_request(|_sli|_slo)_duration_seconds_bucket
+          - action: drop
+            sourceLabels: ["__name__"]
+            regex: (apiserver_response_sizes_bucket|apiserver_watch_events_sizes_bucket)
+    
+    kubeControllerManager:
+      enabled: true
+      endpoints: &cp
+        - 172.16.32.101
+        - 172.16.32.102
+        - 172.16.32.103
+
     kubeEtcd:
-      <<: *kubeControllerManager  # etcd runs on control plane nodes
+      enabled: true
+      endpoints: *cp
+
+    kubeScheduler:
+      enabled: true
+      endpoints: *cp
+
     kubeProxy:
       enabled: false
+
+    coreDns:
+      enabled: true
+
     prometheus:
       ingress:
         enabled: false
