@@ -1,0 +1,23 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: loki
+  annotations:
+    kubernetes.io/ingress.class: traefik-external
+spec:
+  rules:
+  - host: loki.${SECRET_CLUSTER_LOCAL_DOMAIN}
+    http:
+      paths:
+      - backend:
+          service:
+            name: loki
+            port:
+              number: 3100
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - loki.${SECRET_CLUSTER_LOCAL_DOMAIN}
+    secretName: observability-certificate-secret-production
