@@ -14,6 +14,6 @@ spec:
       kind: Rule
       services:
         - name: loki-gateway
-          port: 3100
+          port: 80
   tls:
     secretName: observability-certificate-secret-production
