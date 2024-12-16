@@ -45,7 +45,7 @@ spec:
           - action: drop
             sourceLabels: ["__name__"]
             regex: (apiserver_response_sizes_bucket|apiserver_watch_events_sizes_bucket)
-    
+
     kubeControllerManager:
       enabled: true
       endpoints: &cp

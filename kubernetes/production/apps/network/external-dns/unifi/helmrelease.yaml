@@ -57,6 +57,9 @@ spec:
         - apiGroups: ["traefik.containo.us", "traefik.io"]
           resources: ["ingressroutes", "ingressroutetcps", "ingressrouteudps"]
           verbs: ["get", "watch", "list"]
+        - apiGroups: ["networking.k8s.io"]
+          resources: ["ingresses"]
+          verbs: ["get", "watch", "list"]
     extraArgs:
       - --ignore-ingress-tls-spec
       - --traefik-disable-legacy

@@ -62,6 +62,26 @@ spec:
         size: 5Gi
     gateway:
       replicas: 0
+      ingress:
+        enabled: true
+        annotations:
+          kubernetes.io/ingress.class: traefik-external
+        hosts:
+          - host: loki.${SECRET_CLUSTER_LOCAL_DOMAIN}
+            http:
+              paths:
+              - path: /
+                pathType: Prefix
+                backend:
+                  service:
+                    name: loki
+                    port:
+                      number: 3100
+        tls:
+          - hosts:
+            - loki.${SECRET_CLUSTER_LOCAL_DOMAIN}
+            secretName: observability-certificate-secret-production
+
     backend:
       replicas: 0
     read:
