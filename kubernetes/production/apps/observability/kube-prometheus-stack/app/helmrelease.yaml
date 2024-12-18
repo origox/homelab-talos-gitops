@@ -83,6 +83,7 @@ spec:
           - auto-gomemlimit
           - memory-snapshot-on-shutdown
           - new-service-discovery-manager
+          - web.enable-remote-write-receiver
         additionalArgs:
           - '--web.enable-remote-write-receiver'
         retention: 14d
