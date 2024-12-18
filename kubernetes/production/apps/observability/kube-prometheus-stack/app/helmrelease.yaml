@@ -84,7 +84,7 @@ spec:
           - memory-snapshot-on-shutdown
           - new-service-discovery-manager
         additionalArgs:
-          - --web.enable-remote-write-receiver
+          - '--web.enable-remote-write-receiver'
         retention: 14d
         retentionSize: 70GB
         resources:
