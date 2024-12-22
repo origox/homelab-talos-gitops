@@ -40,9 +40,9 @@ spec:
       persistentVolume:
         storageClass: longhorn
         size: 70Gi
-        resources:
-          limits:
-            memory: 12Gi
+      resources:
+        limits:
+          memory: 12Gi
     store_gateway:
       zoneAwareReplication:
         enabled: false
