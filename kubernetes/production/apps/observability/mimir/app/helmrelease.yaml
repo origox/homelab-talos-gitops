@@ -25,6 +25,8 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    usage_stats:
+      enabled: false
     query_scheduler:
       replicas: 1
     querier:
@@ -37,6 +39,10 @@ spec:
         enabled: false
       persistentVolume:
         storageClass: longhorn
+        size: 70Gi
+        resources:
+          limits:
+            memory: 12Gi
     store_gateway:
       zoneAwareReplication:
         enabled: false
