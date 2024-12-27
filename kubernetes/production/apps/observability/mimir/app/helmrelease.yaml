@@ -51,6 +51,7 @@ spec:
     compactor:
       persistentVolume:
         storageClass: longhorn
+        size: 20Gi
     minio:
       enabled: false  # Mimir helm chart deploys minio by default, if you prefer to use your own mimio instance, disable it as i did
     mimir:
