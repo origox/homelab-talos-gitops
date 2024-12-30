@@ -6,7 +6,7 @@ resources:
   - ./stakater.yaml
   - ./external-dns.yaml
   - ./bitnami.yaml
-  - ./influxdb.yaml
+  # - ./influxdb.yaml
   - ./prometheus-community.yaml
   - ./grafana.yaml
   - ./bjw-s.yaml
