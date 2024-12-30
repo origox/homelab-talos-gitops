@@ -35,7 +35,7 @@ spec:
       persistentVolume:
         storageClass: longhorn
     ingester:
-      replicas: 1
+      replicas: 2
       zoneAwareReplication:
         enabled: false
       persistentVolume:
