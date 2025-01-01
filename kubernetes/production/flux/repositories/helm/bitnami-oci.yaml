@@ -1,0 +1,10 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: bitnami-oci
+  namespace: flux-system
+spec:
+  interval: 1h
+  timeout: 3m
+  url: oci://registry-1.docker.io/bitnamicharts/influxdb

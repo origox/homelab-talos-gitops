@@ -10,3 +10,4 @@ resources:
   - ./prometheus-community.yaml
   - ./grafana.yaml
   - ./bjw-s.yaml
+  - ./bitnami-oci.yaml
