@@ -12,7 +12,7 @@ spec:
       version: 0.10.1
       sourceRef:
         kind: HelmRepository
-        name: grafanalabs
+        name: grafana
         namespace: flux-system
   driftDetection:
     mode: enabled
