@@ -39,7 +39,7 @@ prometheus.relabel "snmp" {
 
 prometheus.remote_write "snmp" {
   endpoint {
-    url = https://mimir.${SECRET_CLUSTER_LOCAL_DOMAIN}/api/v1/push"
+    url = "https://mimir.${SECRET_CLUSTER_LOCAL_DOMAIN}/api/v1/push"
   }
 }
 
