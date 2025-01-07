@@ -39,6 +39,7 @@ spec:
         - name: snmp-modules-volume
           mountPath: /etc/snmp/snmp_modules.yaml
           subPath: snmp_modules.yaml
+      stabilityLevel: experimental
     controller:
       type: "statefulset"
       replicas: 1
