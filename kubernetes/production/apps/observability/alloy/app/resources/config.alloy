@@ -1,47 +1,64 @@
-// SNMP CONFIG
-local.file "snmp_config" {
-    filename  = "/etc/snmp/snmp_modules.yaml"
-    is_secret = true
-}
+prometheus.exporter.unix "os_metrics" { }
 
-prometheus.exporter.snmp "snmp" {
-    config = local.file.snmp_config.content
-
-    target "router_udm" {
-        address     = "192.168.86.1"
-        module      = "if_mib"
-        walk_params = "public"
-    }
-
-    walk_param "private" {
-        retries = "2"
-    }
-
-    walk_param "public" {
-        retries = "2"
-    }
-}
-
-prometheus.scrape "snmp" {
-    targets    = prometheus.exporter.snmp.snmp.targets
-    forward_to = [prometheus.relabel.snmp.receiver]
-}
-
-prometheus.relabel "snmp" {
-  forward_to = [prometheus.remote_write.snmp.receiver]
-
-  rule {
-    action = "replace"
-    target_label = "job"
-    replacement = "apa-router"
+prometheus.scrape "os_metrics" {
+  clustering {
+      enabled = true
   }
+  targets    = prometheus.exporter.unix.os_metrics.targets
+  forward_to = [prometheus.remote_write.metrics.receiver]
+  scrape_interval = "30s"
 }
 
-prometheus.remote_write "snmp" {
+prometheus.remote_write "metrics" {
   endpoint {
-    url = "https://mimir.${SECRET_CLUSTER_LOCAL_DOMAIN}/api/v1/push"
+    url = "http://mimir-nginx/api/v1/push"
   }
 }
+
+// // SNMP CONFIG
+// local.file "snmp_config" {
+//     filename  = "/etc/snmp/snmp_modules.yaml"
+//     is_secret = true
+// }
+
+// prometheus.exporter.snmp "snmp" {
+//     config = local.file.snmp_config.content
+
+//     target "router_udm" {
+//         address     = "192.168.86.1"
+//         module      = "if_mib"
+//         walk_params = "public"
+//     }
+
+//     walk_param "private" {
+//         retries = "2"
+//     }
+
+//     walk_param "public" {
+//         retries = "2"
+//     }
+// }
+
+// prometheus.scrape "snmp" {
+//     targets    = prometheus.exporter.snmp.snmp.targets
+//     forward_to = [prometheus.relabel.snmp.receiver]
+// }
+
+// prometheus.relabel "snmp" {
+//   forward_to = [prometheus.remote_write.snmp.receiver]
+
+//   rule {
+//     action = "replace"
+//     target_label = "job"
+//     replacement = "apa-router"
+//   }
+// }
+
+// prometheus.remote_write "snmp" {
+//   endpoint {
+//     url = "https://mimir.${SECRET_CLUSTER_LOCAL_DOMAIN}/api/v1/push"
+//   }
+// }
 
 livedebugging {
   enabled = true
