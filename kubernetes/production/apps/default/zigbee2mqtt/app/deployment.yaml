@@ -4,8 +4,6 @@ kind: Deployment
 metadata:
   name: zigbee2mqtt
 spec:
-  nodeSelector:
-    zigbeehw: apa
   selector:
     matchLabels:
       app: zigbee2mqtt
@@ -16,6 +14,8 @@ spec:
       labels:
         app: zigbee2mqtt
     spec:
+      nodeSelector:
+        zigbeehw: apa
       containers:
         - image: koenkk/zigbee2mqtt:1.42.0
           name: zigbee2mqtt
