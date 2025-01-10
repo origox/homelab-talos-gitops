@@ -81,7 +81,7 @@ spec:
         fsGroupChangePolicy: OnRootMismatch
         seccompProfile: {type: RuntimeDefault}
       nodeSelector:
-        kubernetes.io/hostname: "talos-taz-s45"
+        zigbeehw: apa
     service:
       app:
         controller: home-assistant
