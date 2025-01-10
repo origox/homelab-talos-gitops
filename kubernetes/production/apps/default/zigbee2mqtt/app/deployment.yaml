@@ -5,7 +5,7 @@ metadata:
   name: zigbee2mqtt
 spec:
   nodeSelector:
-    zigbeehw: "true"
+    zigbeehw: apa
   selector:
     matchLabels:
       app: zigbee2mqtt
