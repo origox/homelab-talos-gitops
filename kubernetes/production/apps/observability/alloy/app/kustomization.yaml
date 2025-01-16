@@ -5,6 +5,7 @@ kind: Kustomization
 resources:
   - cm-snmp.yaml
   - helmrelease.yaml
+  - ingress-route.yaml
 configMapGenerator:
   - name: alloy-config
     files:
