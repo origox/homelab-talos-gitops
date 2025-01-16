@@ -11,7 +11,7 @@ prometheus.scrape "os_metrics" {
 
 prometheus.remote_write "metrics" {
   endpoint {
-    url = "http://mimir-nginx.internal.svc.cluster.local/api/v1/push"
+    url = "http://mimir-nginx.observability.svc.cluster.local:80/api/v1/push"
   }
 }
 
