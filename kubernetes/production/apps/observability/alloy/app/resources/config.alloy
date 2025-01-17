@@ -5,11 +5,21 @@ prometheus.scrape "os_metrics" {
       enabled = true
   }
   targets    = prometheus.exporter.unix.os_metrics.targets
-  forward_to = [prometheus.remote_write.metrics.receiver]
+  forward_to = [prometheus.relabel.os_metrics.receiver]
   scrape_interval = "30s"
 }
 
-prometheus.remote_write "metrics" {
+prometheus.relabel "os_metrics" {
+  forward_to = [prometheus.remote_write.os_metrics.receiver]
+
+//   rule {
+//     action = "replace"
+//     target_label = "job"
+//     replacement = "os_metrics"
+//   }
+// }
+
+prometheus.remote_write "os_metrics" {
   endpoint {
     url = "http://mimir-nginx.observability.svc.cluster.local:80/api/v1/push"
   }
