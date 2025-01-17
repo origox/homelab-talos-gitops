@@ -17,7 +17,7 @@ prometheus.relabel "os_metrics" {
 //     target_label = "job"
 //     replacement = "os_metrics"
 //   }
-// }
+}
 
 prometheus.remote_write "os_metrics" {
   endpoint {
