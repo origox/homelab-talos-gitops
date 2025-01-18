@@ -35,5 +35,5 @@ spec:
   - services:
     - name: alloy
       port: 1415
-  tls:
-    secretName: observability-certificate-secret-production
+  # tls:
+  #   secretName: observability-certificate-secret-production
