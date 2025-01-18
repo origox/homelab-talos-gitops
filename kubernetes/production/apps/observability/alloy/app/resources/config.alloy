@@ -25,50 +25,50 @@ prometheus.remote_write "os_metrics" {
   }
 }
 
-// // SNMP CONFIG
-// local.file "snmp_config" {
-//     filename  = "/etc/snmp/snmp_modules.yaml"
-//     is_secret = true
-// }
+// SNMP CONFIG
+local.file "snmp_config" {
+    filename  = "/etc/snmp/snmp_modules.yaml"
+    is_secret = true
+}
 
-// prometheus.exporter.snmp "snmp" {
-//     config = local.file.snmp_config.content
+prometheus.exporter.snmp "snmp" {
+    config = local.file.snmp_config.content
 
-//     target "router_udm" {
-//         address     = "192.168.86.1"
-//         module      = "if_mib"
-//         walk_params = "public"
-//     }
+    target "router_udm" {
+        address     = "192.168.86.1"
+        module      = "if_mib"
+        walk_params = "public"
+    }
 
-//     walk_param "private" {
-//         retries = "2"
-//     }
+    walk_param "private" {
+        retries = "2"
+    }
 
-//     walk_param "public" {
-//         retries = "2"
-//     }
-// }
+    walk_param "public" {
+        retries = "2"
+    }
+}
 
-// prometheus.scrape "snmp" {
-//     targets    = prometheus.exporter.snmp.snmp.targets
-//     forward_to = [prometheus.relabel.snmp.receiver]
-// }
+prometheus.scrape "snmp" {
+    targets    = prometheus.exporter.snmp.snmp.targets
+    forward_to = [prometheus.relabel.snmp.receiver]
+}
 
-// prometheus.relabel "snmp" {
-//   forward_to = [prometheus.remote_write.snmp.receiver]
+prometheus.relabel "snmp" {
+  forward_to = [prometheus.remote_write.snmp.receiver]
 
-//   rule {
-//     action = "replace"
-//     target_label = "job"
-//     replacement = "apa-router"
-//   }
-// }
+  rule {
+    action = "replace"
+    target_label = "job"
+    replacement = "apa-router"
+  }
+}
 
-// prometheus.remote_write "snmp" {
-//   endpoint {
-//     url = "https://mimir.${SECRET_CLUSTER_LOCAL_DOMAIN}/api/v1/push"
-//   }
-// }
+prometheus.remote_write "snmp" {
+  endpoint {
+    url =  "http://mimir-nginx.observability.svc.cluster.local:80/api/v1/push"
+  }
+}
 
 livedebugging {
   enabled = true
