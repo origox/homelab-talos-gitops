@@ -42,7 +42,8 @@ spec:
       stabilityLevel: experimental
       extraPorts:
         - name: syslogx
-          targetPort: 1514
+          port: 514
+          targetPort: 514
           protocol: UDP
     controller:
       type: "statefulset"
