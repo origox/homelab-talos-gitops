@@ -32,8 +32,8 @@ spec:
   entryPoints:
     - syslog
   routes:
-  - services:
-    - name: alloy
-      port: 514
-  # tls:
-  #   secretName: observability-certificate-secret-production
+    - services:
+      - name: alloy
+        port: 514
+  #  tls:
+  #    secretName: observability-certificate-secret-production
