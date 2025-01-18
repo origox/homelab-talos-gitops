@@ -32,10 +32,8 @@ spec:
   entryPoints:
     - syslogsecure
   routes:
-    - match: HostSNI(`syslog.${SECRET_CLUSTER_LOCAL_DOMAIN}`)
-      kind: Rule
-      services:
-        - name: alloy
-          port: 12345
+  - services:
+    - name: alloy
+      port: 1415
   tls:
     secretName: observability-certificate-secret-production
