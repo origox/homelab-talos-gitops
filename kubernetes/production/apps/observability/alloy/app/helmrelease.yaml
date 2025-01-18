@@ -41,10 +41,8 @@ spec:
           subPath: snmp_modules.yaml
       stabilityLevel: experimental
       extraPorts:
-        - name: syslog
-          port: 1514
+        - name: syslogx
           targetPort: 1514
-          containerPort: 1514
           protocol: UDP
     controller:
       type: "statefulset"
