@@ -70,6 +70,25 @@ prometheus.remote_write "snmp" {
   }
 }
 
+// SYSLOG
+loki.source.syslog "local" {
+  
+  listener {
+    address  = "127.0.0.1:51898"
+    protocol = "udp"
+    labels   = { component = "loki.source.syslog", protocol = "udp"}
+  }
+
+  forward_to = [loki.write.local.receiver]
+}
+
+loki.write "local" {
+  endpoint {
+    url = "loki.observability.svc.cluster.local:3100/api/v1/push"
+    //loki-gateway.talos.frandberg.live/loki/api/v1/push
+  }
+}
+
 livedebugging {
   enabled = true
 }
