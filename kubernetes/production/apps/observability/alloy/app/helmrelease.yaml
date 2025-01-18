@@ -40,6 +40,13 @@ spec:
           mountPath: /etc/snmp/snmp_modules.yaml
           subPath: snmp_modules.yaml
       stabilityLevel: experimental
+      extraPorts:
+        - name: syslog
+          containerPort: 514
+          protocol: UDP
+        - name: syslog-tls
+          containerPort: 6514
+          protocol: TCP
     controller:
       type: "statefulset"
       replicas: 1

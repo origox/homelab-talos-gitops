@@ -60,14 +60,14 @@ spec:
         exposedPort: 8883
         tls:
           enabled: true
-      syslogsecure:
-        port: 1415
+      syslog:
+        port: 514
         protocol: UDP
         expose:
           default: true
-        exposedPort: 1415
+        exposedPort: 514
         tls:
-          enabled: true
+          enabled: false
     ingressRoute:
       dashboard:
         enabled: false
