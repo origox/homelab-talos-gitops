@@ -89,11 +89,41 @@ loki.source.syslog "local" {
 loki.relabel "local" {
   forward_to = [loki.write.local.receiver]
 
+  // rule {
+  //   action = "replace"
+  //   source_labels = ["component"]
+  //   target_label  = "job"
+  //   replacement   = "syslog"
+  // }
   rule {
     action = "replace"
-    source_labels = ["component"]
-    target_label  = "job"
-    replacement   = "syslog"
+    source_labels = ["__syslog_message_hostname"]
+    target_label  = "host"
+  }
+  rule {
+    action = "replace"
+    source_labels = ["__syslog_message_hostname"]
+    target_label  = "hostname"
+  }
+  rule {
+    action = "replace"
+    source_labels = ["__syslog_message_severity"]
+    target_label  = "level"
+  }
+  rule {
+    action = "replace"
+    source_labels = ["__syslog_message_app_name"]
+    target_label  = "application"
+  }
+  rule {
+    action = "replace"
+    source_labels = ["__syslog_message_facility"]
+    target_label  = "facility"
+  }
+  rule {
+    action = "replace"
+    source_labels = ["__syslog_connection_hostname"]
+    target_label  = "connection_hostname"
   }
 }
 
