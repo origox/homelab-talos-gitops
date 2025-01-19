@@ -74,7 +74,7 @@ prometheus.remote_write "os_metrics" {
 loki.source.syslog "local" {
 
   listener {
-    address  = "127.0.0.1:51898"
+    address  = "127.0.0.1:514"
     protocol = "udp"
     labels   = { component = "loki.source.syslog", protocol = "udp"}
   }
