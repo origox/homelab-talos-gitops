@@ -75,6 +75,8 @@ loki.source.syslog "local" {
 
   listener {
     address  = "0.0.0.0:514"
+    idle_timeout = "0s"
+    use_rfc5424_message = true
     protocol = "udp"
     labels   = { component = "loki.source.syslog", protocol = "udp"}
   }
@@ -96,8 +98,7 @@ loki.relabel "local" {
 
 loki.write "local" {
   endpoint {
-    url = "loki.observability.svc.cluster.local:3100/api/v1/push"
-    //loki-gateway.talos.frandberg.live/loki/api/v1/push
+    url = "http://loki.observability.svc.cluster.local:3100/api/v1/push"
   }
 }
 
