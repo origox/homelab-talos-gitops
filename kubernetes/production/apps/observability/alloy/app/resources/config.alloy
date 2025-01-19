@@ -74,12 +74,24 @@ prometheus.remote_write "os_metrics" {
 loki.source.syslog "local" {
 
   listener {
-    address  = "127.0.0.1:514"
+    address  = "0.0.0.0:514"
     protocol = "udp"
     labels   = { component = "loki.source.syslog", protocol = "udp"}
   }
 
+  forward_to = [loki.relabel.syslog.local.receiver]
+}
+
+// add relable for syslog
+loki.relabel.syslog "local" {
   forward_to = [loki.write.local.receiver]
+
+  rule {
+    action = "replace"
+    source_labels = ["component"]
+    target_label  = "job"
+    replacement   = "syslog"
+  }
 }
 
 loki.write "local" {
