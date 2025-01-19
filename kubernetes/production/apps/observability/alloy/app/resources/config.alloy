@@ -76,7 +76,7 @@ loki.source.syslog "local" {
   listener {
     address  = "0.0.0.0:514"
     idle_timeout = "0s"
-    use_rfc5424_message = true
+    use_rfc5424_message = false
     protocol = "udp"
     labels   = { component = "loki.source.syslog", protocol = "udp"}
   }
