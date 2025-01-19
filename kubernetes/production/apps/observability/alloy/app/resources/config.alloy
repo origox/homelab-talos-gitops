@@ -79,11 +79,11 @@ loki.source.syslog "local" {
     labels   = { component = "loki.source.syslog", protocol = "udp"}
   }
 
-  forward_to = [loki.relabel.syslog.local.receiver]
+  forward_to = [loki.relabel.local.receiver]
 }
 
 // add relable for syslog
-loki.relabel.syslog "local" {
+loki.relabel "local" {
   forward_to = [loki.write.local.receiver]
 
   rule {
