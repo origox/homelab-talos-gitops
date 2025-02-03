@@ -1,0 +1,168 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  creationTimestamp: "2025-01-27T18:45:23Z"
+  finalizers:
+  - finalizers.fluxcd.io
+  generation: 3
+  labels:
+    app.kubernetes.io/name: home-assistant
+    kustomize.toolkit.fluxcd.io/name: home-assistant
+    kustomize.toolkit.fluxcd.io/namespace: flux-system
+  name: home-assistant
+  namespace: default
+  resourceVersion: "3695323"
+  uid: a23e449b-aba4-4cb9-bee3-a7385cbd16cd
+spec:
+  chart:
+    spec:
+      chart: app-template
+      reconcileStrategy: ChartVersion
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s
+        namespace: flux-system
+      version: 3.5.1
+  install:
+    remediation:
+      retries: 3
+  interval: 30m
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+      strategy: rollback
+  values:
+    controllers:
+      home-assistant:
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          app:
+            env:
+              HASS_HTTP_TRUSTED_PROXY: 10.42.0.0/16, 172.16.32.0/24
+              HASS_HTTP_TRUSTED_PROXY_1: 10.42.0.0/16
+              HASS_HTTP_TRUSTED_PROXY_2: 172.16.32.0/24
+              HASS_USE_X_FORWARDED_FOR: "true"
+              TZ: Europe/Stockholm
+            image:
+              repository: ghcr.io/onedr0p/home-assistant
+              tag: 2025.1.4@sha256:6389f9593b4acd80c74322f56c9229fae631e752a3bf49839be12442a153e0dc
+            resources:
+              limits:
+                memory: 2Gi
+              requests:
+                cpu: 10m
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                - ALL
+              readOnlyRootFilesystem: true
+          code-server:
+            args:
+            - --auth
+            - none
+            - --user-data-dir
+            - /config/.vscode
+            - --extensions-dir
+            - /config/.vscode
+            - --port
+            - "12321"
+            - /config
+            image:
+              repository: ghcr.io/coder/code-server
+              tag: 4.95.3@sha256:6d74583d68179cbb6ddadc2518b450d2ac3eaec2d342474fe1941e03371cd2cf
+            resources:
+              limits:
+                memory: 512Mi
+              requests:
+                cpu: 10m
+    defaultPodOptions:
+      nodeSelector:
+        zigbeehw: apa
+      securityContext:
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
+        runAsGroup: 568
+        runAsNonRoot: true
+        runAsUser: 568
+        seccompProfile:
+          type: RuntimeDefault
+    http:
+      trusted_proxies:
+      - 10.42.0.0/16
+      - 172.16.32.0/24
+      use_x_forwarded_for: true
+    persistence:
+      config:
+        existingClaim: home-assistant
+        globalMounts:
+        - path: /config
+      logs:
+        globalMounts:
+        - path: /config/logs
+        type: emptyDir
+      tmp:
+        globalMounts:
+        - path: /tmp
+        type: emptyDir
+      tts:
+        globalMounts:
+        - path: /config/tts
+        type: emptyDir
+    service:
+      app:
+        controller: home-assistant
+        ports:
+          http:
+            port: 8123
+      code-server:
+        controller: home-assistant
+        ports:
+          http:
+            port: 12321
+status:
+  conditions:
+  - lastTransitionTime: "2025-02-03T18:15:48Z"
+    message: Helm upgrade succeeded for release default/home-assistant.v3 with chart
+      app-template@3.5.1
+    observedGeneration: 3
+    reason: UpgradeSucceeded
+    status: "True"
+    type: Ready
+  - lastTransitionTime: "2025-02-03T18:15:48Z"
+    message: Helm upgrade succeeded for release default/home-assistant.v3 with chart
+      app-template@3.5.1
+    observedGeneration: 3
+    reason: UpgradeSucceeded
+    status: "True"
+    type: Released
+  helmChart: flux-system/default-home-assistant
+  history:
+  - chartName: app-template
+    chartVersion: 3.5.1
+    configDigest: sha256:4237d7b55e3c7728e690c930da94d45544b4083ce21642edb88dabe26a71ba45
+    digest: sha256:bda4be12ff3b8be81a0ad0622f47edf17fba36be3496fa9375beb4c0528ce425
+    firstDeployed: "2025-01-27T19:01:09Z"
+    lastDeployed: "2025-02-03T18:14:57Z"
+    name: home-assistant
+    namespace: default
+    status: deployed
+    version: 3
+  - chartName: app-template
+    chartVersion: 3.5.1
+    configDigest: sha256:d676b492b079c65c6544f171fbb622674fc48c43e274a49df93e908715e5c0db
+    digest: sha256:9418d375830e68d133dd44ffc54fac70e0aefb5e97acdadaba790c62cff63a6a
+    firstDeployed: "2025-01-27T19:01:09Z"
+    lastDeployed: "2025-02-03T17:55:49Z"
+    name: home-assistant
+    namespace: default
+    status: superseded
+    version: 2
+  lastAttemptedConfigDigest: sha256:4237d7b55e3c7728e690c930da94d45544b4083ce21642edb88dabe26a71ba45
+  lastAttemptedGeneration: 3
+  lastAttemptedReleaseAction: upgrade
+  lastAttemptedRevision: 3.5.1
+  observedGeneration: 3
+  storageNamespace: default
