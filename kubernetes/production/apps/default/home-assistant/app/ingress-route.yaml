@@ -15,8 +15,7 @@ spec:
       services:
         - name: home-assistant-app
           port: 8123
-      middlewares:
-        - name: homeassistant-headers
+          passHostHeader: true
   tls:
     secretName: default-certificate-secret-production
 ---
