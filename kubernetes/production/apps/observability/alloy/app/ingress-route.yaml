@@ -33,7 +33,7 @@ spec:
     - syslog
   routes:
     - services:
-      - name: alloy
-        port: 514
-  #  tls:
-  #    secretName: observability-certificate-secret-production
+        - name: alloy
+          port: 514
+# tls:
+#   secretName: observability-certificate-secret-production

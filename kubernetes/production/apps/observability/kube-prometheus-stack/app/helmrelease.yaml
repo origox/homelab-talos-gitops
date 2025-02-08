@@ -97,8 +97,9 @@ spec:
               resources:
                 requests:
                   storage: 75Gi
-        # remoteWrite:
-        #   - url: http://mimir-nginx.observability.svc.cluster.local:80/api/v1/push
+    # TODO: Enable remote write to Mimir
+    # remoteWrite:
+    #   - url: http://mimir-nginx.observability.svc.cluster.local:80/api/v1/push
     prometheus-node-exporter:
       fullnameOverride: node-exporter
       prometheus:
