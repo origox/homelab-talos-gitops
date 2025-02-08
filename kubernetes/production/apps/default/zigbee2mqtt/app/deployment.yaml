@@ -33,6 +33,8 @@ spec:
               value: "true"
             - name: "ZIGBEE2MQTT_CONFIG_SERIAL_PORT"
               value: "/dev/ttyUSB0"
+            - name: "ZIGBEE2MQTT_CONFIG_SERIAL_ADAPTER"
+              value: "zstack"  # Set to a valid adapter value
             - name: "ZIGBEE2MQTT_CONFIG_ADVANCED_NETWORK_KEY"
               value: "GENERATE"
             - name: "ZIGBEE2MQTT_CONFIG_NETWORK_KEY"
