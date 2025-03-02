@@ -11,6 +11,7 @@ includes:
   talos: .taskfiles/talos
   bootstrap: .taskfiles/bootstrap
   utils: .taskfiles/utils
+  workstation: .taskfiles/workstation
 
 tasks:
 
