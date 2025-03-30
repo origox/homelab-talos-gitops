@@ -17,7 +17,8 @@ tasks:
     requires:
       vars: [IP]
     vars:
-      TALOS_VIP: yq eval -o=json {{.TALOS_VIP_FILE}} | jq -r '.machine.network.interfaces[] | select(.vip) | .vip.ip' "
+      TALOS_VIP: 
+        sh: yq eval -o=json {{.TALOS_VIP_FILE}} | jq -r '.machine.network.interfaces[] | select(.vip) | .vip.ip'
     cmd: |
       bash {{.SCRIPT_DIR}}/render-machine-config.sh {{.PATCH_DIR}}/secrets.yaml.tpl {{.PATCH_DIR}} {{.PATCH_DIR}}/nodes/{{.IP}}.yaml.j2 {{.CLUSTER}} {{.TALOS_VIP}} \
         | talosctl --nodes {{.IP}} apply-config --insecure --file /dev/stdin

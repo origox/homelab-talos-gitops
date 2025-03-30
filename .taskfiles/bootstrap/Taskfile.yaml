@@ -5,7 +5,7 @@ version: "3"
 vars:
   TALOSCTL_CONFIG_FILE: "{{.KUBERNETES_DIR}}/{{.CLUSTER}}/talosconfig"
   CONTROLLER:
-    sh: talosctl --context {{.CLUSTER}} config info --output json | jq --raw-output '.endpoints[]'
+    sh: talosctl --context production config info --output json | jq --raw-output '.endpoints[]' | shuf -n 1
     #sh: talosctl --talosconfig {{.TALOSCTL_CONFIG_FILE}} --context {{.CLUSTER}} config info --output json | jq --raw-output '.nodes[]'
   RESOURCE_DIR: "{{ .ROOT_DIR }}/.taskfiles/bootstrap/resources"
 tasks:
