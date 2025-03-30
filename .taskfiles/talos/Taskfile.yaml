@@ -8,21 +8,19 @@ vars:
   SCRIPT_DIR: "{{ .ROOT_DIR }}/.taskfiles/talos/resources"
   PATCH_DIR: "{{.KUBERNETES_DIR}}/{{.CLUSTER}}/provision/patches"
   TALOS_VIP_FILE: "{{.PATCH_DIR}}/dhcp.yaml"
-  
 
-  
 tasks:
   apply-node:
     desc: Apply Talos config to a node [IP=required]
     requires:
       vars: [IP]
     vars:
-      TALOS_VIP: 
+      TALOS_VIP:
         sh: yq eval -o=json {{.TALOS_VIP_FILE}} | jq -r '.machine.network.interfaces[] | select(.vip) | .vip.ip'
     cmd: |
       bash {{.SCRIPT_DIR}}/render-machine-config.sh {{.PATCH_DIR}}/secrets.yaml.tpl {{.PATCH_DIR}} {{.PATCH_DIR}}/nodes/{{.IP}}.yaml.j2 {{.CLUSTER}} {{.TALOS_VIP}} \
         | talosctl --nodes {{.IP}} apply-config --insecure --file /dev/stdin
-    
+
   gen-talosconfig:
     desc: Generate configuration for the cluster and export talosconfig(select one of the nodes ip)
     requires:
@@ -31,9 +29,8 @@ tasks:
       NODE:
         sh: talosctl config info --output json | jq --exit-status --raw-output '.endpoints[]' | shuf -n 1
       ENDPOINTS:
-        #sh: talosctl config info --output json | jq --exit-status --raw-output '.endpoints[]'
         sh: find {{.PATCH_DIR}}/nodes -type f -name '*.yaml.j2' | sed -E 's|.*/||; s/\.yaml\.j2$//' | tr '\n' ' '
-    cmds: 
+    cmds:
       - talosctl gen config --force {{.CLUSTER}} https://{{.IP}}:6443    --with-secrets <( op.exe inject -i {{.PATCH_DIR}}/secrets.yaml.tpl) --output-types talosconfig --output {{.KUBERNETES_DIR}}/{{.CLUSTER}}/talosconfig
       - talosctl --talosconfig={{.KUBERNETES_DIR}}/{{.CLUSTER}}/talosconfig config endpoint {{.ENDPOINTS}}
 

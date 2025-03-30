@@ -9,4 +9,4 @@ resources:
   # - ./coredns/ks.yaml
   # - ./cilium/ks.yaml
   - ./reloader/ks.yaml
-  #- ./system-upgrade/ks.yaml
+  # - ./system-upgrade/ks.yaml
