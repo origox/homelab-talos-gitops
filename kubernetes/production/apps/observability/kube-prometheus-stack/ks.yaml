@@ -6,6 +6,8 @@ metadata:
   name: &app kube-prometheus-stack
   namespace: flux-system
 spec:
+  dependsOn:
+    - name: prometheus-operator-crds
   targetNamespace: observability
   commonMetadata:
     labels:
