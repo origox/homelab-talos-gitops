@@ -3,7 +3,7 @@
 helm install \
     cilium \
     cilium/cilium \
-    --version 1.17.1 \
+    --version 1.17.2 \
     --namespace kube-system \
     --set ipam.mode=kubernetes \
     --set kubeProxyReplacement=true \

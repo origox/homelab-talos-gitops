@@ -6,6 +6,9 @@ vars:
   KUBERNETES_DIR: "{{.ROOT_DIR}}/kubernetes"
   CLUSTER: production
 
+dotenv:
+  - '{{.KUBERNETES_DIR}}/{{.CLUSTER}}/cluster.env'
+
 includes:
   provision: .taskfiles/provision
   talos: .taskfiles/talos

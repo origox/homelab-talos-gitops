@@ -4,3 +4,5 @@ machine:
     interfaces:
       - interface: eth0
         dhcp: true
+        vip:
+          ip: 172.16.32.200

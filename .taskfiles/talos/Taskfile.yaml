@@ -5,76 +5,44 @@ version: "3"
 vars:
   VM_CONFIG_FILE: "{{.KUBERNETES_DIR}}/{{.CLUSTER}}/provision/vmconfig.secret.sops.yaml"
   TALOSCTL_CONFIG_FILE: "{{.KUBERNETES_DIR}}/{{.CLUSTER}}/talosconfig"
-  TALOS_SCHEMATIC_ID:
-    sh: sops -d {{.VM_CONFIG_FILE}} | yq e '.talos.schematic-id'
-  TALOS_VIP:
-    sh: sops -d {{.VM_CONFIG_FILE}} | yq e '.talos.vip'
-  TALOS_CONTROLPLANE_NODES:
-    sh: sops -d {{.VM_CONFIG_FILE}} | yq e '.talos.controlplane-nodes'
-  TALOS_WORKER_NODES:
-    sh: sops -d {{.VM_CONFIG_FILE}} | yq e '.talos.worker-nodes'
-  TALOS_NODE:
-    sh: sops -d {{.VM_CONFIG_FILE}} | yq e '.talos.node'
+  SCRIPT_DIR: "{{ .ROOT_DIR }}/.taskfiles/talos/resources"
+  PATCH_DIR: "{{.KUBERNETES_DIR}}/{{.CLUSTER}}/provision/patches"
+  TALOS_VIP_FILE: "{{.PATCH_DIR}}/dhcp.yaml"
+  
 
+  
 tasks:
-
-  all:
-    desc: Run all tasks
-    cmds:
-      - {task: install-talosctl}
-      - {task: gen-secrets}
-      - {task: gen-machine-config}
-      - {task: setup-talosctl}
-      - {task: apply-machine-config}
-
-  install-talosctl:
-    desc: Install talosctl
+  apply-node:
+    desc: Apply Talos config to a node [IP=required]
+    requires:
+      vars: [IP]
     vars:
-      cmds:
-        - brew install siderolabs/tap/talosctl
-        - talosctl version
-
-  gen-secrets:
-    desc: Generate secrets for the cluster
-    cmds:
-      - talosctl gen secrets --force -o {{.KUBERNETES_DIR}}/{{.CLUSTER}}/provision/rendered/secrets.yaml
-
-  gen-machine-config:
-    desc: Generate configuration for the cluster and export talosconfig
-    cmds:
-      - talosctl gen config --force {{.CLUSTER}} https://{{.TALOS_VIP}}:6443 --with-secrets {{.KUBERNETES_DIR}}/{{.CLUSTER}}/provision/rendered/secrets.yaml  --install-image factory.talos.dev/installer/{{.TALOS_SCHEMATIC_ID}}:{{.TALOS_OS_VERSION}} --config-patch @{{.KUBERNETES_DIR}}/{{.CLUSTER}}/provision/patches/cni.yaml --config-patch @{{.KUBERNETES_DIR}}/{{.CLUSTER}}/provision/patches/rbac.yaml --config-patch @{{.KUBERNETES_DIR}}/{{.CLUSTER}}/provision/patches/dhcp.yaml --config-patch @{{.KUBERNETES_DIR}}/{{.CLUSTER}}/provision/patches/install-disk.yaml --config-patch @{{.KUBERNETES_DIR}}/{{.CLUSTER}}/provision/patches/interface-names.yaml --config-patch-control-plane '[{"op":"add","path":"/machine/network/interfaces/0/vip","value":{"ip":"{{.TALOS_VIP}}"}}]' --config-patch-worker @{{.KUBERNETES_DIR}}/{{.CLUSTER}}/provision/patches/longhorn.yaml --output {{.KUBERNETES_DIR}}/{{.CLUSTER}}/provision/rendered
-
-  setup-talosctl:
-    desc: Setup talosctl - Note dont use VIP, see https://www.talos.dev/v1.7/talos-guides/network/vip/#caveats
-    cmds:
-      - cp {{.KUBERNETES_DIR}}/{{.CLUSTER}}/provision/rendered/talosconfig {{.TALOSCTL_CONFIG_FILE}}
-      - talosctl --talosconfig {{.TALOSCTL_CONFIG_FILE}} config node {{.TALOS_NODE}}
-      - talosctl --talosconfig {{.TALOSCTL_CONFIG_FILE}} config endpoint {{.TALOS_CONTROLPLANE_NODES}}
-
-  apply-machine-config:
-    desc: Apply configuration to the cluster i.e. install Talos
-    cmds:
-      - for: {var: TALOS_CONTROLPLANE_NODES}
-        cmd: talosctl --talosconfig {{.TALOSCTL_CONFIG_FILE}} apply-config --insecure --nodes {{.ITEM}} --file {{.KUBERNETES_DIR}}/{{.CLUSTER}}/provision/rendered/controlplane.yaml
-      - for: {var: TALOS_WORKER_NODES}
-        cmd: talosctl --talosconfig {{.TALOSCTL_CONFIG_FILE}} apply-config --insecure --nodes {{.ITEM}} --file {{.KUBERNETES_DIR}}/{{.CLUSTER}}/provision/rendered/worker.yaml
+      TALOS_VIP: yq eval -o=json {{.TALOS_VIP_FILE}} | jq -r '.machine.network.interfaces[] | select(.vip) | .vip.ip' "
+    cmd: |
+      bash {{.SCRIPT_DIR}}/render-machine-config.sh {{.PATCH_DIR}}/secrets.yaml.tpl {{.PATCH_DIR}} {{.PATCH_DIR}}/nodes/{{.IP}}.yaml.j2 {{.CLUSTER}} {{.TALOS_VIP}} \
+        | talosctl --nodes {{.IP}} apply-config --insecure --file /dev/stdin
+    
+  gen-talosconfig:
+    desc: Generate configuration for the cluster and export talosconfig(select one of the nodes ip)
+    requires:
+      vars: [IP, CLUSTER]
+    vars:
+      NODE:
+        sh: talosctl config info --output json | jq --exit-status --raw-output '.endpoints[]' | shuf -n 1
+      ENDPOINTS:
+        #sh: talosctl config info --output json | jq --exit-status --raw-output '.endpoints[]'
+        sh: find {{.PATCH_DIR}}/nodes -type f -name '*.yaml.j2' | sed -E 's|.*/||; s/\.yaml\.j2$//' | tr '\n' ' '
+    cmds: 
+      - talosctl gen config --force {{.CLUSTER}} https://{{.IP}}:6443    --with-secrets <( op.exe inject -i {{.PATCH_DIR}}/secrets.yaml.tpl) --output-types talosconfig --output {{.KUBERNETES_DIR}}/{{.CLUSTER}}/talosconfig
+      - talosctl --talosconfig={{.KUBERNETES_DIR}}/{{.CLUSTER}}/talosconfig config endpoint {{.ENDPOINTS}}
 
   reset-cluster:
-    desc: Reset all the Talos nodes and shut 'em down
-    prompt: Reset Talos on the '{{.cluster}}' cluster ... continue?
-    cmd: talosctl --talosconfig {{.TALOSCTL_CONFIG_FILE}} reset --nodes {{.nodes}} --graceful=false
+    desc: Reset Talos across the whole cluster
+    prompt: Reset the Talos cluster ... continue?
+    cmd: talosctl reset --nodes {{.NODES}} --graceful=false
     vars:
-      nodes:
-        sh: kubectl get nodes -o json | jq -r '[.items[].status.addresses[] | select(.type == "InternalIP") | .address] | join(",")'
-
-  upgrade-node:
-    desc: Upgrade a node to a new version of Talos OS
-    cmds:
-      - talosctl --nodes {{.HOSTNAME}} upgrade --image="factory.talos.dev/installer/{{.TALOS_SCHEMATIC_ID}}:{{.TALOS_OS_VERSION}}" --timeout=10m
-    requires:
-      vars: [HOSTNAME]
-
-  upgrade-k8s:
-    desc: Upgrade the Kubernetes version on the cluster
-    cmds:
-      - talosctl -n {{.TALOS_NODE}} upgrade-k8s --to="{{.TALOS_K8S_VERSION}}" --dry-run=false
+      NODES:
+        sh: talosctl config info --output json | jq --exit-status --join-output '[.endpoints[]] | join(",")'
+    preconditions:
+      - talosctl --nodes {{.NODES}} get machineconfig
+      - which jq talosctl

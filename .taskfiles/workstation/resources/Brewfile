@@ -14,5 +14,7 @@ brew "kustomize"
 brew "siderolabs/tap/talosctl"
 brew "sops"
 brew "yq"
+brew "minijinja-cli"
 cask "1password"
 cask "1password-cli"
+
