@@ -42,16 +42,22 @@ spec:
         expose:
           default: true
       web:
-        redirectTo:
-          port: websecure
+        redirections:
+          entryPoint:
+            to: websecure
+            scheme: https
+            permanent: true
       websecure:
         tls:
           enabled: true
       mqtt:
         port: 1883
         protocol: TCP
-        redirectTo:
-          port: mqttsecure
+        redirections:
+          entryPoint:
+            to: mqttsecure
+            scheme: mqtts
+            permanent: true
       mqttsecure:
         port: 8883
         protocol: TCP

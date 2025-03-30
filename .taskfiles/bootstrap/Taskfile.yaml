@@ -18,7 +18,7 @@ tasks:
       - {task: etcd, vars: *vars}
       - {task: kubeconfig, vars: *vars}
       - {task: apps, vars: *vars}
-      # - {task: flux, vars: *vars}
+      - {task: flux, vars: *vars}
     preconditions:
       - talosctl --talosconfig {{.TALOSCTL_CONFIG_FILE}} --context {{.CLUSTER}} -n 172.16.32.201 config info >/dev/null 2>&1
       - test -f {{.KUBERNETES_DIR}}/{{.CLUSTER}}/talosconfig
@@ -59,7 +59,8 @@ tasks:
       # instert priv key to my cluster so we can decrypt sops secrets
       ### - cat $AGE_KEY_FILE | kubectl --kubeconfig kubernetes/production/kubeconfig create secret generic sops-age --namespace=flux-system --from-file=age.agekey=/dev/stdin
       - |
-        if  kubectl --kubeconfig {{.KUBERNETES_DIR}}/{{.CLUSTER}}/kubeconfig -ns flux-system get secrets sops-age  >/dev/null 2>&1; then
+        if  ! kubectl --kubeconfig {{.KUBERNETES_DIR}}/{{.CLUSTER}}/kubeconfig -n flux-system get secrets sops-age  >/dev/null 2>&1; then
+          echo "Creating sops-age secret"
           kubectl --kubeconfig kubernetes/production/kubeconfig create secret generic sops-age --namespace=flux-system --from-literal=age.agekey="$SOPS_AGE_KEY"
         fi
 
