@@ -6,23 +6,23 @@ metadata:
   name: &app influxdb
 spec:
   interval: 30m
-  timeout: 15m
+  timeout: 30m
   chart:
     spec:
       chart: influxdb
-      version: 6.6.1
+      version: 6.6.2
       sourceRef:
         kind: HelmRepository
         name: bitnami-oci
         namespace: flux-system
-  maxHistory: 2
+  maxHistory: 3
   install:
     remediation:
-      retries: 3
+      retries: 4
   upgrade:
     cleanupOnFail: true
     remediation:
-      retries: 3
+      retries: 4
   uninstall:
     keepHistory: false
   values:
@@ -38,8 +38,8 @@ spec:
           memory: 256Mi
           cpu: 200m
         limits:
-          memory: 4Gi
-          cpu: 2000m
+          memory: 8Gi
+          cpu: 5000m
     metrics:
       enabled: true
     auth:
