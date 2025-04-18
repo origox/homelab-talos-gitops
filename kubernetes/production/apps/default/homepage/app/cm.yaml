@@ -83,15 +83,7 @@ data:
         - Proxmox:
             icon: proxmox.svg
             href: "{{HOMEPAGE_VAR_PROXMOX1_URL}}"
-            description: PVE1
-        - Proxmox:
-            icon: proxmox.svg
-            href: "{{HOMEPAGE_VAR_PROXMOX2_URL}}"
-            description: PVE2
-        - Proxmox:
-            icon: proxmox.svg
-            href: "{{HOMEPAGE_VAR_PROXMOX3_URL}}"
-            description: PVE3
+            description: PVE
     - Storage:
         - TrueNAS Scale:
             icon: truenas.svg
