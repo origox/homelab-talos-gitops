@@ -36,7 +36,7 @@ spec:
           env:
             - name: HOMEPAGE_ALLOWED_HOSTS
               value: homepage.${SECRET_CLUSTER_LOCAL_DOMAIN}
-          envFrom:  
+          envFrom:
             - secretRef:
                 name: homepage-secret
           ports:

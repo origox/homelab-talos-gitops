@@ -1,0 +1,38 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: postgresql
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: postgresql
+      version: 16.6.3
+      sourceRef:
+        kind: HelmRepository
+        name: bitnami
+        namespace: flux-system
+      interval: 5m
+  # https://github.com/bitnami/charts/blob/main/bitnami/postgresql/values.yaml
+  values:
+    image:
+      repository: bitnami/postgresql
+      tag: 15.4.0-debian-11-r39
+    auth:
+      enablePostgresUser: false
+      username: test
+      password: test
+      # existingSecret: postgresql-secrets
+      postgresPassword: test
+    primary:
+      persistence:
+        enabled: true
+        existingClaim: postgresql-pvc
+      resources:
+        requests:
+          memory: 50Mi
+          cpu: 25m
+        limits:
+          memory: 150Mi
