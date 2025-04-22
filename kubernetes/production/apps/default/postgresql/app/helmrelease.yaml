@@ -12,7 +12,7 @@ spec:
       version: 16.6.3
       sourceRef:
         kind: HelmRepository
-        name: bitnami
+        name: bitnami-oci
         namespace: flux-system
       interval: 5m
   # https://github.com/bitnami/charts/blob/main/bitnami/postgresql/values.yaml
