@@ -1,5 +1,5 @@
 ---
-apiVersion: longhorn.io/v1beta1
+apiVersion: longhorn.io/v1beta2
 kind: RecurringJob
 metadata:
   name: daily-snapshot
@@ -15,7 +15,7 @@ spec:
     job-type: snapshot
     schedule: daily
 ---
-apiVersion: longhorn.io/v1beta1
+apiVersion: longhorn.io/v1beta2
 kind: RecurringJob
 metadata:
   name: weekly-backup
