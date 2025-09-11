@@ -85,10 +85,10 @@ data:
             href: "{{HOMEPAGE_VAR_PROXMOX1_URL}}"
             description: PVE
     - Storage:
-        - TrueNAS Scale:
+        - TrueNAS:
             icon: truenas.svg
             href: "{{HOMEPAGE_VAR_TRUENAS_url}}"
-            description: TrueNAS Scale
+            description: TrueNAS
         - Minio:
             icon: minio.svg
             href: "{{HOMEPAGE_VAR_MINIO_url}}"
