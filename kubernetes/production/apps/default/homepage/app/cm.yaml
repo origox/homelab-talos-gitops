@@ -49,6 +49,10 @@ data:
         header: true
         style: row
         columns: 2
+      Documentation:
+        header: true
+        style: row
+        columns: 2
   custom.css: ""
   custom.js: ""
   bookmarks.yaml: |
@@ -153,6 +157,11 @@ data:
             icon: alertmanager.svg
             href: "{{HOMEPAGE_VAR_ALERTMANAGER_url}}"
             description: Alertmanager
+    - Documentation:
+        - Wiki:
+            icon: wiki.svg
+            href: "{{HOMEPAGE_VAR_WIKI_URL}}"
+            description: Wiki
   widgets.yaml: |
     - resources:
         cpu: true
