@@ -159,7 +159,7 @@ data:
             description: Alertmanager
     - Documentation:
         - Wiki:
-            icon: wiki.svg
+            icon: wikijs.svg
             href: "{{HOMEPAGE_VAR_WIKI_URL}}"
             description: Wiki
   widgets.yaml: |
