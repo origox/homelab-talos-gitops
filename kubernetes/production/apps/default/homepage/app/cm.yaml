@@ -127,6 +127,10 @@ data:
             icon: zigbee2mqtt.svg
             href: "{{HOMEPAGE_VAR_ZIGBEE2MQTT_URL}}"
             description: Zigbee2MQTT
+        - NVR:
+            icon: frigate.svg
+            href: "{{HOMEPAGE_VAR_NVR_URL}}"
+            description: Frigate NVR
     - DNS:
         - DNS:
             icon: pi-hole.svg
