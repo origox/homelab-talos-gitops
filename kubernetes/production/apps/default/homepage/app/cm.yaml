@@ -157,6 +157,10 @@ data:
             icon: alertmanager.svg
             href: "{{HOMEPAGE_VAR_ALERTMANAGER_url}}"
             description: Alertmanager
+        - Portainer:
+            icon: portainer.svg
+            href: "{{HOMEPAGE_VAR_PORTAINER_URL}}"
+            description: Portainer
     - Documentation:
         - Wiki:
             icon: wikijs.svg
