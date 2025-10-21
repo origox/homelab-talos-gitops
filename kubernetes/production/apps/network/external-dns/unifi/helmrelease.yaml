@@ -64,7 +64,6 @@ spec:
           verbs: ["get", "watch", "list"]
     extraArgs:
       - --ignore-ingress-tls-spec
-      - --traefik-disable-legacy
       - --source=traefik-proxy
     policy: sync
     sources: ["service", "ingress", "crd"]
