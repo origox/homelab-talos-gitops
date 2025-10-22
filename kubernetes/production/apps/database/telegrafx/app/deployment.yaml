@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: telegraf
-          image: telegraf:1.35.3
+          image: telegraf:1.36.3
           resources:
             limits:
               memory: "200Mi"
