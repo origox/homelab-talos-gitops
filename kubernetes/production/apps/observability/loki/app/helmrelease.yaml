@@ -38,7 +38,7 @@ spec:
       compactor:
         working_directory: /var/loki/compactor/retention
         delete_request_store: filesystem
-        retention_enabled: true
+        retention_enabled: false
       ingester:
         chunk_encoding: snappy
       storage:
@@ -53,7 +53,7 @@ spec:
               prefix: loki_index_
               period: 24h
       limits_config:
-        retention_period: 7d
+        retention_period: 0s
     singleBinary:
       replicas: 1
       persistence:
