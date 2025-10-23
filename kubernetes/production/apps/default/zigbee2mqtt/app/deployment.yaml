@@ -48,9 +48,10 @@ spec:
             - name: "ZIGBEE2MQTT_CONFIG_SERIAL_ADAPTER"
               value: "ember"  # Set to a valid adapter value
             - name: "ZIGBEE2MQTT_CONFIG_ADVANCED_NETWORK_KEY"
-              value: "GENERATE"
-            - name: "ZIGBEE2MQTT_CONFIG_NETWORK_KEY"
-              value: "GENERATE"
+              valueFrom:
+                secretKeyRef:
+                  name: zigbee-secrets
+                  key: ZIGBEE2MQTT_CONFIG_ADVANCED_NETWORK_KEY
             - name: ZIGBEE2MQTT_CONFIG_ADVANCED_LOG_LEVEL
               value: "debug"
             - name: "TZ"
