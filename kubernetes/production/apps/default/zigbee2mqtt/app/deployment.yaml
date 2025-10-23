@@ -51,7 +51,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: zigbee-secrets
-                  key: ZIGBEE2MQTT_CONFIG_ADVANCED_NETWORK_KEY
+                  key: ZIGBEE2MQTT_ADVANCED_NETWORK_KEY
             - name: ZIGBEE2MQTT_CONFIG_ADVANCED_LOG_LEVEL
               value: "debug"
             - name: "TZ"
