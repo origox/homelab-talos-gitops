@@ -12,4 +12,4 @@ resources:
   - home-assistant/ks.yaml
   - node-red/ks.yaml
   # - frigate/ks.yaml
-  - postgresql/ks.yaml
+  # - postgresql/ks.yaml
