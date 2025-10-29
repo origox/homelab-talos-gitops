@@ -11,20 +11,20 @@
     "dependencies-testlabel"
   ],
   "flux": {
-    "fileMatch": [
-      "(^|/)kubernetes/.+\\.ya?ml(\\.j2)?$"
+    "managerFilePatterns": [
+      "/(^|/)kubernetes/.+\\.ya?ml(\\.j2)?$/"
     ]
   },
   "helm-values": {
-    "fileMatch": [
-      "(^|/)kubernetes/.+\\.ya?ml(\\.j2)?$"
+    "managerFilePatterns": [
+      "/(^|/)kubernetes/.+\\.ya?ml(\\.j2)?$/"
     ]
   },
   "kubernetes": {
-    "fileMatch": [
-      "\\.yaml$",
-      "(^|/)\\.taskfiles/.+\\.ya?ml(\\.j2)?$",
-      "(^|/)kubernetes/.+\\.ya?ml(\\.j2)?$"
+    "managerFilePatterns": [
+      "/\\.yaml$/",
+      "/(^|/)\\.taskfiles/.+\\.ya?ml(\\.j2)?$/",
+      "/(^|/)kubernetes/.+\\.ya?ml(\\.j2)?$/"
     ]
   }
 }
