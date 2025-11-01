@@ -13,3 +13,4 @@ resources:
   - network
   - database
   - flux-system
+  - system-upgrade
